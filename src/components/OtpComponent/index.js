@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import OTPInputView from '@twotalltotems/react-native-otp-input'
+
 
 const OtpComponent = () => {
   return (
-    <View>
-      <Text>OtpComponent</Text>
+    <View style = {{marginTop : 40}}>
+      <OTPInputView />
     </View>
   )
 }
