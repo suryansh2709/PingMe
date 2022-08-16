@@ -32,13 +32,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#f7f7fc',
     borderRadius: vh(5),
     width: '80%',
-    marginLeft: normalize(8),
     height: normalize(36),
+    paddingHorizontal: 10,
+    justifyContent: 'center',
   },
   textInput: {
     color: 'black',
     marginHorizontal: vw(10),
     paddingHorizontal: vh(5),
     fontSize: vw(14),
+    alignSelf: 'center',
   },
 });
