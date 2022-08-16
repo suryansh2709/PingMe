@@ -8,6 +8,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {string} from '../../utils/strings';
 import CountryCodeModal from '../../components/countryCodeModal';
 import {countryCodes} from '../../components/countryCodeModal/utils/phoneData';
+import auth from '@react-native-firebase/auth';
 
 export default function PhoneLogin() {
   const [isVisible, setIsVisible] = useState(false);
@@ -16,6 +17,10 @@ export default function PhoneLogin() {
 
   const selectionHandler = code => {
     setSelected(code);
+  };
+
+  const handleChangeText = txt => {
+    setNumber(txt);
   };
 
   const hanldeCountryCodeOnPress = () => {
@@ -40,7 +45,13 @@ export default function PhoneLogin() {
           <Text style={styles.codeStyle}>{'+ ' + selected}</Text>
           <View style={styles.lineView} />
         </TouchableOpacity>
-        <CustomTextInput width={200} />
+        <CustomTextInput
+          width={200}
+          value={number}
+          maxLength={10}
+          keyboardType={'numeric'}
+          onChangeText={handleChangeText}
+        />
       </View>
       <CountryCodeModal
         selected={selected}

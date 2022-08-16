@@ -1,5 +1,5 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
 import {vw} from '../../utils/dimensions';
 import {color} from '../../utils/colors';
 

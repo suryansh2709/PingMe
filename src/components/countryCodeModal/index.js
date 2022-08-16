@@ -1,4 +1,4 @@
-import {Image, Text, View, FlatList} from 'react-native';
+import {Text, View, FlatList} from 'react-native';
 import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import {styles} from './style';
@@ -9,12 +9,12 @@ import CountryCodeRender from './countryCodeRender';
 const CountryCodeModal = ({
   selected,
   isVisible,
-  hanldeCountryCodeOnPress,
   setSelected,
+  hanldeCountryCodeOnPress,
 }) => {
   const [searchText, setSearchText] = useState('');
 
-  const itemSeperator = () => <View style={styles.itemSeprator}></View>;
+  const itemSeperator = () => <View style={styles.itemSeprator} />;
 
   const onChangeText = txt => {
     setSearchText(txt);
