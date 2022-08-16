@@ -1,13 +1,26 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
 import Header from '../../components/commonHeader';
-import {normalize} from '../../utils/dimensions';
+import {normalize, vh, vw} from '../../utils/dimensions';
 import {color} from '../../utils/colors';
 import CustomTextInput from '../../components/customTextInput/customTextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {string} from '../../utils/strings';
+import CountryCodeModal from '../../components/countryCodeModal';
+import {countryCodes} from '../../components/countryCodeModal/utils/phoneData';
 
 export default function PhoneLogin() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [selected, setSelected] = useState(countryCodes[0].code);
+  const [number, setNumber] = useState('');
+
+  const selectionHandler = code => {
+    setSelected(code);
+  };
+
+  const hanldeCountryCodeOnPress = () => {
+    setIsVisible(!isVisible);
+  };
   return (
     <KeyboardAwareScrollView
       style={styles.mainView}
@@ -20,11 +33,21 @@ export default function PhoneLogin() {
       </View>
       <Text style={styles.recommendText}>{string.recommend}</Text>
       <View style={styles.countryCodeView}>
-        <View style={styles.countryCodeViewStyle}>
-          <CustomTextInput />
-        </View>
-        <CustomTextInput width={245} />
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={hanldeCountryCodeOnPress}
+          style={{backgroundColor: 'red'}}>
+          <Text style={styles.codeStyle}>{'+ ' + selected}</Text>
+          <View style={styles.lineView} />
+        </TouchableOpacity>
+        <CustomTextInput width={200} />
       </View>
+      <CountryCodeModal
+        selected={selected}
+        isVisible={isVisible}
+        setSelected={selectionHandler}
+        hanldeCountryCodeOnPress={hanldeCountryCodeOnPress}
+      />
     </KeyboardAwareScrollView>
   );
 }
@@ -66,8 +89,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#f7f7fc',
     borderRadius: 4,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   mainView: {
     backgroundColor: color.white,
+  },
+  lineView: {
+    width: vw(1),
+    height: vw(15),
+    backgroundColor: color.black,
   },
 });
