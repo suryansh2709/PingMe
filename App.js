@@ -6,7 +6,7 @@ import OtpComponent from './src/components/OtpComponent';
 import Header from './src/components/commonHeader';
 
 const App = () => {
-  return <Header/>
+  return <OtpComponent />;
 };
 
 export default App;

@@ -12,13 +12,13 @@ export function normalize(size) {
   return PixelRatio.roundToNearestPixel(size * scale);
 }
 
-export const vw = (width) => {
+export const vw = width => {
   let percent = (width / DESIGN_WIDTH) * 100;
   const elemWidth = parseFloat(percent + '%');
   return PixelRatio.roundToNearestPixel((SCREEN_WIDTH * elemWidth) / 100);
 };
 
-export const vh = (height) => {
+export const vh = height => {
   let percent = (height / DESIGN_HEIGHT) * 100;
   const elemHeight = parseFloat(percent + '%');
   return PixelRatio.roundToNearestPixel((SCREEN_HEIGHT * elemHeight) / 100);

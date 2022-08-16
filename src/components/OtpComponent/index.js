@@ -1,16 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import OTPInputView from '@twotalltotems/react-native-otp-input'
-
-
-const OtpComponent = () => {
+import {} from 'react-native';
+import React from 'react';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
+import styles from './styles';
+const OtpComponent = ({}) => {
   return (
-    <View style = {{marginTop : 40}}>
-      <OTPInputView />
-    </View>
-  )
-}
+    <OTPInputView
+      style={{}}
+      pinCount={4}
+      autoFocusOnLoad
+      codeInputFieldStyle={styles.underlineStyleBase}
+      codeInputHighlightStyle={styles.underlineStyleHighLighted}
+    />
+  );
+};
 
-export default OtpComponent
-
-const styles = StyleSheet.create({})
+export default OtpComponent;
