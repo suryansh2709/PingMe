@@ -6,6 +6,7 @@ import {color} from '../../utils/colors';
 import CustomTextInput from '../../components/customTextInput/customTextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {string} from '../../utils/strings';
+import CountryCodeModal from '../../components/countryCodeModal';
 
 export default function PhoneLogin() {
   return (
@@ -20,9 +21,7 @@ export default function PhoneLogin() {
       </View>
       <Text style={styles.recommendText}>{string.recommend}</Text>
       <View style={styles.countryCodeView}>
-        <View style={styles.countryCodeViewStyle}>
-          <CustomTextInput />
-        </View>
+        <View style={styles.countryCodeViewStyle}></View>
         <CustomTextInput width={245} />
       </View>
     </KeyboardAwareScrollView>

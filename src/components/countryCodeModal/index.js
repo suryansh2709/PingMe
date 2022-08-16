@@ -5,7 +5,7 @@ import Modal from 'react-native-modal';
 import {styles} from './style';
 import {countryCodes} from '../../../utils/phoneData';
 import CountryCodeRender from './countryCodeRender';
-import CustomTextInput from '../../customComponents/customTextInput';
+import CustomTextInput from '../customTextInput/customTextInput';
 import localImages from '../../../utils/localImages';
 import {localStrings} from '../../../utils/localStrings';
 
