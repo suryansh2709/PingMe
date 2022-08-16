@@ -1,11 +1,11 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Text} from 'react-native';
 import React from 'react';
 import styles from './styles';
 import LinearGradient from 'react-native-linear-gradient';
-import { color } from '../../utils/colors';
+import {color} from '../../utils/colors';
 
 const SplashScreen = () => {
-    const colorArray = [color.darkGreen, color.lightGreen]
+  const colorArray = [color.darkGreen, color.lightGreen];
   return (
     <LinearGradient
       start={{x: 0, y: 0}}
