@@ -1,7 +1,6 @@
 import {StyleSheet, TextInput, View} from 'react-native';
 import React from 'react';
 import {vw, vh, normalize} from '../../utils/dimensions';
-import {color} from '../../utils/colors';
 
 export default function CustomTextInput(props) {
   const {width = 375} = props;

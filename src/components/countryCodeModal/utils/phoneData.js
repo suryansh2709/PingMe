@@ -1,4 +1,5 @@
 export const countryCodes = [
+  {country: 'India', code: '91', iso: 'Ind'},
   {country: 'Kuwait', code: '965', iso: 'KW'},
   {country: 'United Arab Emirates', code: '971', iso: 'AE'},
   {country: 'Saudi Arabia', code: '966', iso: 'SA'},

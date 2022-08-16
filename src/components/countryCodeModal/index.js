@@ -1,4 +1,4 @@
-import {Image, Text, View, FlatList} from 'react-native';
+import {Text, View, FlatList} from 'react-native';
 import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import {styles} from './style';
