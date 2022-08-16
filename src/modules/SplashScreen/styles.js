@@ -1,11 +1,11 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-    splashMain : {
-        flex : 1,
-        alignItems : 'center',
-        justifyContent : "center"
-    }
-})
+  splashMain: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
-export default styles
+export default styles;
