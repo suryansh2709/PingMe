@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import colors from '../../../utils/colors';
+import {color} from '../../utils/colors';
 import {normalize} from '../../utils/dimensions';
 
 export const styles = StyleSheet.create({
@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
   },
   modal: {margin: 0, flex: 1},
   modalView: {
-    backgroundColor: colors.white,
+    backgroundColor: color.white,
     marginTop: 'auto',
     borderTopEndRadius: normalize(32),
     borderTopLeftRadius: normalize(32),
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
   },
   suretyText: {
     textAlign: 'center',
-    color: colors.black,
+    color: color.black,
     fontSize: normalize(18),
   },
   bottomView: {
@@ -49,14 +49,14 @@ export const styles = StyleSheet.create({
   },
   termsText: {
     fontSize: normalize(11),
-    color: colors.black,
+    color: color.black,
   },
   cancelButton: {
     height: normalize(50),
     width: normalize(163),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.white,
+    backgroundColor: color.white,
     borderWidth: normalize(1),
     borderRadius: normalize(6),
   },
@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
     borderRadius: normalize(6),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.red,
+    backgroundColor: color.red,
   },
   bottomButtonView: {
     flexDirection: 'row',
@@ -76,12 +76,12 @@ export const styles = StyleSheet.create({
     marginBottom: normalize(20),
     marginTop: normalize(15),
   },
-  cancelText: {color: colors.black, fontSize: 12, fontWeight: 'bold'},
-  deleteText: {color: colors.white, fontSize: 12, fontWeight: 'bold'},
+  cancelText: {color: color.black, fontSize: 12, fontWeight: 'bold'},
+  deleteText: {color: color.white, fontSize: 12, fontWeight: 'bold'},
   delModal: {margin: 0},
   delModalView: {
     borderWidth: 1,
-    backgroundColor: colors.white,
+    backgroundColor: color.white,
     borderTopEndRadius: normalize(32),
     borderTopLeftRadius: normalize(32),
     height: 'auto',
@@ -96,21 +96,21 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: normalize(18),
     marginBottom: normalize(33),
-    color: colors.black,
+    color: color.black,
   },
   middleText: {
     textAlign: 'left',
     alignSelf: 'center',
     marginBottom: normalize(25),
     fontSize: normalize(14),
-    color: colors.black,
+    color: color.black,
   },
   bottomText: {
     textAlign: 'left',
     alignSelf: 'center',
     marginBottom: normalize(25),
     fontSize: normalize(11),
-    color: colors.black,
+    color: color.black,
   },
   gradientStyle: {
     height: 50,
@@ -122,7 +122,7 @@ export const styles = StyleSheet.create({
   button: {height: 50, width: 335, justifyContent: 'center'},
   buttonText: {
     alignSelf: 'center',
-    color: colors.white,
+    color: color.white,
     fontSize: normalize(12),
   },
   countryModalHeader: {
@@ -131,11 +131,11 @@ export const styles = StyleSheet.create({
   },
   itemSeprator: {
     height: 2,
-    backgroundColor: colors.lightGrey,
+    backgroundColor: color.lightGrey,
   },
   searchView: {
     height: normalize(35),
-    backgroundColor: colors.Whitesmoke,
+    backgroundColor: color.Whitesmoke,
     width: '98%',
     alignItems: 'center',
     flexDirection: 'row',

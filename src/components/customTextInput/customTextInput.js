@@ -1,7 +1,6 @@
 import {StyleSheet, TextInput, View} from 'react-native';
 import React from 'react';
 import {vw, vh, normalize} from '../../utils/dimensions';
-import {color} from '../../utils/colors';
 
 export default function CustomTextInput(props) {
   const {width = 375} = props;
@@ -32,13 +31,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#f7f7fc',
     borderRadius: vh(5),
     width: '80%',
-    marginLeft: normalize(8),
     height: normalize(36),
+    paddingHorizontal: 10,
+    justifyContent: 'center',
   },
   textInput: {
     color: 'black',
     marginHorizontal: vw(10),
     paddingHorizontal: vh(5),
     fontSize: vw(14),
+    alignSelf: 'center',
   },
 });

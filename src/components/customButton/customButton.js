@@ -11,6 +11,7 @@ export default function CustomButton(props) {
     disable = false,
     borderColor,
     width,
+    marginTop,
   } = props;
   return (
     <TouchableOpacity
@@ -21,6 +22,7 @@ export default function CustomButton(props) {
           borderColor: borderColor,
         },
         {width: width},
+        {marginTop: marginTop},
       ]}
       activeOpacity={0.8}
       onPress={() => onPressButton()}
@@ -33,9 +35,10 @@ const styles = StyleSheet.create({
   button: {
     height: normalize(42),
     marginTop: normalize(16),
-    borderRadius: 8,
+    borderRadius: 30,
     justifyContent: 'center',
     borderWidth: normalize(1),
+    marginLeft: normalize(28),
   },
   buttonText: {
     fontSize: normalize(14),

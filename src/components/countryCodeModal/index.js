@@ -1,13 +1,10 @@
-import {Image, Text, View} from 'react-native';
+import {Text, View, FlatList} from 'react-native';
 import React, {useState} from 'react';
-import {FlatList} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import {styles} from './style';
-import {countryCodes} from '../../../utils/phoneData';
-import CountryCodeRender from './countryCodeRender';
 import CustomTextInput from '../customTextInput/customTextInput';
-import localImages from '../../../utils/localImages';
-import {localStrings} from '../../../utils/localStrings';
+import {countryCodes} from './utils/phoneData';
+import CountryCodeRender from './countryCodeRender';
 
 const CountryCodeModal = ({
   selected,
@@ -59,12 +56,13 @@ const CountryCodeModal = ({
       onBackdropPress={hanldeCountryCodeOnPress}
       style={styles.delModal}>
       <View style={[styles.delModalView, styles.countryCodeModal]}>
-        <Text style={styles.countryModalHeader}>{localStrings.selectCode}</Text>
+        <Text style={styles.countryModalHeader}>{'select code'}</Text>
         <View style={styles.searchView}>
-          <Image source={localImages.search} style={styles.search} />
+          {/* <Image source={localImages.search} style={styles.search} /> */}
           <CustomTextInput
+            width={100}
             onChangeText={onChangeText}
-            placeholder={localStrings.selectCode}
+            placeholder={'select Code'}
           />
         </View>
         <FlatList
