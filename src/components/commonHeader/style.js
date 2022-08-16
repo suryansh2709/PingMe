@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {color} from '../../utils/colors';
-import {normalize} from '../../utils/dimensions';
+import {normalize, vw} from '../../utils/dimensions';
 
 const styles = StyleSheet.create({
   headerMain: {
@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     height: normalize(90),
     backgroundColor: color.white,
     justifyContent: 'center',
+    marginTop: normalize(33),
   },
   backButton: {
     height: normalize(20),
