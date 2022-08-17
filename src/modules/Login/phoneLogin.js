@@ -68,7 +68,7 @@ export default function PhoneLogin() {
           <View style={styles.lineView} />
         </TouchableOpacity>
         <CustomTextInput
-          width={vw(245)}
+          width={245}
           style={{marginLeft: normalize(8)}}
           color={color.lightGrey}
           value={number}
@@ -76,6 +76,15 @@ export default function PhoneLogin() {
           keyboardType={'numeric'}
           onChangeText={handleChangeText}
         />
+        {/* <CustomTextInput
+          width={245}
+          style={{marginLeft: normalize(8)}}
+          color={color.lightGrey}
+          value={number}
+          maxLength={10}
+          keyboardType={'numeric'}
+          onChangeText={handleChangeText}
+        /> */}
       </View>
       <CountryCodeModal
         selected={selected}
@@ -83,14 +92,16 @@ export default function PhoneLogin() {
         setSelected={selectionHandler}
         hanldeCountryCodeOnPress={hanldeCountryCodeOnPress}
       />
-      <CustomButton
-        text={'Continue'}
-        marginTop={vh(240)}
-        width={vw(327)}
-        bgColor={'rgba(88, 213, 130, 1)'}
-        textColor={'white'}
-        onPressButton={handleContineuPress}
-      />
+      <View style={styles.buttonView}>
+        <CustomButton
+          text={'Continue'}
+          marginTop={128}
+          width={327}
+          bgColor={'rgba(88, 213, 130, 1)'}
+          textColor={color.white}
+          onPressButton={handleContineuPress}
+        />
+      </View>
     </KeyboardAwareScrollView>
   );
 }
