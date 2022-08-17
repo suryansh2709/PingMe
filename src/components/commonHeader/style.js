@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: normalize(90),
     backgroundColor: color.white,
-    justifyContent: 'center',
     marginTop: normalize(33),
+    flexDirection: 'row',
   },
   backButton: {
     height: normalize(20),

@@ -11,12 +11,12 @@ import {string} from '../../utils/strings';
 const CountryCodeModal = ({
   selected,
   isVisible,
-  hanldeCountryCodeOnPress,
   setSelected,
+  hanldeCountryCodeOnPress,
 }) => {
   const [searchText, setSearchText] = useState('');
 
-  const itemSeperator = () => <View style={styles.itemSeprator}></View>;
+  const itemSeperator = () => <View style={styles.itemSeprator} />;
 
   const onChangeText = txt => {
     setSearchText(txt);

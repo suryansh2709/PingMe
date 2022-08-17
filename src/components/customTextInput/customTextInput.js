@@ -1,6 +1,7 @@
-import {StyleSheet, TextInput, View} from 'react-native';
+import {TextInput, View} from 'react-native';
 import React from 'react';
-import {vw, vh, normalize} from '../../utils/dimensions';
+import {vw} from '../../utils/dimensions';
+import {styles} from './style';
 
 export default function CustomTextInput(props) {
   const {width = 375} = props;
@@ -27,21 +28,3 @@ export default function CustomTextInput(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#f7f7fc',
-    borderRadius: vh(5),
-    width: '80%',
-    height: normalize(36),
-    paddingHorizontal: 10,
-    justifyContent: 'center',
-  },
-  textInput: {
-    color: 'black',
-    marginHorizontal: vw(10),
-    paddingHorizontal: vh(5),
-    fontSize: vw(14),
-    alignSelf: 'center',
-  },
-});
