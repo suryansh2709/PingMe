@@ -10,7 +10,7 @@ import auth from '@react-native-firebase/auth';
 import CustomButton from '../../components/customButton/customButton';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from './style';
-import {normalize} from '../../utils/dimensions';
+import {normalize, vh, vw} from '../../utils/dimensions';
 import {color} from '../../utils/colors';
 
 export default function PhoneLogin() {
@@ -37,10 +37,9 @@ export default function PhoneLogin() {
       const confirmation = await auth().signInWithPhoneNumber(
         '+' + selected + number,
       );
-      console.log('confirmation', confirmation);
-      setConfirm(confirmation);
-      if (!confirm) {
-        navigation.navigate('Otp');
+      if (confirmation) {
+        setConfirm(confirmation);
+        navigation.navigate('Otp', {confirm: confirmation});
       }
     } catch (err) {
       console.log(err);
@@ -69,6 +68,7 @@ export default function PhoneLogin() {
           <View style={styles.lineView} />
         </TouchableOpacity>
         <CustomTextInput
+          width={245}
           style={{marginLeft: normalize(8)}}
           color={color.lightGrey}
           value={number}

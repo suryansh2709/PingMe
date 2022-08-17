@@ -22,37 +22,32 @@ export default function UserProfile() {
       <View style={styles.textInputView}>
         <CustomTextInput
           width={335}
-          marginHorizontal={30}
           color={color.lightGrey}
-          marginTop={20}
+          style={styles.userInputStyle}
           placeholder={'UserName (Required)'}
         />
         <CustomTextInput
           width={335}
-          marginHorizontal={30}
           color={color.lightGrey}
-          marginTop={20}
+          style={styles.userInputStyle}
           placeholder={'First Name (Required)'}
         />
         <CustomTextInput
           width={335}
-          marginHorizontal={30}
           color={color.lightGrey}
-          marginTop={20}
+          style={styles.userInputStyle}
           placeholder={'Last Name (Optional)'}
         />
         <CustomTextInput
           width={335}
-          marginHorizontal={30}
           color={color.lightGrey}
-          marginTop={20}
+          style={styles.userInputStyle}
           placeholder={'Date Of Birth (Optional)'}
         />
         <CustomTextInput
           width={335}
-          marginHorizontal={30}
           color={color.lightGrey}
-          marginTop={20}
+          style={styles.userInputStyle}
           placeholder={'Gender (Optional)'}
         />
       </View>
@@ -97,4 +92,5 @@ const styles = StyleSheet.create({
   },
   textInputView: {flex: 0.45},
   profileImage: {height: '100%', width: '100%'},
+  userInputStyle: {marginHorizontal: 25, marginTop: 20},
 });

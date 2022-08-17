@@ -11,10 +11,8 @@ export default function CustomTextInput(props) {
         styles.container,
         props.hasOwnProperty('width')
           ? {
-              width: width,
+              width: vw(width),
               backgroundColor: props.color,
-              marginHorizontal: vw(props.marginHorizontal),
-              marginTop: vh(props.marginTop),
             }
           : {},
         props.style,
