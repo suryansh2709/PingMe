@@ -1,10 +1,12 @@
-import {Text, View, FlatList} from 'react-native';
+import {Text, View, FlatList, Image} from 'react-native';
 import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import {styles} from './style';
 import CustomTextInput from '../customTextInput/customTextInput';
 import {countryCodes} from './utils/phoneData';
 import CountryCodeRender from './countryCodeRender';
+import localImages from '../../utils/localImages';
+import {string} from '../../utils/strings';
 
 const CountryCodeModal = ({
   selected,
@@ -56,13 +58,14 @@ const CountryCodeModal = ({
       onBackdropPress={hanldeCountryCodeOnPress}
       style={styles.delModal}>
       <View style={[styles.delModalView, styles.countryCodeModal]}>
-        <Text style={styles.countryModalHeader}>{'select code'}</Text>
+        <Text style={styles.countryModalHeader}>{string.selectCode}</Text>
         <View style={styles.searchView}>
-          {/* <Image source={localImages.search} style={styles.search} /> */}
+          <Image source={localImages.search} style={styles.search} />
           <CustomTextInput
-            width={100}
+            width={247}
             onChangeText={onChangeText}
             placeholder={'select Code'}
+            color={'#f2f2f2'}
           />
         </View>
         <FlatList
@@ -70,6 +73,7 @@ const CountryCodeModal = ({
           renderItem={renderItem}
           ItemSeparatorComponent={itemSeperator}
           keyExtractor={_keyExtractor}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </Modal>

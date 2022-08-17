@@ -1,7 +1,8 @@
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
-import {vw} from '../../utils/dimensions';
+import {normalize, vw} from '../../utils/dimensions';
 import {color} from '../../utils/colors';
+import localImages from '../../utils/localImages';
 
 const CountryCodeRender = ({
   code,
@@ -23,8 +24,7 @@ const CountryCodeRender = ({
         {country.toUpperCase() + '  +' + code}
       </Text>
       {selected === code ? (
-        // <Image source={localImages.check} style={styles.check} />
-        <Text>fgh</Text>
+        <Image source={localImages.check} style={styles.check} />
       ) : null}
     </TouchableOpacity>
   );
@@ -49,5 +49,10 @@ const styles = StyleSheet.create({
     color: color.black,
     fontSize: vw(13),
   },
-  check: {height: vw(20), width: vw(20)},
+  check: {
+    height: vw(24),
+    width: vw(24),
+    marginTop: normalize(6),
+    marginRight: normalize(10),
+  },
 });

@@ -9,7 +9,9 @@ export default function CustomTextInput(props) {
     <View
       style={[
         styles.container,
-        props.hasOwnProperty('width') ? {width: vw(width)} : {},
+        props.hasOwnProperty('width')
+          ? {width: vw(width), backgroundColor: props.color}
+          : {},
         props.style,
       ]}>
       <TextInput

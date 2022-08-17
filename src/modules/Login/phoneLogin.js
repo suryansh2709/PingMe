@@ -1,7 +1,6 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/commonHeader';
-import {vw} from '../../utils/dimensions';
 import CustomTextInput from '../../components/customTextInput/customTextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {string} from '../../utils/strings';
@@ -11,6 +10,8 @@ import auth from '@react-native-firebase/auth';
 import CustomButton from '../../components/customButton/customButton';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from './style';
+import {normalize} from '../../utils/dimensions';
+import {color} from '../../utils/colors';
 
 export default function PhoneLogin() {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,12 +33,17 @@ export default function PhoneLogin() {
   };
 
   async function signInWirhPhoneNumber() {
-    const confirmation = await auth().signInWithPhoneNumber(
-      '+' + selected + number,
-    );
-    setConfirm(confirmation);
-    if (!confirm) {
-      navigation.navigate('Otp');
+    try {
+      const confirmation = await auth().signInWithPhoneNumber(
+        '+' + selected + number,
+      );
+      console.log('confirmation', confirmation);
+      setConfirm(confirmation);
+      if (!confirm) {
+        navigation.navigate('Otp');
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
   const handleContineuPress = () => {
@@ -63,7 +69,9 @@ export default function PhoneLogin() {
           <View style={styles.lineView} />
         </TouchableOpacity>
         <CustomTextInput
-          width={200}
+          width={245}
+          style={{marginLeft: normalize(8)}}
+          color={color.lightGrey}
           value={number}
           maxLength={10}
           keyboardType={'numeric'}
@@ -76,13 +84,16 @@ export default function PhoneLogin() {
         setSelected={selectionHandler}
         hanldeCountryCodeOnPress={hanldeCountryCodeOnPress}
       />
-      <CustomButton
-        text={'Continue'}
-        marginTop={128}
-        width={vw(327)}
-        bgColor={'rgba(88, 213, 130, 1)'}
-        onPressButton={handleContineuPress}
-      />
+      <View style={styles.buttonView}>
+        <CustomButton
+          text={'Continue'}
+          marginTop={128}
+          width={327}
+          bgColor={'rgba(88, 213, 130, 1)'}
+          textColor={'white'}
+          onPressButton={handleContineuPress}
+        />
+      </View>
     </KeyboardAwareScrollView>
   );
 }

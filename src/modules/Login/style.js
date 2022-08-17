@@ -62,4 +62,8 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
     height: normalize(36),
   },
+  buttonView: {justifyContent: 'flex-end', height: normalize(376)},
+  otpMainView: {backgroundColor: 'white', flex: 1},
+  resendCodeView: {marginTop: normalize(62), alignSelf: 'center'},
+  resendCodeText: {color: 'rgba(88, 213, 130, 1)'},
 });

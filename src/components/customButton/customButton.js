@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     marginTop: normalize(16),
     borderRadius: 30,
     justifyContent: 'center',
-    borderWidth: normalize(1),
     marginLeft: normalize(28),
   },
   buttonText: {

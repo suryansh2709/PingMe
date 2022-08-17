@@ -1,7 +1,11 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-  otpViewStyle: {},
+  otpViewStyle: {
+    width: '75%',
+    alignSelf: 'center',
+    height: '20%',
+  },
 
   borderStyleBase: {
     width: 30,
@@ -23,7 +27,7 @@ const styles = StyleSheet.create({
   underlineStyleHighLighted: {
     borderColor: '#03DAC6',
   },
-  viewStyle: {width: '80%', height: 200},
+  viewStyle: {width: '75%', height: 200},
 });
 
 export default styles;
