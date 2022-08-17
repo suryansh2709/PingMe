@@ -1,14 +1,14 @@
 import {StyleSheet} from 'react-native';
 import {color} from '../../utils/colors';
-import {normalize, vw} from '../../utils/dimensions';
+import {normalize} from '../../utils/dimensions';
 
 const styles = StyleSheet.create({
   headerMain: {
     width: '100%',
     height: normalize(90),
     backgroundColor: color.white,
-    justifyContent: 'center',
     marginTop: normalize(33),
+    flexDirection: 'row',
   },
   backButton: {
     height: normalize(20),

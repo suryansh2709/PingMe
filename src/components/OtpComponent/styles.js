@@ -1,6 +1,8 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
+  otpViewStyle: {},
+
   borderStyleBase: {
     width: 30,
     height: 45,

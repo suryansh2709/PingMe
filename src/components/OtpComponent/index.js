@@ -5,7 +5,7 @@ import styles from './styles';
 const OtpComponent = ({}) => {
   return (
     <OTPInputView
-      style={{marginTop: 40}}
+      style={styles.otpViewStyle}
       pinCount={4}
       autoFocusOnLoad
       codeInputFieldStyle={styles.underlineStyleBase}

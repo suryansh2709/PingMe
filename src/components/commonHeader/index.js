@@ -1,8 +1,8 @@
-import {Image, TouchableOpacity, View} from 'react-native';
+import {Image, TouchableOpacity, View, Text} from 'react-native';
 import React from 'react';
 import styles from './style';
 
-const Header = ({onPress, style = []}) => {
+const Header = ({onPress, style = [], header}) => {
   return (
     <View style={styles.headerMain}>
       <TouchableOpacity
@@ -14,6 +14,7 @@ const Header = ({onPress, style = []}) => {
           source={require('../../assets/images/left.png')}
         />
       </TouchableOpacity>
+      <Text>{header}</Text>
     </View>
   );
 };
