@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mainView: {
-    backgroundColor: color.white,
+    backgroundColor: 'white',
   },
   lineView: {
     width: vw(1),

@@ -1,6 +1,6 @@
 import {TextInput, View} from 'react-native';
 import React from 'react';
-import {vw} from '../../utils/dimensions';
+import {vh, vw} from '../../utils/dimensions';
 import {styles} from './style';
 
 export default function CustomTextInput(props) {
@@ -10,7 +10,10 @@ export default function CustomTextInput(props) {
       style={[
         styles.container,
         props.hasOwnProperty('width')
-          ? {width: vw(width), backgroundColor: props.color}
+          ? {
+              width: vw(width),
+              backgroundColor: props.color,
+            }
           : {},
         props.style,
       ]}>
