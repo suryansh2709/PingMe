@@ -128,24 +128,26 @@ export const styles = StyleSheet.create({
   countryModalHeader: {
     marginTop: normalize(35),
     marginBottom: normalize(14),
+    fontSize: normalize(16),
+    fontWeight: '600',
   },
   itemSeprator: {
     height: 2,
     backgroundColor: color.lightGrey,
   },
   searchView: {
-    height: normalize(35),
-    backgroundColor: color.Whitesmoke,
-    width: '98%',
-    alignItems: 'center',
+    height: normalize(36),
+    backgroundColor: '#f2f2f2',
+    width: '99%',
     flexDirection: 'row',
-    paddingHorizontal: normalize(10),
     borderRadius: normalize(8),
   },
   search: {
     height: normalize(17),
     width: normalize(17),
-    marginRight: normalize(6),
+    marginRight: normalize(8),
+    marginTop: normalize(8),
+    marginHorizontal: normalize(10),
   },
   countryCodeModal: {
     height: '65%',

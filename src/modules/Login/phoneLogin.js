@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/commonHeader';
 import {normalize, vh, vw} from '../../utils/dimensions';
@@ -22,6 +22,9 @@ export default function PhoneLogin() {
   const hanldeCountryCodeOnPress = () => {
     setIsVisible(!isVisible);
   };
+  const pressBtn = () => {
+    return Alert.alert('Hello');
+  };
   return (
     <KeyboardAwareScrollView
       style={styles.mainView}
@@ -41,7 +44,11 @@ export default function PhoneLogin() {
           <Text style={styles.codeStyle}>{'+ ' + selected}</Text>
           <View style={styles.lineView} />
         </TouchableOpacity>
-        <CustomTextInput width={245} style={{marginLeft: normalize(8)}} />
+        <CustomTextInput
+          width={245}
+          style={{marginLeft: normalize(8)}}
+          color={color.lightGrey}
+        />
       </View>
       <CountryCodeModal
         selected={selected}
@@ -49,12 +56,15 @@ export default function PhoneLogin() {
         setSelected={selectionHandler}
         hanldeCountryCodeOnPress={hanldeCountryCodeOnPress}
       />
-      <CustomButton
-        text={'Continue'}
-        marginTop={128}
-        width={327}
-        bgColor={'rgba(88, 213, 130, 1)'}
-      />
+      <View style={styles.buttonView}>
+        <CustomButton
+          text={'Continue'}
+          marginTop={128}
+          width={327}
+          bgColor={'rgba(88, 213, 130, 1)'}
+          textColor={'white'}
+        />
+      </View>
     </KeyboardAwareScrollView>
   );
 }
@@ -119,4 +129,5 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     height: normalize(36),
   },
+  buttonView: {justifyContent: 'flex-end', height: normalize(376)},
 });
