@@ -10,7 +10,7 @@ import auth from '@react-native-firebase/auth';
 import CustomButton from '../../components/customButton/customButton';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from './style';
-import {normalize, vh, vw} from '../../utils/dimensions';
+import {normalize} from '../../utils/dimensions';
 import {color} from '../../utils/colors';
 
 export default function PhoneLogin() {
@@ -76,15 +76,6 @@ export default function PhoneLogin() {
           keyboardType={'numeric'}
           onChangeText={handleChangeText}
         />
-        {/* <CustomTextInput
-          width={245}
-          style={{marginLeft: normalize(8)}}
-          color={color.lightGrey}
-          value={number}
-          maxLength={10}
-          keyboardType={'numeric'}
-          onChangeText={handleChangeText}
-        /> */}
       </View>
       <CountryCodeModal
         selected={selected}
