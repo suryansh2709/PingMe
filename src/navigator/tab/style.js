@@ -6,11 +6,21 @@ const styles = StyleSheet.create({
   tabView: {
     height: vh(70),
     borderRadius: normalize(20),
-    bottom: 0,
     flexDirection: 'row',
-    marginTop: vh(100),
     marginHorizontal: vw(10),
-    backgroundColor: 'rgba(2,34,36,0.1)',
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+
+    elevation: 12,
+    bottom: '4%',
+    position: 'absolute',
+    alignSelf: 'center',
   },
   homeTabView: {
     height: vh(56),
