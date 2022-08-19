@@ -2,19 +2,32 @@ import {} from 'react-native';
 import React from 'react';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import styles from './styles';
-import {confirmOtp} from '../../utils/commonFunctions';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {confirmOtpAction} from '../../redux/auth/action';
 
-const OtpComponent = ({handleCodeChange, confirm}) => {
+const OtpComponent = ({handleCodeChange, confirm, handleLoader}) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const handleChange = code => {
     handleCodeChange(code);
   };
   const handleAfterFill = otp => {
-    confirmOtp(confirm, otp, user => {
-      console.log('user', user);
-      navigation.navigate('Profile');
-    });
+    handleLoader(true);
+    dispatch(
+      confirmOtpAction(
+        confirm,
+        otp,
+        user => {
+          console.log('user', user);
+          navigation.navigate('Profile');
+          handleLoader(false);
+        },
+        () => {
+          handleLoader(false);
+        },
+      ),
+    );
   };
   return (
     <OTPInputView

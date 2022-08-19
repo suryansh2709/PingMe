@@ -1,8 +1,37 @@
 import {StyleSheet} from 'react-native';
 import {color} from '../../utils/colors';
-import {normalize, vw} from '../../utils/dimensions';
+import {normalize, vw, vh} from '../../utils/dimensions';
 
 export const styles = StyleSheet.create({
+  userProfileMainView: {flex: 1, backgroundColor: color.white},
+  deleteIconView: {
+    height: vh(30),
+    width: vh(30),
+    backgroundColor: color.white,
+    padding: 2,
+    position: 'absolute',
+    borderRadius: 40,
+    right: 140,
+    borderColor: 'white',
+    zIndex: 1,
+    opacity: 0.6,
+  },
+  deleteImage: {zIndex: 1, height: '100%', width: '100%'},
+  profilePicView: {
+    height: vh(120),
+    width: vh(120),
+    alignSelf: 'center',
+    borderRadius: 90,
+    backgroundColor: color.grey,
+  },
+  profileView: {
+    flex: 0.25,
+    justifyContent: 'flex-end',
+    paddingHorizontal: vw(25),
+  },
+  textInputView: {flex: 0.45},
+  profileImage: {height: '100%', width: '100%'},
+  userInputStyle: {marginHorizontal: 25, marginTop: 20},
   emailTextView: {
     height: normalize(86),
     marginHorizontal: normalize(40),
