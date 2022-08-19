@@ -38,7 +38,7 @@ export async function confirmOtp(
     const data = await confirm.confirm(code);
     if (data) {
       successCallback(data?.user);
-      return data?.user;
+      return data?.user?._user;
     }
   } catch (err) {
     failureCallback();

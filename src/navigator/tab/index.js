@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import styles from './style';
 import tabs from './utils';
 
-export default function CustomTab() {
+export default function CustomTab({handleCurrentTabCallback}) {
   const [bottomTabs, setBottomTabs] = useState(tabs);
   const onItemPress = item => {
     let i = tabs.findIndex(ele => ele === item);
@@ -14,6 +14,7 @@ export default function CustomTab() {
     bottomTabs.map((item, index) => {
       if (i === index) {
         item.isFocused = true;
+        handleCurrentTabCallback(item);
       } else {
         item.isFocused = false;
       }
