@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import Snackbar from 'react-native-snackbar';
 import {color} from './colors';
+import firestore from '@react-native-firebase/firestore';
 
 const showToast = message => {
   Snackbar.show({
@@ -37,11 +38,13 @@ export async function confirmOtp(
   try {
     const data = await confirm.confirm(code);
     if (data) {
+      console.log('user', data?.user?._user?.uid);
       successCallback(data?.user);
-      return data?.user?._user;
+      return data?.user;
     }
   } catch (err) {
     failureCallback();
+    console.log('errrr', err);
     handleError(err.code);
   }
 }

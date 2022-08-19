@@ -5,6 +5,7 @@ import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {confirmOtpAction} from '../../redux/auth/action';
+import firestore from '@react-native-firebase/firestore';
 
 const OtpComponent = ({handleCodeChange, confirm, handleLoader}) => {
   const navigation = useNavigation();
@@ -19,7 +20,12 @@ const OtpComponent = ({handleCodeChange, confirm, handleLoader}) => {
         confirm,
         otp,
         user => {
-          console.log('user', user);
+          console.log('uidddd', user?._user?.uid);
+          let uid = user?._user?.uid;
+          firestore().collection('Users').doc(uid).set({
+            phoneNumber: '1234567890',
+            id: uid,
+          });
           navigation.navigate('Profile');
           handleLoader(false);
         },
