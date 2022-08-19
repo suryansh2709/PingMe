@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
   },
   homeTabView: {
     height: vh(56),
-    width: vw(67),
-    marginLeft: vw(16),
+    width: vw(88),
+    alignItems: 'center',
   },
   tabText: {
     alignSelf: 'center',
@@ -33,13 +33,11 @@ const styles = StyleSheet.create({
   iconImageStyle: {
     height: vh(24),
     width: vh(24),
-    marginLeft: vw(21),
     marginTop: vh(16),
   },
   iconImageActiveStyle: {
     height: vh(24),
     width: vh(24),
-    marginLeft: vw(21),
     marginTop: vh(16),
     tintColor: '#4FBC87',
   },
