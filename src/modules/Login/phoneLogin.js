@@ -18,6 +18,7 @@ export default function PhoneLogin() {
   const [isVisible, setIsVisible] = useState(false);
   const [selected, setSelected] = useState(countryCodes[0].code);
   const [number, setNumber] = useState('');
+  const [confirm, setConfirm] = useState(null);
   const navigation = useNavigation();
   const [loader, setLoader] = useState(false);
 
