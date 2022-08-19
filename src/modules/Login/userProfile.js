@@ -2,10 +2,11 @@ import {View, StyleSheet, Image, TouchableOpacity, Text} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/commonHeader';
 import {color} from '../../utils/colors';
-import {vh, vw} from '../../utils/dimensions';
 import localImages from '../../utils/localImages';
 import CustomTextInput from '../../components/customTextInput/customTextInput';
 import CustomButton from '../../components/customButton/customButton';
+import {string} from '../../utils/strings';
+import {styles} from './style';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export default function UserProfile() {
@@ -32,7 +33,7 @@ export default function UserProfile() {
           width={335}
           color={color.lightGrey}
           style={styles.userInputStyle}
-          placeholder={'UserName (Required)'}
+          placeholder={string.userName}
           onChangeText={text => {
             setInfoDetails({...infoDetails, userName: text});
           }}
@@ -41,7 +42,7 @@ export default function UserProfile() {
           width={335}
           color={color.lightGrey}
           style={styles.userInputStyle}
-          placeholder={'First Name (Required)'}
+          placeholder={string.firstName}
           onChangeText={text => {
             setInfoDetails({...infoDetails, fName: text});
           }}
@@ -50,7 +51,7 @@ export default function UserProfile() {
           width={335}
           color={color.lightGrey}
           style={styles.userInputStyle}
-          placeholder={'Last Name (Optional)'}
+          placeholder={string.lastName}
           onChangeText={text => {
             setInfoDetails({...infoDetails, lName: text});
           }}
@@ -59,7 +60,7 @@ export default function UserProfile() {
           width={335}
           color={color.lightGrey}
           style={styles.userInputStyle}
-          placeholder={'Date Of Birth (Optional)'}
+          placeholder={string.DOB}
           onChangeText={text => {
             setInfoDetails({...infoDetails, date: text});
           }}
@@ -68,51 +69,22 @@ export default function UserProfile() {
           width={335}
           color={color.lightGrey}
           style={styles.userInputStyle}
-          placeholder={'Gender (Optional)'}
+          placeholder={string.gender}
           onChangeText={text => {
             setInfoDetails({...infoDetails, gender: text});
           }}
         />
       </View>
       <CustomButton
-        text={'Save'}
+        text={string.save}
         marginTop={128}
         width={327}
         bgColor={'rgba(88, 213, 130, 1)'}
         textColor={color.white}
+        disableColor={color.grey}
+        disable={true}
+        // onPressButton={handleContineuPress}
       />
     </KeyboardAwareScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  userProfileMainView: {backgroundColor: color.white},
-  deleteIconView: {
-    height: vh(30),
-    width: vh(30),
-    backgroundColor: color.white,
-    padding: 2,
-    position: 'absolute',
-    borderRadius: 40,
-    right: 140,
-    bottom: 15,
-    borderColor: 'white',
-    zIndex: 1,
-  },
-  deleteImage: {zIndex: 1, height: '100%', width: '100%'},
-  profilePicView: {
-    height: vh(120),
-    width: vh(120),
-    alignSelf: 'center',
-    borderRadius: 90,
-    backgroundColor: color.grey,
-  },
-  profileView: {
-    flex: 0.25,
-    justifyContent: 'flex-end',
-    paddingHorizontal: vw(25),
-  },
-  textInputView: {flex: 0.45},
-  profileImage: {height: '100%', width: '100%'},
-  userInputStyle: {marginHorizontal: 25, marginTop: 20},
-});

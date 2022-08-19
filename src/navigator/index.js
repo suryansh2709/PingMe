@@ -3,7 +3,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {LoginStack} from './stack';
 import SplashScreen from '../modules/SplashScreen';
-import OtpComponent from '../components/OtpComponent';
 
 const Stack = createNativeStackNavigator();
 
