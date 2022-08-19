@@ -95,4 +95,17 @@ export const styles = StyleSheet.create({
   otpMainView: {backgroundColor: 'white', flex: 1},
   resendCodeView: {marginTop: normalize(62), alignSelf: 'center'},
   resendCodeText: {color: 'rgba(88, 213, 130, 1)'},
+  errorStyleView: {
+    top: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  errorImg: {
+    height: 20,
+    width: 20,
+  },
+  errorText: {
+    marginLeft: 5,
+    color: 'red',
+  },
 });
