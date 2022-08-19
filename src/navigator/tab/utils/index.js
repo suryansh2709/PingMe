@@ -1,25 +1,26 @@
 import localImages from '../../../utils/localImages';
+import {string} from '../../../utils/strings';
 const tabs = [
   {
-    title: 'Chat',
+    title: string.chat,
     image: localImages.chatIcon,
     imageActive: localImages.chatActiveIcon,
     isFocused: true,
   },
   {
-    title: 'Status',
+    title: string.status,
     image: localImages.statusIcon,
     imageActive: localImages.statusActiveIcon,
     isFocused: false,
   },
   {
-    title: 'Call',
+    title: string.call,
     image: localImages.callIcon,
     imageActive: localImages.callActiveIcon,
     isFocused: false,
   },
   {
-    title: 'Setting',
+    title: string.setting,
     image: localImages.settingIcon,
     imageActive: localImages.settingActiveIcon,
     isFocused: false,

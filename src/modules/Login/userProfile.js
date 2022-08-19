@@ -1,4 +1,4 @@
-import {View, StyleSheet, Image, TouchableOpacity, Text} from 'react-native';
+import {View, Image, TouchableOpacity, Text} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/commonHeader';
 import {color} from '../../utils/colors';
@@ -8,8 +8,11 @@ import CustomButton from '../../components/customButton/customButton';
 import {string} from '../../utils/strings';
 import {styles} from './style';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {firstNameTest, userNameTest} from '../../utils/validation';
 
 export default function UserProfile() {
+  const [err, setErr] = useState(false);
+  const [errTxt, setErrTxt] = useState('');
   const [infoDetails, setInfoDetails] = useState({
     userName: '',
     fName: '',
@@ -17,6 +20,27 @@ export default function UserProfile() {
     date: '',
     gender: '',
   });
+  const handleContineuPress = () => {
+    if (!firstNameTest(infoDetails.userName)) {
+      setErr(true);
+      setErrTxt(string.incorrectName);
+    } else if (!userNameTest(infoDetails.fName)) {
+      setErr(true);
+      setErrTxt(string.incorrectUserName);
+    } else {
+      setErr(false);
+      console.log('ye chala');
+    }
+  };
+
+  const isDisable = () => {
+    if (infoDetails.userName.length > 4 && infoDetails.fName.length > 2) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   return (
     <KeyboardAwareScrollView style={styles.userProfileMainView} bounces={false}>
       <Header header={'Your Profile'} />
@@ -82,9 +106,15 @@ export default function UserProfile() {
         bgColor={'rgba(88, 213, 130, 1)'}
         textColor={color.white}
         disableColor={color.grey}
-        disable={true}
-        // onPressButton={handleContineuPress}
+        disable={isDisable()}
+        onPressButton={handleContineuPress}
       />
+      {err ? (
+        <View style={styles.errorStyleView}>
+          <Image source={localImages.warningIcon} style={styles.errorImg} />
+          <Text style={styles.errorText}>{errTxt}</Text>
+        </View>
+      ) : null}
     </KeyboardAwareScrollView>
   );
 }
