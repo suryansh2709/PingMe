@@ -13,7 +13,6 @@ function Navigation() {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name={'SplashScreen'} component={SplashScreen} />
         <Stack.Screen name={'LoginStack'} component={LoginStack} />
-        <Stack.Screen name={'Otp'} component={OtpComponent} />
       </Stack.Navigator>
     </NavigationContainer>
   );

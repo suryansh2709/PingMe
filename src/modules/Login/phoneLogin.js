@@ -18,6 +18,13 @@ export default function PhoneLogin() {
   const [selected, setSelected] = useState(countryCodes[0].code);
   const [number, setNumber] = useState('');
   const [confirm, setConfirm] = useState(null);
+  const [infoDetails, setInfoDetails] = useState({
+    userName: '',
+    fName: '',
+    lName: '',
+    date: new Date(),
+    gender: '',
+  });
   const navigation = useNavigation();
 
   const selectionHandler = code => {
