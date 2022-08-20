@@ -1,10 +1,9 @@
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import React, {useState} from 'react';
 import CustomTab from '../../navigator/tab';
 import Call from './Call';
 import Setting from './Setting';
 import Status from './Status';
-import {ChatStack} from '../../navigator/stack';
 import ChatList from './Chat';
 
 const Home = () => {

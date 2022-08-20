@@ -1,4 +1,4 @@
-import {View, Image, TouchableOpacity, Text} from 'react-native';
+import {View, Image, TouchableOpacity, Text, Platform} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/commonHeader';
 import {color} from '../../utils/colors';
@@ -9,8 +9,20 @@ import {string} from '../../utils/strings';
 import {styles} from './style';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {firstNameTest, userNameTest} from '../../utils/validation';
+import {useSelector} from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
+import {
+  handleDisplayImage,
+  handleError,
+  showToast,
+} from '../../utils/commonFunctions';
+import ImageCropPicker from 'react-native-image-crop-picker';
+import Loader from '../../components/loader';
+import {useNavigation} from '@react-navigation/native';
 
 export default function UserProfile() {
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
+  console.log('selectore', loggedInUser?._user?.uid);
   const [err, setErr] = useState(false);
   const [errTxt, setErrTxt] = useState('');
   const [infoDetails, setInfoDetails] = useState({
@@ -19,8 +31,42 @@ export default function UserProfile() {
     lName: '',
     date: '',
     gender: '',
+    displayImage: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
   });
+  const [loader, setLoader] = useState(false);
+  const navigation = useNavigation();
+
+  /**
+   * Setting Display Image.
+   */
+
+  const onAddImagePress = () => {
+    setLoader(true);
+    ImageCropPicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    })
+      .then(res => {
+        if (Platform.OS === 'ios') {
+          setInfoDetails({...infoDetails, displayImage: res?.sourceURL});
+          setLoader(false);
+          showToast('Profile Image Updated');
+        } else {
+          setInfoDetails({...infoDetails, displayImage: res?.path});
+          setLoader(false);
+          showToast('Profile Image Updated');
+        }
+      })
+      .catch(err => {
+        showToast(err.message);
+        setLoader(false);
+        console.log(err.message);
+      });
+  };
+
   const handleContineuPress = () => {
+    setLoader(true);
     if (!firstNameTest(infoDetails.userName)) {
       setErr(true);
       setErrTxt(string.incorrectName);
@@ -29,6 +75,19 @@ export default function UserProfile() {
       setErrTxt(string.incorrectUserName);
     } else {
       setErr(false);
+      console.log('details', infoDetails);
+
+      let user = {...infoDetails};
+      firestore()
+        .collection('Users')
+        .doc(loggedInUser._user.uid)
+        .update({
+          ...user,
+        })
+        .then(() => {
+          setLoader(false);
+          navigation.navigate('HomeStack');
+        });
       console.log('ye chala');
     }
   };
@@ -45,11 +104,19 @@ export default function UserProfile() {
     <KeyboardAwareScrollView style={styles.userProfileMainView} bounces={false}>
       <Header header={'Your Profile'} />
       <View style={styles.profileView}>
-        <TouchableOpacity style={styles.deleteIconView} activeOpacity={0.5}>
+        <TouchableOpacity
+          onPress={onAddImagePress}
+          style={styles.deleteIconView}
+          activeOpacity={0.5}>
           <Image source={localImages.add} style={styles.deleteImage} />
         </TouchableOpacity>
         <View style={styles.profilePicView}>
-          <Image source={localImages.user} style={styles.profileImage} />
+          <Image
+            source={{
+              uri: infoDetails?.displayImage,
+            }}
+            style={styles.profileImage}
+          />
         </View>
       </View>
       <View style={styles.textInputView}>
@@ -115,6 +182,7 @@ export default function UserProfile() {
           <Text style={styles.errorText}>{errTxt}</Text>
         </View>
       ) : null}
+      <Loader loader={loader} />
     </KeyboardAwareScrollView>
   );
 }
