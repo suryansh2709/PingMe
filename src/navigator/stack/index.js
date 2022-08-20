@@ -3,8 +3,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../../modules/Login';
 import OtpScreen from '../../modules/Login/otpScreen';
 import UserProfile from '../../modules/Login/userProfile';
-import Home from '../../modules/home';
-import {ChatRoom} from '../../modules/home/Chat/chatRoom';
+import {ChatRoom} from '../../modules/Home/Chat/chatRoom';
+import Home from '../../modules/Home/index';
 
 const Stack = createNativeStackNavigator();
 

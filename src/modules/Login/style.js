@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
   },
   deleteImage: {zIndex: 1, height: '100%', width: '100%'},
   profilePicView: {
+    overflow: 'hidden',
     height: vh(120),
     width: vh(120),
     alignSelf: 'center',
