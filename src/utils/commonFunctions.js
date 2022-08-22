@@ -1,7 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import Snackbar from 'react-native-snackbar';
 import {color} from './colors';
-import firestore from '@react-native-firebase/firestore';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import {Platform} from 'react-native';
 
