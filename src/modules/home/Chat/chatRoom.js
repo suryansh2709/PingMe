@@ -81,6 +81,7 @@ export function ChatRoom() {
       }}
       isTyping={true}
       isKeyboardInternallyHandled={true}
+      alwaysShowSend={true}
     />
   );
 }
