@@ -2,10 +2,14 @@ import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import localImages from '../../../utils/localImages';
 import {styles} from './style';
+import {useNavigation} from '@react-navigation/native';
 
-const RenderChatCard = ({displayImage, fName, lName}) => {
+const RenderChatCard = ({displayImage, fName, lName, id}) => {
+  const navigation = useNavigation();
   console.log('displayImage,fName, lName', displayImage, fName, lName);
-  const onCardPress = () => {};
+  const onCardPress = () => {
+    navigation.navigate('ChatRoom', {id});
+  };
 
   console.log('chalaa');
   return (
