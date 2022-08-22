@@ -23,4 +23,10 @@ export const styles = StyleSheet.create({
   },
   nameView: {marginLeft: vw(14), marginTop: vh(5)},
   userName: {fontSize: vh(16), fontWeight: '400'},
+  chatSend: {
+    height: 30,
+    width: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
