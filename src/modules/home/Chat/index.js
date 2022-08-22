@@ -14,7 +14,6 @@ const ChatList = () => {
    * gets the user from the firestore.
    */
   const getUsers = async () => {
-    console.log('loggedInUser.uid', loggedInUser.uid);
     const querySnap = await firestore()
       .collection('Users')
       .where('id', '!=', loggedInUser.uid)

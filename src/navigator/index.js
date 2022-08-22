@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {LoginStack} from './stack';
 import SplashScreen from '../modules/SplashScreen';
+import {string} from '../utils/strings';
 
 const Stack = createNativeStackNavigator();
 
@@ -10,8 +11,8 @@ function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name={'SplashScreen'} component={SplashScreen} />
-        <Stack.Screen name={'LoginStack'} component={LoginStack} />
+        <Stack.Screen name={string.splashScreen} component={SplashScreen} />
+        <Stack.Screen name={string.loginStack} component={LoginStack} />
       </Stack.Navigator>
     </NavigationContainer>
   );

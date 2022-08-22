@@ -12,7 +12,6 @@ export function* otpConfirm(action) {
       successCallback,
       failureCallback,
     );
-    console.log('Data', data);
     yield put(setUser(data));
   } catch (e) {
     console.log('error', e);
