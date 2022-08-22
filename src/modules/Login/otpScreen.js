@@ -7,6 +7,7 @@ import OtpComponent from '../../components/OtpComponent';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Loader from '../../components/loader';
+import HeadingView from './headingView';
 
 export default function OtpScreen() {
   const navigation = useNavigation();
@@ -29,10 +30,10 @@ export default function OtpScreen() {
           navigation.goBack();
         }}
       />
-      <View style={styles.emailTextView}>
-        <Text style={styles.enterEmailText}>{string.enterCode}</Text>
-        <Text style={styles.confirmPhoneText}>{string.sentOtpTo}</Text>
-      </View>
+      <HeadingView
+        bigHeader={string.enterCode}
+        smallHeader={string.sentOtpTo}
+      />
       <OtpComponent
         number={number}
         confirm={confirm}

@@ -11,22 +11,14 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {firstNameTest, userNameTest} from '../../utils/validation';
 import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
-import {
-  handleDisplayImage,
-  handleError,
-  showToast,
-} from '../../utils/commonFunctions';
+import {showToast} from '../../utils/commonFunctions';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import Loader from '../../components/loader';
 import {useNavigation} from '@react-navigation/native';
 import DatePicker from 'react-native-date-picker';
-import {vh} from '../../utils/dimensions';
-
 export default function UserProfile() {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
   console.log('selectore', loggedInUser?._user?.uid);
-  const [err, setErr] = useState(false);
-  const [errTxt, setErrTxt] = useState('');
   const [infoDetails, setInfoDetails] = useState({
     userName: '',
     fName: '',
@@ -70,15 +62,13 @@ export default function UserProfile() {
 
   const handleContineuPress = () => {
     setLoader(true);
-    if (!firstNameTest(infoDetails.userName)) {
-      setErr(true);
-      setErrTxt(string.incorrectName);
-    } else if (!userNameTest(infoDetails.fName)) {
-      setErr(true);
-      setErrTxt(string.incorrectUserName);
+    if (!userNameTest(infoDetails.userName)) {
+      showToast('Invalid username');
+      setLoader(false);
+    } else if (!firstNameTest(infoDetails.fName)) {
+      showToast('Invalid name');
+      setLoader(false);
     } else {
-      setErr(false);
-      console.log('details', infoDetails);
       let user = {...infoDetails};
       firestore()
         .collection('Users')
@@ -202,12 +192,6 @@ export default function UserProfile() {
         disable={isDisable()}
         onPressButton={handleContineuPress}
       />
-      {err ? (
-        <View style={styles.errorStyleView}>
-          <Image source={localImages.warningIcon} style={styles.errorImg} />
-          <Text style={styles.errorText}>{errTxt}</Text>
-        </View>
-      ) : null}
       <Loader loader={loader} />
     </KeyboardAwareScrollView>
   );

@@ -28,6 +28,7 @@ export function ChatRoom() {
       });
 
     return subscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log('pure', messages);
 
@@ -45,6 +46,7 @@ export function ChatRoom() {
       .doc(docId)
       .collection(string.messages)
       .add({...myMsg, createdAt: new Date().getTime()});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderSend = props => {

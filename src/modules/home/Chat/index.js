@@ -9,7 +9,6 @@ import {useNavigation} from '@react-navigation/native';
 
 const ChatList = () => {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
-  const navigation = useNavigation();
 
   /**
    * gets the user from the firestore.
