@@ -13,7 +13,7 @@ export function ChatRoom() {
   useEffect(() => {}, []);
 
   const onSend = useCallback((messages = []) => {
-    console.log(messages);
+    console.log('message', messages);
     const msg = messages[0];
     const myMsg = {
       ...msg,
@@ -79,6 +79,8 @@ export function ChatRoom() {
       user={{
         _id: loggedInUser?._user?.uid,
       }}
+      isTyping={true}
+      isKeyboardInternallyHandled={true}
     />
   );
 }

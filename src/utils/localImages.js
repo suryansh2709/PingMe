@@ -11,6 +11,7 @@ export default {
   homeMenuIcon: require('../assets/images/menu.png'),
   warningIcon: require('../assets/images/warning.png'),
   settingIcon: require('../assets/images/setting.png'),
+  calenderIcon: require('../assets/images/calendar.png'),
   callActiveIcon: require('../assets/images/callActive.png'),
   chatActiveIcon: require('../assets/images/chatActive.png'),
   homeSearchIcon: require('../assets/images/homeSearch.png'),
