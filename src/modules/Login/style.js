@@ -109,4 +109,27 @@ export const styles = StyleSheet.create({
     marginLeft: 5,
     color: 'red',
   },
+  datePickerView: {
+    height: vh(36),
+    marginHorizontal: vw(16),
+    borderRadius: 4,
+    marginLeft: vw(24),
+    backgroundColor: color.lightGrey,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: vh(16),
+  },
+  dateDisplayView: {
+    height: vh(24),
+    width: vw(157),
+    marginLeft: vw(8),
+    justifyContent: 'center',
+  },
+  calenderImage: {
+    height: vh(20),
+    width: vh(20),
+    right: 10,
+    tintColor: color.darkGreen,
+  },
 });

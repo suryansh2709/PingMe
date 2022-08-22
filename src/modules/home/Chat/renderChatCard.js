@@ -8,7 +8,7 @@ const RenderChatCard = ({displayImage, fName, lName, id}) => {
   const navigation = useNavigation();
   console.log('displayImage,fName, lName', displayImage, fName, lName);
   const onCardPress = () => {
-    navigation.navigate('ChatRoom', {id});
+    navigation.navigate('ChatRoom', {id, fName});
   };
 
   console.log('chalaa');

@@ -1,4 +1,3 @@
-import {applyMiddleware} from 'redux';
 import logger from 'redux-logger';
 import createSagaMiddleware from '@redux-saga/core';
 import {configureStore} from '@reduxjs/toolkit';

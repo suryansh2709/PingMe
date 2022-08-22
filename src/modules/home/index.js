@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import CustomTab from '../../navigator/tab';
 import Call from './Call';
@@ -10,7 +10,6 @@ const Home = () => {
   const [currentScreen, setCurrentScreen] = useState('Chat');
 
   const handleCurrentTabCallback = args => {
-    console.log('arg', args);
     setCurrentScreen(args?.title);
   };
 
@@ -18,9 +17,10 @@ const Home = () => {
     switch (currentScreen) {
       case 'Chat':
         return <ChatList />;
-      case 'Call':
+      case 'Calls':
+        console.log('call');
         return <Call />;
-      case 'Setting':
+      case 'Settings':
         return <Setting />;
       case 'Status':
         return <Status />;
@@ -28,7 +28,7 @@ const Home = () => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={styles.mainView}>
       {currentScreenViewHandler()}
       <CustomTab handleCurrentTabCallback={handleCurrentTabCallback} />
     </View>
@@ -36,3 +36,7 @@ const Home = () => {
 };
 
 export default Home;
+
+const styles = StyleSheet.create({
+  mainView: {flex: 1, backgroundColor: 'white'},
+});

@@ -1,11 +1,4 @@
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  Text,
-  Platform,
-  Button,
-} from 'react-native';
+import {View, Image, TouchableOpacity, Text, Platform} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/commonHeader';
 import {color} from '../../utils/colors';
@@ -27,6 +20,7 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 import Loader from '../../components/loader';
 import {useNavigation} from '@react-navigation/native';
 import DatePicker from 'react-native-date-picker';
+import {vh} from '../../utils/dimensions';
 
 export default function UserProfile() {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
@@ -94,8 +88,10 @@ export default function UserProfile() {
         })
         .then(() => {
           setLoader(false);
+          console.log('sdfghjkl');
           navigation.navigate('HomeStack');
-        });
+        })
+        .catch(err => console.log(err));
       console.log('ye chala');
     }
   };
@@ -155,8 +151,26 @@ export default function UserProfile() {
             setInfoDetails({...infoDetails, lName: text});
           }}
         />
-        <Button title="Open" onPress={() => setOPen(true)} />
+        <View style={styles.datePickerView}>
+          <View style={styles.dateDisplayView}>
+            <Text style={{color: color.darkGreen}}>
+              {' '}
+              {`${JSON.stringify(
+                infoDetails?.date?.getDate(),
+              )}/${JSON.stringify(
+                infoDetails.date.getMonth() + 1,
+              )}/${JSON.stringify(infoDetails.date.getFullYear() - 18)}`}
+            </Text>
+          </View>
+          <TouchableOpacity onPress={() => setOPen(true)}>
+            <Image
+              source={localImages.calenderIcon}
+              style={styles.calenderImage}
+            />
+          </TouchableOpacity>
+        </View>
         <DatePicker
+          mode="date"
           modal
           open={open}
           date={infoDetails.date}
@@ -168,15 +182,6 @@ export default function UserProfile() {
             setOPen(false);
           }}
         />
-        {/* <CustomTextInput
-          width={335}
-          color={color.lightGrey}
-          style={styles.userInputStyle}
-          placeholder={string.DOB}
-          onChangeText={text => {
-            setInfoDetails({...infoDetails, date: text});
-          }}
-        /> */}
         <CustomTextInput
           width={335}
           color={color.lightGrey}
