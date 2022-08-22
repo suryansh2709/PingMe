@@ -1,5 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {GiftedChat} from 'react-native-gifted-chat';
+import {Image, View} from 'react-native';
+import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
 
 export function ChatRoom() {
   const [messages, setMessages] = useState([]);
@@ -25,8 +26,45 @@ export function ChatRoom() {
     );
   }, []);
 
+  const renderSend = props => {
+    return (
+      <Send {...props}>
+        <View
+          style={{
+            height: 30,
+            width: 30,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Image
+            source={require('../../../assets/images/send.png')}
+            style={{height: '100%', width: '100%'}}
+          />
+        </View>
+      </Send>
+    );
+  };
+
+  const renderBubble = props => {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          right: {
+            backgroundColor: '#4FBC87',
+          },
+          left: {
+            backgroundColor: '#EFEEF4',
+          },
+        }}
+      />
+    );
+  };
+
   return (
     <GiftedChat
+      renderSend={renderSend}
+      renderBubble={renderBubble}
       messages={messages}
       onSend={messages => onSend(messages)}
       user={{

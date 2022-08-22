@@ -1,8 +1,11 @@
 import auth from '@react-native-firebase/auth';
 import Snackbar from 'react-native-snackbar';
 import {color} from './colors';
+import firestore from '@react-native-firebase/firestore';
+import ImageCropPicker from 'react-native-image-crop-picker';
+import {Platform} from 'react-native';
 
-const showToast = message => {
+export const showToast = message => {
   Snackbar.show({
     text: message,
     textColor: color.white,
@@ -11,7 +14,7 @@ const showToast = message => {
   });
 };
 
-const handleError = code => {
+export const handleError = code => {
   switch (code) {
     case 'auth/invalid-phone-number':
       showToast('Invalid Phone Number');
@@ -37,11 +40,13 @@ export async function confirmOtp(
   try {
     const data = await confirm.confirm(code);
     if (data) {
+      console.log('user', data?.user?._user?.uid);
       successCallback(data?.user);
-      return data?.user?._user;
+      return data?.user;
     }
   } catch (err) {
     failureCallback();
+    console.log('errrr', err);
     handleError(err.code);
   }
 }
@@ -65,3 +70,24 @@ export async function signInWirhPhoneNumber(
     console.log(err.code);
   }
 }
+
+export const handleDisplayImage = () => {
+  var image;
+  ImageCropPicker.openPicker({
+    width: 300,
+    height: 400,
+    cropping: true,
+  })
+    .then(res => {
+      if (Platform.OS === 'ios') {
+        image = res?.sourceURL;
+      } else {
+        image = res?.path;
+      }
+    })
+    .catch(err => {
+      console.log('err', err);
+    });
+  console.log(image);
+  return image;
+};

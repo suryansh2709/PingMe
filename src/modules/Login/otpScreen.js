@@ -11,7 +11,7 @@ import Loader from '../../components/loader';
 export default function OtpScreen() {
   const navigation = useNavigation();
   const [code, setCode] = useState();
-  const {confirm} = useRoute().params;
+  const {confirm, number} = useRoute().params;
   const [loader, setLoader] = useState(false);
 
   const handleLoader = loaderBack => {
@@ -34,9 +34,10 @@ export default function OtpScreen() {
         <Text style={styles.confirmPhoneText}>{string.sentOtpTo}</Text>
       </View>
       <OtpComponent
-        handleCodeChange={handleCodeChange}
+        number={number}
         confirm={confirm}
         handleLoader={handleLoader}
+        handleCodeChange={handleCodeChange}
       />
       <TouchableOpacity activeOpacity={0.6} style={styles.resendCodeView}>
         <Text style={styles.resendCodeText}>{string.resendCode}</Text>
