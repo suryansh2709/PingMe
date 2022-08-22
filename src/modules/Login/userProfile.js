@@ -1,4 +1,11 @@
-import {View, Image, TouchableOpacity, Text, Platform} from 'react-native';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+  Platform,
+  Button,
+} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/commonHeader';
 import {color} from '../../utils/colors';
@@ -19,6 +26,7 @@ import {
 import ImageCropPicker from 'react-native-image-crop-picker';
 import Loader from '../../components/loader';
 import {useNavigation} from '@react-navigation/native';
+import DatePicker from 'react-native-date-picker';
 
 export default function UserProfile() {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
@@ -29,12 +37,13 @@ export default function UserProfile() {
     userName: '',
     fName: '',
     lName: '',
-    date: '',
+    date: new Date(),
     gender: '',
     displayImage: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
   });
   const [loader, setLoader] = useState(false);
   const navigation = useNavigation();
+  const [open, setOPen] = useState(false);
 
   /**
    * Setting Display Image.
@@ -76,7 +85,6 @@ export default function UserProfile() {
     } else {
       setErr(false);
       console.log('details', infoDetails);
-
       let user = {...infoDetails};
       firestore()
         .collection('Users')
@@ -147,7 +155,20 @@ export default function UserProfile() {
             setInfoDetails({...infoDetails, lName: text});
           }}
         />
-        <CustomTextInput
+        <Button title="Open" onPress={() => setOPen(true)} />
+        <DatePicker
+          modal
+          open={open}
+          date={infoDetails.date}
+          onConfirm={date => {
+            setOPen(false);
+            setInfoDetails({...infoDetails, date: date});
+          }}
+          onCancel={() => {
+            setOPen(false);
+          }}
+        />
+        {/* <CustomTextInput
           width={335}
           color={color.lightGrey}
           style={styles.userInputStyle}
@@ -155,7 +176,7 @@ export default function UserProfile() {
           onChangeText={text => {
             setInfoDetails({...infoDetails, date: text});
           }}
-        />
+        /> */}
         <CustomTextInput
           width={335}
           color={color.lightGrey}

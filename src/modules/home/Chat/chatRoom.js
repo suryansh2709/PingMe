@@ -1,29 +1,38 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import {Image, View} from 'react-native';
 import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
+import {useSelector} from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
+import {useRoute} from '@react-navigation/native';
 
 export function ChatRoom() {
   const [messages, setMessages] = useState([]);
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
+  const {id} = useRoute().params;
 
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ]);
-  }, []);
+  useEffect(() => {}, []);
 
   const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages =>
-      GiftedChat.append(previousMessages, messages),
-    );
+    console.log(messages);
+    const msg = messages[0];
+    const myMsg = {
+      ...msg,
+      sentBy: loggedInUser?._user?.uid,
+      sentTo: id,
+    };
+    setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
+    const docId =
+      loggedInUser?._user?.uid > id
+        ? loggedInUser?._user?.uid + '-' + id
+        : id + '-' + loggedInUser?._user?.uid;
+
+    console.log('docId', docId, myMsg, loggedInUser);
+
+    firestore()
+      .collection('chatroom')
+      .doc(docId)
+      .collection('messages')
+      .add({...myMsg, createdAt: firestore.FieldValue.serverTimestamp()});
   }, []);
 
   const renderSend = props => {
@@ -68,7 +77,7 @@ export function ChatRoom() {
       messages={messages}
       onSend={messages => onSend(messages)}
       user={{
-        _id: 1,
+        _id: loggedInUser?._user?.uid,
       }}
     />
   );
