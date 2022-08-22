@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect, useLayoutEffect} from 'react';
+import React, {useState, useCallback, useLayoutEffect} from 'react';
 import {Image, View} from 'react-native';
 import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
@@ -27,12 +27,13 @@ export function ChatRoom() {
       });
 
     return subscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log('pure', messages);
 
-  const onSend = useCallback((messages = []) => {
-    console.log('messages', messages);
-    const msg = messages[0];
+  const onSend = useCallback((message = []) => {
+    console.log('messages', message);
+    const msg = message[0];
     const myMsg = {
       ...msg,
       sentBy: loggedInUser?._user?.uid,
@@ -47,6 +48,7 @@ export function ChatRoom() {
       .doc(docId)
       .collection('messages')
       .add({...myMsg, createdAt: new Date().getTime()});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderSend = props => {
@@ -83,7 +85,7 @@ export function ChatRoom() {
       renderSend={renderSend}
       renderBubble={renderBubble}
       messages={messages}
-      onSend={messages => onSend(messages)}
+      onSend={message => onSend(message)}
       user={{
         _id: loggedInUser?._user?.uid,
       }}

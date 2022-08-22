@@ -13,6 +13,7 @@ import {normalize} from '../../utils/dimensions';
 import {color} from '../../utils/colors';
 import {signInWirhPhoneNumber} from '../../utils/commonFunctions';
 import Loader from '../../components/loader';
+import HeadingView from './headingView';
 
 export default function PhoneLogin() {
   const [isVisible, setIsVisible] = useState(false);
@@ -53,10 +54,10 @@ export default function PhoneLogin() {
       bounces={false}
       scrollEnabled={false}>
       <Header header={'Login'} />
-      <View style={styles.emailTextView}>
-        <Text style={styles.enterEmailText}>{string.enterEmail}</Text>
-        <Text style={styles.confirmPhoneText}>{string.confirmCountryCode}</Text>
-      </View>
+      <HeadingView
+        bigHeader={string.enterEmail}
+        smallHeader={string.confirmCountryCode}
+      />
       <Text style={styles.recommendText}>{string.recommend}</Text>
       <View style={styles.countryCodeView}>
         <TouchableOpacity

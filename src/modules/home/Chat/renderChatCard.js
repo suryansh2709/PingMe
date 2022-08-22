@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const RenderChatCard = ({displayImage, fName, lName, id}) => {
   const navigation = useNavigation();
-  console.log('displayImage,fName, lName', displayImage, fName, lName);
+  console.log('displayImage', displayImage);
   const onCardPress = () => {
     navigation.navigate('ChatRoom', {id});
   };
@@ -14,15 +14,9 @@ const RenderChatCard = ({displayImage, fName, lName, id}) => {
   console.log('chalaa');
   return (
     <TouchableOpacity onPress={onCardPress} style={styles.homeChatMainView}>
-      {displayImage ? (
-        <View style={styles.chatUserImage}>
-          <Image source={{uri: displayImage}} style={styles.chatUserImage} />
-        </View>
-      ) : (
-        <View style={styles.chatUserImage}>
-          <Image source={localImages.user} style={styles.chatUserImage} />
-        </View>
-      )}
+      <View style={styles.chatUserImage}>
+        <Image source={{uri: displayImage}} style={styles.chatUserImage} />
+      </View>
       <View style={styles.nameView}>
         <Text style={styles.userName}>{fName}</Text>
         <Text style={styles.userChatMessage}>{lName}</Text>
