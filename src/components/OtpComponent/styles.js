@@ -1,10 +1,12 @@
 import {StyleSheet} from 'react-native';
+import {color} from '../../utils/colors';
 
 const styles = StyleSheet.create({
   otpViewStyle: {
     width: '75%',
     alignSelf: 'center',
     height: '20%',
+    color: color.black,
   },
 
   borderStyleBase: {

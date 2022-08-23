@@ -6,6 +6,8 @@ import firestore from '@react-native-firebase/firestore';
 import {useRoute} from '@react-navigation/native';
 import {styles} from './style';
 import {string} from '../../../utils/strings';
+import localImages from '../../../utils/localImages';
+import {addMessagges} from '../../../utils/commonFunctions';
 
 export function ChatRoom() {
   const [messages, setMessages] = useState([]);
@@ -22,7 +24,7 @@ export function ChatRoom() {
       .doc(docId)
       .collection(string.messages)
       .onSnapshot(doc => {
-        const dataArray = doc._docs.map(element => element._data);
+        const dataArray = doc?._docs.map(element => element._data);
         dataArray.sort((a, b) => b.createdAt - a.createdAt);
         setMessages(dataArray);
       });
@@ -30,10 +32,8 @@ export function ChatRoom() {
     return subscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log('pure', messages);
 
   const onSend = useCallback((message = []) => {
-    console.log('messages', message);
     const msg = message[0];
     const myMsg = {
       ...msg,
@@ -41,11 +41,7 @@ export function ChatRoom() {
       sentTo: id,
     };
     setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
-    firestore()
-      .collection(string.homeChatRoom)
-      .doc(docId)
-      .collection(string.messages)
-      .add({...myMsg, createdAt: new Date().getTime()});
+    addMessagges(docId, myMsg);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -53,10 +49,7 @@ export function ChatRoom() {
     return (
       <Send {...props}>
         <View style={styles.chatSend}>
-          <Image
-            source={require('../../../assets/images/send.png')}
-            style={{height: '90%', width: '90%', bottom: 5}}
-          />
+          <Image source={localImages.sendButton} style={styles.sendButton} />
         </View>
       </Send>
     );
@@ -86,6 +79,7 @@ export function ChatRoom() {
 
   return (
     <GiftedChat
+      messagesContainerStyle={styles.messageContainer}
       showAvatarForEveryMessage={true}
       renderSend={renderSend}
       renderBubble={renderBubble}

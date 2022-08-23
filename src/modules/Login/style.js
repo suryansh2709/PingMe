@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     borderRadius: 40,
     right: 140,
-    borderColor: 'white',
+    borderColor: color.white,
     zIndex: 1,
     opacity: 0.6,
   },
@@ -43,6 +43,7 @@ export const styles = StyleSheet.create({
     fontSize: normalize(19),
     fontWeight: '500',
     textAlign: 'center',
+    color: color.black,
   },
   confirmPhoneText: {
     fontSize: normalize(14),
@@ -72,7 +73,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mainView: {
-    backgroundColor: 'white',
+    backgroundColor: color.white,
   },
   lineView: {
     width: vw(1),
@@ -81,8 +82,8 @@ export const styles = StyleSheet.create({
   },
   codeStyle: {
     fontSize: normalize(15),
-    marginTop: normalize(14),
-    lineHeight: 24,
+    color: color.black,
+    fontWeight: '600',
   },
   countryCodeTextView: {
     backgroundColor: '#f7f7fc',
@@ -93,7 +94,7 @@ export const styles = StyleSheet.create({
     height: normalize(36),
   },
   buttonView: {justifyContent: 'flex-end'},
-  otpMainView: {backgroundColor: 'white', flex: 1},
+  otpMainView: {backgroundColor: color.white, flex: 1},
   resendCodeView: {marginTop: normalize(62), alignSelf: 'center'},
   resendCodeText: {color: 'rgba(88, 213, 130, 1)'},
   errorStyleView: {

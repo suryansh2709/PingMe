@@ -1,31 +1,25 @@
 import {FlatList, SafeAreaView} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import HomeHeader from '../../../components/commonHomeHeader';
-import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import {styles} from './style';
 import RenderChatCard from './renderChatCard';
-import {useNavigation} from '@react-navigation/native';
+import {getUsers} from '../../../utils/commonFunctions';
 
 const ChatList = () => {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
 
-  /**
-   * gets the user from the firestore.
-   */
-  const getUsers = async () => {
-    const querySnap = await firestore()
-      .collection('Users')
-      .where('id', '!=', loggedInUser.uid)
-      .get();
-    console.log('querySnap', querySnap);
-    const allUsers = querySnap.docs?.map(docSnap => docSnap.data());
-    console.log('alluser', allUsers);
-    setStaticData(allUsers);
-  };
-
   useEffect(() => {
-    getUsers();
+    getUsers(
+      loggedInUser.uid,
+      allUsers => {
+        setStaticData(allUsers);
+      },
+      err => {
+        console.log(err);
+      },
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**
@@ -56,6 +50,7 @@ const ChatList = () => {
         />
       );
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [staticData],
   );
   return (

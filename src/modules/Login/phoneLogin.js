@@ -1,9 +1,6 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
-import Header from '../../components/commonHeader';
 import CustomTextInput from '../../components/customTextInput/customTextInput';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {string} from '../../utils/strings';
 import CountryCodeModal from '../../components/countryCodeModal';
 import {countryCodes} from '../../components/countryCodeModal/utils/phoneData';
 import CustomButton from '../../components/customButton/customButton';
@@ -13,7 +10,7 @@ import {normalize} from '../../utils/dimensions';
 import {color} from '../../utils/colors';
 import {signInWirhPhoneNumber} from '../../utils/commonFunctions';
 import Loader from '../../components/loader';
-import HeadingView from './headingView';
+import {string} from '../../utils/strings';
 
 export default function PhoneLogin() {
   const [isVisible, setIsVisible] = useState(false);
@@ -40,7 +37,10 @@ export default function PhoneLogin() {
       selected,
       number,
       confirmation => {
-        navigation.navigate('Otp', {confirm: confirmation, number: number});
+        navigation.navigate(string.otp, {
+          confirm: confirmation,
+          number: number,
+        });
         setLoader(false);
       },
       () => {
@@ -49,23 +49,13 @@ export default function PhoneLogin() {
     );
   };
   return (
-    <KeyboardAwareScrollView
-      style={styles.mainView}
-      bounces={false}
-      scrollEnabled={false}>
-      <Header header={'Login'} />
-      <HeadingView
-        bigHeader={string.enterEmail}
-        smallHeader={string.confirmCountryCode}
-      />
-      <Text style={styles.recommendText}>{string.recommend}</Text>
+    <View style={styles.mainView}>
       <View style={styles.countryCodeView}>
         <TouchableOpacity
           activeOpacity={1}
           onPress={hanldeCountryCodeOnPress}
           style={styles.countryCodeTextView}>
           <Text style={styles.codeStyle}>{'+ ' + selected}</Text>
-          <View style={styles.lineView} />
         </TouchableOpacity>
         <CustomTextInput
           width={245}
@@ -96,6 +86,6 @@ export default function PhoneLogin() {
         />
       </View>
       <Loader loader={loader} />
-    </KeyboardAwareScrollView>
+    </View>
   );
 }
