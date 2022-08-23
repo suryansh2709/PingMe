@@ -6,6 +6,7 @@ export default {
   callIcon: require('../assets/images/call.png'),
   chatIcon: require('../assets/images/chat.png'),
   nextIcon: require('../assets/images/next.png'),
+  sendButton: require('../assets/images/send.png'),
   homeAddIcon: require('../assets/images/plus.png'),
   statusIcon: require('../assets/images/status.png'),
   homeMenuIcon: require('../assets/images/menu.png'),

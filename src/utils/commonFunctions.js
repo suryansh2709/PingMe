@@ -4,6 +4,7 @@ import {color} from './colors';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import {Platform} from 'react-native';
 import {string} from './strings';
+import firestore from '@react-native-firebase/firestore';
 
 export const showToast = message => {
   Snackbar.show({
@@ -14,6 +15,29 @@ export const showToast = message => {
   });
 };
 
+export const getUsers = async (uid, successCallback, failureCallback) => {
+  try {
+    const querySnap = await firestore()
+      .collection('Users')
+      .where('id', '!=', uid)
+      .get();
+    const allUsers = querySnap.docs?.map(docSnap => docSnap.data());
+    console.log('alluser', allUsers);
+    successCallback(allUsers);
+  } catch (err) {
+    failureCallback(err);
+  }
+};
+
+export const addMessagges = async (docId, myMsg) => {
+  try {
+    firestore()
+      .collection(string.homeChatRoom)
+      .doc(docId)
+      .collection(string.messages)
+      .add({...myMsg, createdAt: new Date().getTime()});
+  } catch (e) {}
+};
 export const handleError = code => {
   switch (code) {
     case string.invalidPhoneCase:

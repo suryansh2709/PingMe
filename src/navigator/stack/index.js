@@ -12,12 +12,11 @@ const Stack = createNativeStackNavigator();
 export function LoginStack() {
   return (
     <Stack.Navigator
-      screenOptions={{headerShown: false}}
+      screenOptions={{headerShown: false, gestureEnabled: false}}
       initialRouteName={string.login}>
       <Stack.Screen name={string.login} component={Login} />
       <Stack.Screen name={string.otp} component={OtpScreen} />
       <Stack.Screen name={string.profile} component={UserProfile} />
-      <Stack.Screen name={string.homeStack} component={HomeStack} />
     </Stack.Navigator>
   );
 }

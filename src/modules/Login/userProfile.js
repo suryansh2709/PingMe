@@ -18,7 +18,6 @@ import {useNavigation} from '@react-navigation/native';
 import DatePicker from 'react-native-date-picker';
 export default function UserProfile() {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
-  console.log('selectore', loggedInUser?._user?.uid);
   const [infoDetails, setInfoDetails] = useState({
     userName: '',
     fName: '',
@@ -78,7 +77,6 @@ export default function UserProfile() {
         })
         .then(() => {
           setLoader(false);
-          console.log('sdfghjkl');
           navigation.navigate('HomeStack');
         })
         .catch(err => console.log(err));

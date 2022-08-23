@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {color} from '../../../utils/colors';
 import {vh, vw} from '../../../utils/dimensions';
 
 export const styles = StyleSheet.create({
@@ -45,5 +46,9 @@ export const styles = StyleSheet.create({
     elevation: 9,
     paddingLeft: vw(10),
     paddingTop: vh(5),
+  },
+  sendButton: {height: '90%', width: '90%', bottom: 5},
+  messageContainer: {
+    backgroundColor: color.lightGreen,
   },
 });

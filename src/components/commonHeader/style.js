@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   headerText: {fontSize: vh(17), marginLeft: vw(10)},
+  headerWithoutBack: {alignItems: 'center', justifyContent: 'center'},
 });
 
 export default styles;

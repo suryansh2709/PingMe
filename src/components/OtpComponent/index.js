@@ -37,9 +37,9 @@ const OtpComponent = ({handleCodeChange, confirm, handleLoader, number}) => {
   };
   return (
     <OTPInputView
-      style={styles.otpViewStyle}
       pinCount={6}
       autoFocusOnLoad={false}
+      style={styles.otpViewStyle}
       onCodeChanged={handleChange}
       onCodeFilled={handleAfterFill}
       codeInputFieldStyle={styles.underlineStyleBase}
