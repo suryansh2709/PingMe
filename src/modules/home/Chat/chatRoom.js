@@ -6,6 +6,8 @@ import firestore from '@react-native-firebase/firestore';
 import {useRoute} from '@react-navigation/native';
 import {styles} from './style';
 import {string} from '../../../utils/strings';
+import ChatHeader from './chatHeader';
+import {color} from '../../../utils/colors';
 
 export function ChatRoom() {
   const [messages, setMessages] = useState([]);
@@ -55,7 +57,7 @@ export function ChatRoom() {
         <View style={styles.chatSend}>
           <Image
             source={require('../../../assets/images/send.png')}
-            style={{height: '90%', width: '90%', bottom: 5}}
+            style={styles.sendImage}
           />
         </View>
       </Send>
@@ -85,19 +87,24 @@ export function ChatRoom() {
   };
 
   return (
-    <GiftedChat
-      showAvatarForEveryMessage={true}
-      renderSend={renderSend}
-      renderBubble={renderBubble}
-      messages={messages}
-      onSend={message => onSend(message)}
-      user={{
-        _id: loggedInUser?._user?.uid,
-        avatar: 'https://placeimg.com/140/140/any',
-      }}
-      isTyping={true}
-      isKeyboardInternallyHandled={true}
-      renderInputToolbar={renderInputToolbar}
-    />
+    <>
+      <View style={styles.giftedChatMainView}>
+        <GiftedChat
+          messagesContainerStyle={styles.messageContainerView}
+          showAvatarForEveryMessage={true}
+          renderSend={renderSend}
+          renderBubble={renderBubble}
+          messages={messages}
+          onSend={message => onSend(message)}
+          user={{
+            _id: loggedInUser?._user?.uid,
+            avatar: 'https://placeimg.com/140/140/any',
+          }}
+          isTyping={true}
+          isKeyboardInternallyHandled={true}
+          renderInputToolbar={renderInputToolbar}
+        />
+      </View>
+    </>
   );
 }

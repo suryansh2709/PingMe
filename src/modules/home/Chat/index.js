@@ -1,11 +1,11 @@
-import {FlatList, SafeAreaView} from 'react-native';
+import {FlatList, SafeAreaView, View} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import HomeHeader from '../../../components/commonHomeHeader';
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import {styles} from './style';
 import RenderChatCard from './renderChatCard';
-import {useNavigation} from '@react-navigation/native';
+import {vh} from '../../../utils/dimensions';
 
 const ChatList = () => {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
@@ -26,6 +26,7 @@ const ChatList = () => {
 
   useEffect(() => {
     getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**
@@ -38,6 +39,10 @@ const ChatList = () => {
     return id;
   };
 
+  const _itemSeperator = () => {
+    return <View style={styles.itemSeperatorView} />;
+  };
+
   const [staticData, setStaticData] = useState([]);
 
   /**
@@ -45,6 +50,7 @@ const ChatList = () => {
    */
   const onRender = useCallback(
     ({item}) => {
+      console.log('Shubhankar Item', item);
       const {displayImage, fName, lName, id} = item;
 
       return (
@@ -65,6 +71,7 @@ const ChatList = () => {
         keyExtractor={_keyExtractor}
         data={staticData}
         renderItem={onRender}
+        ItemSeparatorComponent={_itemSeperator}
       />
     </SafeAreaView>
   );
