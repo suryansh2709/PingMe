@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  headerText: {fontSize: vh(17), marginLeft: vw(10)},
+  headerText: {fontSize: vh(17), marginLeft: vw(10), fontWeight: 'bold'},
   headerWithoutBack: {alignItems: 'center', justifyContent: 'center'},
 });
 

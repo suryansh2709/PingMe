@@ -7,12 +7,9 @@ import {useDispatch} from 'react-redux';
 import {confirmOtpAction} from '../../redux/auth/action';
 import firestore from '@react-native-firebase/firestore';
 
-const OtpComponent = ({handleCodeChange, confirm, handleLoader, number}) => {
+const OtpComponent = ({confirm, handleLoader, number}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const handleChange = code => {
-    handleCodeChange(code);
-  };
   const handleAfterFill = otp => {
     handleLoader(true);
     dispatch(
@@ -40,7 +37,6 @@ const OtpComponent = ({handleCodeChange, confirm, handleLoader, number}) => {
       pinCount={6}
       autoFocusOnLoad={false}
       style={styles.otpViewStyle}
-      onCodeChanged={handleChange}
       onCodeFilled={handleAfterFill}
       codeInputFieldStyle={styles.underlineStyleBase}
       codeInputHighlightStyle={styles.underlineStyleHighLighted}

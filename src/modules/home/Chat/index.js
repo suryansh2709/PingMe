@@ -1,13 +1,20 @@
 import {FlatList, SafeAreaView} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import HomeHeader from '../../../components/commonHomeHeader';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {styles} from './style';
 import RenderChatCard from './renderChatCard';
-import {getUsers} from '../../../utils/commonFunctions';
+import {getUsers, logOut, showToast} from '../../../utils/commonFunctions';
+import {StackActions, useNavigation} from '@react-navigation/native';
+import {string} from '../../../utils/strings';
+import Loader from '../../../components/loader';
+import {setUser} from '../../../redux/auth/action';
 
 const ChatList = () => {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
+  const navigation = useNavigation();
+  const [loader, setLoader] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getUsers(
@@ -21,6 +28,21 @@ const ChatList = () => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleLogOut = () => {
+    setLoader(true);
+    logOut(
+      () => {
+        setLoader(false);
+        dispatch(setUser({}));
+        navigation.dispatch(StackActions.replace(string.loginStack));
+      },
+      error => {
+        setLoader(false);
+        showToast(error.message);
+      },
+    );
+  };
 
   /**
    *
@@ -55,12 +77,13 @@ const ChatList = () => {
   );
   return (
     <SafeAreaView style={styles.homeMainView}>
-      <HomeHeader />
+      <HomeHeader handleLogOut={handleLogOut} />
       <FlatList
         keyExtractor={_keyExtractor}
         data={staticData}
         renderItem={onRender}
       />
+      <Loader loader={loader} />
     </SafeAreaView>
   );
 };

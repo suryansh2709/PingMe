@@ -40,6 +40,7 @@ export default function PhoneLogin() {
         navigation.navigate(string.otp, {
           confirm: confirmation,
           number: number,
+          selected: selected,
         });
         setLoader(false);
       },

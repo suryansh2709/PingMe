@@ -1,5 +1,6 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {confirmOtp} from '../../utils/commonFunctions';
+import {string} from '../../utils/strings';
 import {setUser} from '../auth/action';
 
 export function* otpConfirm(action) {
@@ -19,5 +20,5 @@ export function* otpConfirm(action) {
 }
 
 export function* watcherFunction() {
-  yield takeEvery('ConfirmOtp', otpConfirm);
+  yield takeEvery(string.ConfirmOtp, otpConfirm);
 }

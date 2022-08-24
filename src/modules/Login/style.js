@@ -133,4 +133,11 @@ export const styles = StyleSheet.create({
     right: 10,
     tintColor: color.darkGreen,
   },
+  timer: {
+    color: color.red,
+    textAlign: 'center',
+  },
+  inactiveReset: {
+    color: '#808080',
+  },
 });

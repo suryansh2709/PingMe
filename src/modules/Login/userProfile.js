@@ -14,7 +14,7 @@ import firestore from '@react-native-firebase/firestore';
 import {showToast} from '../../utils/commonFunctions';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import Loader from '../../components/loader';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, CommonActions} from '@react-navigation/native';
 import DatePicker from 'react-native-date-picker';
 export default function UserProfile() {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
@@ -77,7 +77,14 @@ export default function UserProfile() {
         })
         .then(() => {
           setLoader(false);
-          navigation.navigate('HomeStack');
+
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{name: 'HomeStack'}],
+            }),
+          );
+          // navigation.navigate('HomeStack');
         })
         .catch(err => console.log(err));
       console.log('ye chala');

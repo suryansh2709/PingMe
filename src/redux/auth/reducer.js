@@ -1,3 +1,5 @@
+import {string} from '../../utils/strings';
+
 const initialState = {
   loggedInUser: {},
 };
@@ -5,7 +7,7 @@ const initialState = {
 export const userDataReducer = (state = initialState, action) => {
   const {type, payload} = action;
   switch (type) {
-    case 'SetUser':
+    case string.SetUser:
       return {...state, ...payload};
     default:
       return state;
