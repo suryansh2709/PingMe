@@ -13,7 +13,8 @@ export function* otpConfirm(action) {
       successCallback,
       failureCallback,
     );
-    yield put(setUser(data));
+    console.log(data?._user);
+    yield put(setUser(data?._user));
   } catch (e) {
     console.log('error', e);
   }

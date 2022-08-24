@@ -32,6 +32,7 @@ export const string = {
   requestExceed: 'Too many requests',
   tooManyCase: 'auth/too-many-requests',
   enterEmail: 'Enter Your Phone Number',
+  profileUpdate: 'Profile Image Updated',
   networkIsuue: "Can't connent to internet",
   invalidPhoneNumber: 'Invalid Phone Number',
   invalidPhoneCase: 'auth/invalid-phone-number',
