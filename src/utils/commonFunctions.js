@@ -112,3 +112,14 @@ export async function handleDisplayImage() {
       console.log('err', err);
     });
 }
+
+export const logOut = async (successCallback, failureCallback) => {
+  try {
+    const logOutSucces = auth().signOut();
+    console.log('logOutSucces', logOutSucces);
+    successCallback();
+  } catch (err) {
+    console.log(err);
+    failureCallback(err);
+  }
+};

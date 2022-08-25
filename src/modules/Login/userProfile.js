@@ -9,13 +9,14 @@ import {string} from '../../utils/strings';
 import {styles} from './style';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {firstNameTest, userNameTest} from '../../utils/validation';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import {showToast} from '../../utils/commonFunctions';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import Loader from '../../components/loader';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, CommonActions} from '@react-navigation/native';
 import DatePicker from 'react-native-date-picker';
+import {setUser} from '../../redux/auth/action';
 export default function UserProfile() {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
   const [infoDetails, setInfoDetails] = useState({
@@ -29,6 +30,7 @@ export default function UserProfile() {
   const [loader, setLoader] = useState(false);
   const navigation = useNavigation();
   const [open, setOPen] = useState(false);
+  const dispatch = useDispatch();
 
   /**
    * Setting Display Image.
@@ -45,11 +47,11 @@ export default function UserProfile() {
         if (Platform.OS === 'ios') {
           setInfoDetails({...infoDetails, displayImage: res?.sourceURL});
           setLoader(false);
-          showToast('Profile Image Updated');
+          showToast(string.profileUpdate);
         } else {
           setInfoDetails({...infoDetails, displayImage: res?.path});
           setLoader(false);
-          showToast('Profile Image Updated');
+          showToast(string.profileUpdate);
         }
       })
       .catch(err => {
@@ -71,16 +73,21 @@ export default function UserProfile() {
       let user = {...infoDetails};
       firestore()
         .collection('Users')
-        .doc(loggedInUser._user.uid)
+        .doc(loggedInUser?.uid)
         .update({
           ...user,
         })
         .then(() => {
           setLoader(false);
-          navigation.navigate('HomeStack');
+          dispatch(setUser({...loggedInUser, ...infoDetails}));
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{name: string.homeStack}],
+            }),
+          );
         })
         .catch(err => console.log(err));
-      console.log('ye chala');
     }
   };
 

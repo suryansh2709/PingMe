@@ -135,4 +135,11 @@ export const styles = StyleSheet.create({
   },
   headerView: {flex: 0.07},
   enterPhoneTextView: {flex: 0.2, justifyContent: 'flex-end'},
+  timer: {
+    color: color.red,
+    textAlign: 'center',
+  },
+  inactiveReset: {
+    color: '#808080',
+  },
 });

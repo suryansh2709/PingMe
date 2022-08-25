@@ -30,9 +30,10 @@ export const styles = StyleSheet.create({
     marginLeft: vw(16),
     justifyContent: 'space-between',
     height: vh(39),
+    alignItems: 'center',
   },
   nameText: {
-    fontSize: vh(16),
+    fontSize: vh(17),
     color: color.white,
     fontStyle: 'italic',
     fontWeight: '500',

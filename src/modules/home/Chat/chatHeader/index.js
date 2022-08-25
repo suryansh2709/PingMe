@@ -6,7 +6,7 @@ import {vh, vw} from '../../../../utils/dimensions';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
 
-export default function ChatHeader() {
+export default function ChatHeader({fName, isActive, displayImage}) {
   const navigation = useNavigation();
   return (
     <LinearGradient
@@ -20,14 +20,16 @@ export default function ChatHeader() {
             navigation.goBack();
           }}>
           <Image
-            source={localImages.callIcon}
+            source={localImages.left}
             style={{height: vh(22), width: vh(22), marginLeft: vw(14)}}
           />
         </TouchableOpacity>
-        <Image source={localImages.user} style={styles.userProfile} />
+        <Image source={{uri: displayImage}} style={styles.userProfile} />
         <View style={styles.activeNameView}>
-          <Text style={styles.nameText}>{'Name'}</Text>
-          <Text style={styles.activeText}>{'Active Now'}</Text>
+          <Text style={styles.nameText}>{fName}</Text>
+          {isActive ? (
+            <Text style={styles.activeText}>{'Active Now'}</Text>
+          ) : null}
         </View>
       </View>
       <View style={styles.iconImageView}>
