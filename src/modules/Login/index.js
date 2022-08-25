@@ -24,7 +24,7 @@ const Login = () => {
 
   const onBackPress = () => {
     if (navigation.isFocused()) {
-      Alert.alert('', string, [
+      Alert.alert('', string.cancel, [
         {
           text: string.cancel,
           onPress: () => null,

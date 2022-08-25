@@ -35,7 +35,7 @@ const Setting = () => {
       );
     } else if (item?.id === '7') {
       return (
-        <>
+        <React.Fragment>
           <View style={styles.itemSeperatorView}></View>
           <TouchableOpacity style={styles.itemHelpView} activeOpacity={0.4}>
             <View style={styles.itemTextView}>
@@ -49,7 +49,7 @@ const Setting = () => {
               />
             </TouchableOpacity>
           </TouchableOpacity>
-        </>
+        </React.Fragment>
       );
     }
   };
