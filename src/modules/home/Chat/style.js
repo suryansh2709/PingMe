@@ -3,7 +3,7 @@ import {color} from '../../../utils/colors';
 import {vh, vw} from '../../../utils/dimensions';
 
 export const styles = StyleSheet.create({
-  homeMainView: {flex: 1},
+  homeMainView: {height: '88%'},
   homeChatMainView: {
     flexDirection: 'row',
     height: vh(68),
@@ -47,6 +47,18 @@ export const styles = StyleSheet.create({
     paddingLeft: vw(10),
     paddingTop: vh(5),
   },
+  itemSeperatorView: {
+    height: vh(1),
+    backgroundColor: '#56CF83',
+    width: '90%',
+    alignSelf: 'center',
+    opacity: 0.4,
+  },
+  giftedChatMainView: {flex: 1, backgroundColor: color.cream},
+  messageContainerView: {
+    backgroundColor: color.cream,
+  },
+  sendImage: {height: '90%', width: '90%', bottom: 5},
   sendButton: {height: '90%', width: '90%', bottom: 5},
   messageContainer: {
     backgroundColor: color.lightGreen,

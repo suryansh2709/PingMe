@@ -9,11 +9,13 @@ import {string} from '../../../utils/strings';
 import localImages from '../../../utils/localImages';
 import {addMessagges} from '../../../utils/commonFunctions';
 
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import ChatHeader from './chatHeader';
+
 export function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
-  const {id} = useRoute().params;
-  console.log('loggedInUser', loggedInUser);
+  const {id, fName, isActive, displayImage} = useRoute().params;
   const docId =
     loggedInUser?.uid > id
       ? loggedInUser?.uid + '-' + id
@@ -78,20 +80,30 @@ export function ChatRoom() {
   };
 
   return (
-    <GiftedChat
-      messagesContainerStyle={styles.messageContainer}
-      showAvatarForEveryMessage={true}
-      renderSend={renderSend}
-      renderBubble={renderBubble}
-      messages={messages}
-      onSend={message => onSend(message)}
-      user={{
-        _id: loggedInUser?.uid,
-        avatar: 'https://placeimg.com/140/140/any',
-      }}
-      isTyping={true}
-      isKeyboardInternallyHandled={true}
-      renderInputToolbar={renderInputToolbar}
-    />
+    <View style={styles.giftedChatMainView}>
+      <ChatHeader
+        fName={fName}
+        isActive={isActive}
+        displayImage={displayImage}
+      />
+      <GiftedChat
+        messagesContainerStyle={[
+          styles.messageContainerView,
+          {paddingTop: getStatusBarHeight()},
+        ]}
+        showAvatarForEveryMessage={true}
+        renderSend={renderSend}
+        renderBubble={renderBubble}
+        messages={messages}
+        onSend={message => onSend(message)}
+        user={{
+          _id: loggedInUser?.uid,
+          avatar: 'https://placeimg.com/140/140/any',
+        }}
+        isTyping={true}
+        isKeyboardInternallyHandled={true}
+        renderInputToolbar={renderInputToolbar}
+      />
+    </View>
   );
 }
