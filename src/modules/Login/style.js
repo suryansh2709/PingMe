@@ -60,9 +60,8 @@ export const styles = StyleSheet.create({
     color: color.blue,
   },
   countryCodeView: {
-    height: normalize(36),
+    marginTop: vh(50),
     marginHorizontal: normalize(24),
-    marginTop: normalize(14),
     flexDirection: 'row',
   },
   countryCodeViewStyle: {
@@ -74,6 +73,7 @@ export const styles = StyleSheet.create({
   },
   mainView: {
     backgroundColor: color.white,
+    flex: 1,
   },
   lineView: {
     width: vw(1),
@@ -93,7 +93,7 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
     height: normalize(36),
   },
-  buttonView: {justifyContent: 'flex-end'},
+  buttonView: {justifyContent: 'flex-end', height: '60%'},
   otpMainView: {backgroundColor: color.white, flex: 1},
   resendCodeView: {marginTop: normalize(62), alignSelf: 'center'},
   resendCodeText: {color: 'rgba(88, 213, 130, 1)'},
@@ -133,6 +133,8 @@ export const styles = StyleSheet.create({
     right: 10,
     tintColor: color.darkGreen,
   },
+  headerView: {flex: 0.07},
+  enterPhoneTextView: {flex: 0.2, justifyContent: 'flex-end'},
   timer: {
     color: color.red,
     textAlign: 'center',

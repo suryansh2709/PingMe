@@ -1,4 +1,4 @@
-import {FlatList, SafeAreaView} from 'react-native';
+import {FlatList, SafeAreaView, View} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import HomeHeader from '../../../components/commonHomeHeader';
 import {useDispatch, useSelector} from 'react-redux';
@@ -54,6 +54,10 @@ const ChatList = () => {
     return id;
   };
 
+  const _itemSeperator = () => {
+    return <View style={styles.itemSeperatorView} />;
+  };
+
   const [staticData, setStaticData] = useState([]);
 
   /**
@@ -61,7 +65,8 @@ const ChatList = () => {
    */
   const onRender = useCallback(
     ({item}) => {
-      const {displayImage, fName, lName, id} = item;
+      const {displayImage, fName, lName, id, isActive} = item;
+      console.log('asdfghjkjhg', staticData);
 
       return (
         <RenderChatCard
@@ -69,6 +74,7 @@ const ChatList = () => {
           fName={fName}
           lName={lName}
           displayImage={displayImage}
+          isActive={isActive}
         />
       );
     },
@@ -82,6 +88,8 @@ const ChatList = () => {
         keyExtractor={_keyExtractor}
         data={staticData}
         renderItem={onRender}
+        ItemSeparatorComponent={_itemSeperator}
+        showsVerticalScrollIndicator={false}
       />
       <Loader loader={loader} />
     </SafeAreaView>

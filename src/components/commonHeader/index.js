@@ -6,7 +6,11 @@ import localImages from '../../utils/localImages';
 const Header = ({onPress, style = [], header, backVisible}) => {
   return (
     <View
-      style={[styles.headerMain, !backVisible ? styles.headerWithoutBack : {}]}>
+      style={[
+        styles.headerMain,
+        !backVisible ? styles.headerWithoutBack : {},
+        style,
+      ]}>
       {backVisible ? (
         <TouchableOpacity
           hitSlop={{top: 20, left: 20, right: 20, bottom: 20}}

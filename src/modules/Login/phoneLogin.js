@@ -50,7 +50,7 @@ export default function PhoneLogin() {
     );
   };
   return (
-    <View style={styles.mainView}>
+    <>
       <View style={styles.countryCodeView}>
         <TouchableOpacity
           activeOpacity={1}
@@ -87,6 +87,6 @@ export default function PhoneLogin() {
         />
       </View>
       <Loader loader={loader} />
-    </View>
+    </>
   );
 }

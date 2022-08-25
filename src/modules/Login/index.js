@@ -42,8 +42,9 @@ const Login = () => {
       style={styles.mainView}
       bounces={false}
       scrollEnabled={false}>
-      <Header header={'Login'} backVisible={false} />
+      <Header header={'Login'} backVisible={false} style={styles.headerView} />
       <HeadingView
+        style={styles.enterPhoneTextView}
         bigHeader={string.enterEmail}
         smallHeader={string.confirmCountryCode}
       />
