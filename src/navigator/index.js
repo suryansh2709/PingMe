@@ -1,13 +1,48 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {HomeStack, LoginStack} from './stack';
 import SplashScreen from '../modules/SplashScreen';
 import {string} from '../utils/strings';
+import {AppState} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
 function Navigation() {
+  const appState = useRef(AppState.currentState);
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
+
+  useEffect(() => {
+    AppState.addEventListener('change', _handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const _handleAppStateChange = nextAppState => {
+    console.log('AppState', appState.current);
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      // TODO SET USERS ONLINE STATUS TO TRUE
+      firestore().collection('Users').doc(loggedInUser?.uid).update({
+        isActive: true,
+      });
+    } else {
+      // TODO SET USERS ONLINE STATUS TO FALSE
+      firestore().collection('Users').doc(loggedInUser?.uid).update({
+        isActive: false,
+      });
+    }
+
+    appState.current = nextAppState;
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>

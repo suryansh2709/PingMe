@@ -22,6 +22,7 @@ const OtpComponent = ({confirm, handleLoader, number}) => {
           firestore().collection('Users').doc(uid).set({
             phoneNumber: number,
             id: uid,
+            isActive: true,
           });
           navigation.navigate('Profile');
           handleLoader(false);

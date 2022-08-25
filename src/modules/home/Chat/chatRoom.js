@@ -13,10 +13,11 @@ export function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
   const {id} = useRoute().params;
+  console.log('loggedInUser', loggedInUser);
   const docId =
-    loggedInUser?._user?.uid > id
-      ? loggedInUser?._user?.uid + '-' + id
-      : id + '-' + loggedInUser?._user?.uid;
+    loggedInUser?.uid > id
+      ? loggedInUser?.uid + '-' + id
+      : id + '-' + loggedInUser?.uid;
 
   useLayoutEffect(() => {
     const subscribe = firestore()
@@ -28,7 +29,6 @@ export function ChatRoom() {
         dataArray.sort((a, b) => b.createdAt - a.createdAt);
         setMessages(dataArray);
       });
-
     return subscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -37,7 +37,7 @@ export function ChatRoom() {
     const msg = message[0];
     const myMsg = {
       ...msg,
-      sentBy: loggedInUser?._user?.uid,
+      sentBy: loggedInUser?.uid,
       sentTo: id,
     };
     setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
@@ -86,7 +86,7 @@ export function ChatRoom() {
       messages={messages}
       onSend={message => onSend(message)}
       user={{
-        _id: loggedInUser?._user?.uid,
+        _id: loggedInUser?.uid,
         avatar: 'https://placeimg.com/140/140/any',
       }}
       isTyping={true}
