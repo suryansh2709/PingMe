@@ -17,8 +17,13 @@ import Loader from '../../components/loader';
 import {useNavigation, CommonActions} from '@react-navigation/native';
 import DatePicker from 'react-native-date-picker';
 import {setUser} from '../../redux/auth/action';
+import storage from '@react-native-firebase/storage';
+
 export default function UserProfile() {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
+  const reference = storage().ref(
+    `${loggedInUser?.uid}/IMG_${Math.floor(Math.random() * 100000000)}.jpg`,
+  );
   const [infoDetails, setInfoDetails] = useState({
     userName: '',
     fName: '',
@@ -46,10 +51,22 @@ export default function UserProfile() {
       .then(res => {
         if (Platform.OS === 'ios') {
           setInfoDetails({...infoDetails, displayImage: res?.sourceURL});
+
+          reference
+            .putFile(res?.sourceURL)
+            .then(res => {
+              console.log('uploaded', res);
+              reference.getDownloadURL().then(res => {
+                console.log('url===   ', res);
+              });
+            })
+            .catch(err => console.log('Err', err));
           setLoader(false);
           showToast(string.profileUpdate);
         } else {
           setInfoDetails({...infoDetails, displayImage: res?.path});
+
+          reference && reference.putFile(res?.path);
           setLoader(false);
           showToast(string.profileUpdate);
         }
