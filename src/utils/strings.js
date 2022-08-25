@@ -1,4 +1,5 @@
 export const string = {
+  yes: 'YES',
   otp: 'Otp',
   home: 'Home',
   chat: 'Chat',
@@ -6,6 +7,7 @@ export const string = {
   call: 'Calls',
   login: 'Login',
   status: 'Status',
+  cancel: 'Cancel',
   SetUser: 'SetUser',
   profile: 'Profile',
   setting: 'Settings',
@@ -26,6 +28,7 @@ export const string = {
   DOB: 'Date Of Birth (Optional)',
   lastName: 'Last Name (Optional)',
   firstName: 'First Name (Required)',
+  hardWareBack: 'hardwareBackPress',
   requestExceed: 'Too many requests',
   tooManyCase: 'auth/too-many-requests',
   enterEmail: 'Enter Your Phone Number',
@@ -35,8 +38,9 @@ export const string = {
   networkIsuueCase: 'auth/network-request-failed',
   invalidOtpCase: 'auth/invalid-verification-code',
   incorrectName: 'Name should be in correct format',
-  incorrectUserName: 'UserName should be in correct format',
   sentOtpTo: 'We have sent you an SMS with the code to ',
+  incorrectUserName: 'UserName should be in correct format',
+  closeApplication: 'You sure you want to close the application?',
   confirmCountryCode:
     'Please confirm your country code and enter your phone number',
 };

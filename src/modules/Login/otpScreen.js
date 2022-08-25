@@ -1,4 +1,4 @@
-import {View, Text, ActivityIndicator} from 'react-native';
+import {View, Text} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/commonHeader';
 import {string} from '../../utils/strings';
@@ -29,6 +29,7 @@ export default function OtpScreen() {
         onPress={() => {
           navigation.goBack();
         }}
+        backVisible={false}
       />
       <HeadingView
         bigHeader={string.enterCode}

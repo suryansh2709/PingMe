@@ -1,9 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {vh, vw} from '../../../utils/dimensions';
 import {color} from '../../../utils/colors';
+import {vh, vw} from '../../../utils/dimensions';
 
 export const styles = StyleSheet.create({
-  homeMainView: {flex: 1},
+  homeMainView: {height: '88%'},
   homeChatMainView: {
     flexDirection: 'row',
     height: vh(68),
@@ -59,4 +59,8 @@ export const styles = StyleSheet.create({
     backgroundColor: color.cream,
   },
   sendImage: {height: '90%', width: '90%', bottom: 5},
+  sendButton: {height: '90%', width: '90%', bottom: 5},
+  messageContainer: {
+    backgroundColor: color.lightGreen,
+  },
 });

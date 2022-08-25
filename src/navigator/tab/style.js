@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     marginTop: vh(16),
   },
   iconImageActiveStyle: {
-    height: vh(24),
-    width: vh(24),
+    height: vh(28),
+    width: vh(28),
     marginTop: vh(16),
     tintColor: '#4FBC87',
   },
