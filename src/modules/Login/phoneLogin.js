@@ -78,7 +78,7 @@ export default function PhoneLogin() {
         disableColor={color.grey}
         disable={number.length < 10}
         text={'Continue'}
-        marginTop={128}
+        marginTop={130}
         width={327}
         bgColor={'rgba(88, 213, 130, 1)'}
         textColor={color.white}

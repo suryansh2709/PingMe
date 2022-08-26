@@ -22,4 +22,5 @@ export default {
   homeSearchIcon: require('../assets/images/homeSearch.png'),
   statusActiveIcon: require('../assets/images/statusActive.png'),
   settingActiveIcon: require('../assets/images/settingActive.png'),
+  noInternet: require('../assets/images/Internet-Access-Error.jpeg'),
 };

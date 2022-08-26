@@ -16,33 +16,29 @@ function Navigation() {
   console.log('dattttttt', loggedInUser);
 
   useEffect(() => {
-    AppState.addEventListener('change', _handleAppStateChange);
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        firestore().collection('Users').doc(loggedInUser?.uid).update({
+          isActive: true,
+        });
+      } else {
+        firestore().collection('Users').doc(loggedInUser?.uid).update({
+          isActive: false,
+        });
+      }
+      appState.current = nextAppState;
+    });
 
     return () => {
-      AppState.removeEventListener('change', _handleAppStateChange);
+      subscription.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const _handleAppStateChange = nextAppState => {
-    console.log('AppState', appState.current);
-    if (
-      appState.current.match(/inactive|background/) &&
-      nextAppState === 'active'
-    ) {
-      // TODO SET USERS ONLINE STATUS TO TRUE
-      firestore().collection('Users').doc(loggedInUser?.uid).update({
-        isActive: true,
-      });
-    } else {
-      // TODO SET USERS ONLINE STATUS TO FALSE
-      firestore().collection('Users').doc(loggedInUser?.uid).update({
-        isActive: false,
-      });
-    }
-
-    appState.current = nextAppState;
-  };
+  // const _handleAppStateChange =
 
   return (
     <NavigationContainer>
