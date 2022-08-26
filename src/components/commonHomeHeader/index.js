@@ -5,7 +5,7 @@ import localImages from '../../utils/localImages';
 import {color} from '../../utils/colors';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default function HomeHeader({toolTip}) {
+export default function HomeHeader({toolTip, addFriend}) {
   return (
     <LinearGradient
       colors={['#56CF83', '#50BD87', '#47AD8B']}
@@ -20,7 +20,7 @@ export default function HomeHeader({toolTip}) {
             style={styles.headerIconImage}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={addFriend}>
           <Image
             source={localImages.homeAddIcon}
             style={styles.headerIconImage}

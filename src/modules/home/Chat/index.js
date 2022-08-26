@@ -101,7 +101,12 @@ const ChatList = () => {
   };
   return (
     <SafeAreaView style={styles.homeMainView}>
-      <HomeHeader toolTip={toolTip} />
+      <HomeHeader
+        toolTip={toolTip}
+        addFriend={() => {
+          navigation.navigate('AddFriend');
+        }}
+      />
       <Tooltip
         topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
         backgroundColor="transparent"
