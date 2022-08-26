@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* PingMeAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PingMeAppTests.m */; };
-		11D5A92A9D27D7C034027C21 /* libPods-PingMeApp-PingMeAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4D2B2DF0B9130FD4A084749 /* libPods-PingMeApp-PingMeAppTests.a */; };
+		0F9D17A101531CFBECDF36FB /* Pods_PingMeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBFC3375B0448ACA9970643F /* Pods_PingMeApp.framework */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		330BD9BBD197A18BD861F110 /* libPods-PingMeApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3037404ACA558E97FFF0FE4A /* libPods-PingMeApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		843FEF7628A1748E00D6095C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 843FEF7528A1748E00D6095C /* GoogleService-Info.plist */; };
+		D44F8D4771A06C1063CFE3BF /* Pods_PingMeApp_PingMeAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1553C6696C46E1AD8B0929A8 /* Pods_PingMeApp_PingMeAppTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,14 +37,14 @@
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = PingMeApp/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PingMeApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PingMeApp/main.m; sourceTree = "<group>"; };
-		3037404ACA558E97FFF0FE4A /* libPods-PingMeApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PingMeApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1553C6696C46E1AD8B0929A8 /* Pods_PingMeApp_PingMeAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PingMeApp_PingMeAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F95614B0F4E8A54C9C294B2 /* Pods-PingMeApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PingMeApp.release.xcconfig"; path = "Target Support Files/Pods-PingMeApp/Pods-PingMeApp.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PingMeApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		843FEF7528A1748E00D6095C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8E4CD53E119C2C6C732638DD /* Pods-PingMeApp-PingMeAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PingMeApp-PingMeAppTests.release.xcconfig"; path = "Target Support Files/Pods-PingMeApp-PingMeAppTests/Pods-PingMeApp-PingMeAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		E4D2B2DF0B9130FD4A084749 /* libPods-PingMeApp-PingMeAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PingMeApp-PingMeAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC5EE59AD5CE2B4280360F55 /* Pods-PingMeApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PingMeApp.debug.xcconfig"; path = "Target Support Files/Pods-PingMeApp/Pods-PingMeApp.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FBFC3375B0448ACA9970643F /* Pods_PingMeApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PingMeApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11D5A92A9D27D7C034027C21 /* libPods-PingMeApp-PingMeAppTests.a in Frameworks */,
+				D44F8D4771A06C1063CFE3BF /* Pods_PingMeApp_PingMeAppTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				330BD9BBD197A18BD861F110 /* libPods-PingMeApp.a in Frameworks */,
+				0F9D17A101531CFBECDF36FB /* Pods_PingMeApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,8 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				3037404ACA558E97FFF0FE4A /* libPods-PingMeApp.a */,
-				E4D2B2DF0B9130FD4A084749 /* libPods-PingMeApp-PingMeAppTests.a */,
+				FBFC3375B0448ACA9970643F /* Pods_PingMeApp.framework */,
+				1553C6696C46E1AD8B0929A8 /* Pods_PingMeApp_PingMeAppTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -160,7 +160,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C6EB8574684C7B13BF9004FC /* [CP] Embed Pods Frameworks */,
 				D7D56C89F11543F3C6E5EDD6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -183,7 +182,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				5C119B3E5B96D15EB561159D /* [CP] Embed Pods Frameworks */,
 				478A917B8621994CFBB4B2F0 /* [CP] Copy Pods Resources */,
 				F7D2F188A45FAECE5A7A29FE /* [CP-User] [RNFB] Core Configuration */,
 			);
@@ -308,23 +306,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PingMeApp/Pods-PingMeApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5C119B3E5B96D15EB561159D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PingMeApp/Pods-PingMeApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PingMeApp/Pods-PingMeApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PingMeApp/Pods-PingMeApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		909E641B05555FF5739502B8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -345,23 +326,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C6EB8574684C7B13BF9004FC /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PingMeApp-PingMeAppTests/Pods-PingMeApp-PingMeAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PingMeApp-PingMeAppTests/Pods-PingMeApp-PingMeAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PingMeApp-PingMeAppTests/Pods-PingMeApp-PingMeAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D7D56C89F11543F3C6E5EDD6 /* [CP] Copy Pods Resources */ = {
