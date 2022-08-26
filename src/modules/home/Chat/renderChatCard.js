@@ -1,12 +1,22 @@
 import {Text, View, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {styles} from './style';
 import {useNavigation} from '@react-navigation/native';
 const RenderChatCard = ({displayImage, fName, lName, id, isActive}) => {
   const navigation = useNavigation();
-  console.log('displayImage', displayImage);
+  const [lastMessage, setLastMessage] = useState('');
   const onCardPress = () => {
-    navigation.navigate('ChatRoom', {id, fName, displayImage, isActive});
+    navigation.navigate('ChatRoom', {
+      id,
+      fName,
+      lName,
+      displayImage,
+      handleLastMessage,
+      isActive,
+    });
+  };
+  const handleLastMessage = last => {
+    setLastMessage(last);
   };
 
   return (
@@ -17,7 +27,7 @@ const RenderChatCard = ({displayImage, fName, lName, id, isActive}) => {
         </View>
         <View style={styles.nameView}>
           <Text style={styles.userName}>{fName}</Text>
-          <Text style={styles.userChatMessage}>{lName}</Text>
+          <Text style={styles.userChatMessage}>{lastMessage}</Text>
         </View>
       </TouchableOpacity>
     </>

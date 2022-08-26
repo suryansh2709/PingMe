@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     zIndex: 1,
     elevation: 1,
     width: '100%',
-    marginTop: getStatusBarHeight(),
+    top: getStatusBarHeight(),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -25,12 +25,12 @@ export const styles = StyleSheet.create({
     width: vh(40),
     borderRadius: 40,
     marginLeft: vw(14),
+    backgroundColor: color.grey,
   },
   activeNameView: {
     marginLeft: vw(16),
     justifyContent: 'space-between',
     height: vh(39),
-    alignItems: 'center',
   },
   nameText: {
     fontSize: vh(17),

@@ -35,12 +35,28 @@ export function ChatRoom() {
   }, []);
 
   const onSend = useCallback((message = []) => {
+    console.log('if');
     const msg = message[0];
     const myMsg = {
       ...msg,
       sentBy: loggedInUser?.uid,
       sentTo: id,
     };
+    if (messages.length === 0) {
+      firestore()
+        .collection('Users')
+        .doc(loggedInUser?.uid)
+        .collection('Inbox')
+        .doc(id)
+        .set({id: id, lastMessage: myMsg});
+    } else {
+      firestore()
+        .collection('Users')
+        .doc(loggedInUser?.uid)
+        .collection('Inbox')
+        .doc(id)
+        .update({lastMessage: msg});
+    }
     setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
     addMessagges(docId, myMsg);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,7 +82,7 @@ export function ChatRoom() {
         ]}
         showAvatarForEveryMessage={true}
         renderSend={RenderSend}
-        enderBubble={RenderBubble}
+        renderBubble={RenderBubble}
         messages={messages}
         onSend={message => onSend(message)}
         user={{
