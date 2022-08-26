@@ -3,6 +3,7 @@ import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import Navigation from './src/navigator';
 import {persistor, store} from './src/redux/store';
+import NetInfoHandler from './src/utils/NetInfo/netInfo';
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <Navigation />
       </PersistGate>
+      <NetInfoHandler />
     </Provider>
   );
 };

@@ -34,10 +34,10 @@ export default function CustomButton(props) {
 const styles = StyleSheet.create({
   button: {
     height: normalize(42),
-    marginTop: normalize(16),
+    marginTop: normalize(20),
     borderRadius: 30,
     justifyContent: 'center',
-    marginLeft: normalize(28),
+    alignSelf: 'center',
   },
   buttonText: {
     fontSize: normalize(14),

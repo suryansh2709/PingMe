@@ -50,25 +50,30 @@ export default function UserProfile() {
     })
       .then(res => {
         if (Platform.OS === 'ios') {
-          setInfoDetails({...infoDetails, displayImage: res?.sourceURL});
-
           reference
             .putFile(res?.sourceURL)
             .then(res => {
               console.log('uploaded', res);
-              reference.getDownloadURL().then(res => {
-                console.log('url===   ', res);
+              reference.getDownloadURL().then(result => {
+                setInfoDetails({...infoDetails, displayImage: result});
+                setLoader(false);
+                showToast(string.profileUpdate);
               });
             })
             .catch(err => console.log('Err', err));
-          setLoader(false);
-          showToast(string.profileUpdate);
         } else {
-          setInfoDetails({...infoDetails, displayImage: res?.path});
-
-          reference && reference.putFile(res?.path);
-          setLoader(false);
-          showToast(string.profileUpdate);
+          reference &&
+            reference
+              .putFile(res?.path)
+              .then(res => {
+                console.log('uploaded', res);
+                reference.getDownloadURL().then(result => {
+                  setInfoDetails({...infoDetails, displayImage: result});
+                  setLoader(false);
+                  showToast(string.profileUpdate);
+                });
+              })
+              .catch(err => console.log('Err', err));
         }
       })
       .catch(err => {

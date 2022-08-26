@@ -73,23 +73,23 @@ const ChatList = () => {
           id={id}
           fName={fName}
           lName={lName}
-          displayImage={displayImage}
           isActive={isActive}
+          displayImage={displayImage}
         />
       );
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [staticData],
   );
   return (
     <SafeAreaView style={styles.homeMainView}>
       <HomeHeader handleLogOut={handleLogOut} />
       <FlatList
-        keyExtractor={_keyExtractor}
         data={staticData}
         renderItem={onRender}
-        ItemSeparatorComponent={_itemSeperator}
+        keyExtractor={_keyExtractor}
         showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={_itemSeperator}
       />
       <Loader loader={loader} />
     </SafeAreaView>
