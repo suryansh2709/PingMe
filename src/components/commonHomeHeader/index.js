@@ -5,7 +5,7 @@ import localImages from '../../utils/localImages';
 import {color} from '../../utils/colors';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default function HomeHeader({handleLogOut}) {
+export default function HomeHeader({toolTip}) {
   return (
     <LinearGradient
       colors={['#56CF83', '#50BD87', '#47AD8B']}
@@ -26,7 +26,7 @@ export default function HomeHeader({handleLogOut}) {
             style={styles.headerIconImage}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleLogOut} activeOpacity={0.8}>
+        <TouchableOpacity onPress={toolTip} activeOpacity={0.8}>
           <Image
             source={localImages.homeMenuIcon}
             style={styles.headerIconImage}
@@ -38,7 +38,11 @@ export default function HomeHeader({handleLogOut}) {
 }
 
 const styles = StyleSheet.create({
-  headerIconImage: {height: vh(20), width: vh(20), tintColor: color.white},
+  headerIconImage: {
+    height: vh(20),
+    width: vh(20),
+    tintColor: color.white,
+  },
   headerMainView: {
     height: vh(83),
     flexDirection: 'row',

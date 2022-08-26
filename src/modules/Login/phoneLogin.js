@@ -74,18 +74,16 @@ export default function PhoneLogin() {
         setSelected={selectionHandler}
         hanldeCountryCodeOnPress={hanldeCountryCodeOnPress}
       />
-      <View style={styles.buttonView}>
-        <CustomButton
-          disableColor={color.grey}
-          disable={number.length < 10}
-          text={'Continue'}
-          marginTop={128}
-          width={327}
-          bgColor={'rgba(88, 213, 130, 1)'}
-          textColor={color.white}
-          onPressButton={handleContineuPress}
-        />
-      </View>
+      <CustomButton
+        disableColor={color.grey}
+        disable={number.length < 10}
+        text={'Continue'}
+        marginTop={128}
+        width={327}
+        bgColor={'rgba(88, 213, 130, 1)'}
+        textColor={color.white}
+        onPressButton={handleContineuPress}
+      />
       <Loader loader={loader} />
     </>
   );

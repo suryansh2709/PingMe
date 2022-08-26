@@ -15,7 +15,8 @@ import ChatHeader from './chatHeader';
 export function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
-  const {id, fName, isActive, displayImage} = useRoute().params;
+  const {id, fName, isActive, displayImage, handleLastMessage} =
+    useRoute().params;
   const docId =
     loggedInUser?.uid > id
       ? loggedInUser?.uid + '-' + id
@@ -37,6 +38,7 @@ export function ChatRoom() {
 
   const onSend = useCallback((message = []) => {
     const msg = message[0];
+    handleLastMessage(message[0]?.text?.slice(-1));
     const myMsg = {
       ...msg,
       sentBy: loggedInUser?.uid,

@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
     height: vh(60),
     width: vh(60),
     borderRadius: 100,
+    backgroundColor: color.grey,
   },
   userChatMessage: {
     fontSize: vh(16),
@@ -23,12 +24,13 @@ export const styles = StyleSheet.create({
     marginTop: vh(5),
   },
   nameView: {marginLeft: vw(14), marginTop: vh(5)},
-  userName: {fontSize: vh(16), fontWeight: '400'},
+  userName: {fontSize: vh(17), fontWeight: '500'},
   chatSend: {
     height: 30,
     width: 30,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: -1,
   },
   chatInputViewStyle: {
     height: vh(40),
@@ -61,6 +63,29 @@ export const styles = StyleSheet.create({
   sendImage: {height: '90%', width: '90%', bottom: 5},
   sendButton: {height: '90%', width: '90%', bottom: 5},
   messageContainer: {
+    backgroundColor: color.lightGreen,
+  },
+  toolTipView: {
+    backgroundColor: 'red',
+  },
+  toolTipTextStyle: {
+    color: 'black',
+    fontSize: vh(20),
+    alignSelf: 'center',
+  },
+  toolTipContainer: {
+    bottom: 270,
+    borderWidth: 1,
+    borderColor: color.lightGreen,
+  },
+  tooTipContentMainView: {
+    height: vh(100),
+    width: vw(110),
+    justifyContent: 'space-between',
+    paddingVertical: vh(20),
+  },
+  contentLineSeperator: {
+    height: vh(1),
     backgroundColor: color.lightGreen,
   },
 });
