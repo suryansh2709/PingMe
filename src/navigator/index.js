@@ -13,7 +13,6 @@ const Stack = createNativeStackNavigator();
 function Navigation() {
   const appState = useRef(AppState.currentState);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
-  console.log('dattttttt', loggedInUser);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {

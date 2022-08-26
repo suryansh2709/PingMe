@@ -5,6 +5,7 @@ import {
   Text,
   Platform,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import HomeHeader from '../../../components/commonHomeHeader';
@@ -17,6 +18,7 @@ import {string} from '../../../utils/strings';
 import Loader from '../../../components/loader';
 import {setUser} from '../../../redux/auth/action';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import firestore from '@react-native-firebase/firestore';
 
 const ChatList = () => {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
@@ -24,6 +26,7 @@ const ChatList = () => {
   const [loader, setLoader] = useState(false);
   const [showTip, setTip] = useState(false);
   const dispatch = useDispatch();
+  const [staticData, setStaticData] = useState([]);
 
   useEffect(() => {
     getUsers(
@@ -40,14 +43,16 @@ const ChatList = () => {
 
   const handleTooltipPress = () => {
     setTip(!showTip);
-    navigation.navigate(string.profile, {uid: userId});
+    navigation.navigate(string.profile, {});
   };
 
   const handleLogOut = () => {
     setTip(!showTip);
     setLoader(true);
+    console.log('handle logOut');
     logOut(
       () => {
+        console.log('logh');
         setLoader(false);
         dispatch(setUser({}));
         navigation.dispatch(StackActions.replace(string.loginStack));
@@ -73,8 +78,6 @@ const ChatList = () => {
     return <View style={styles.itemSeperatorView} />;
   };
 
-  const [staticData, setStaticData] = useState([]);
-
   /**
    * renders the chat list.
    */
@@ -93,6 +96,7 @@ const ChatList = () => {
       );
     },
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [staticData],
   );
 
@@ -119,14 +123,13 @@ const ChatList = () => {
               {'Profile'}
             </Text>
             <View style={styles.contentLineSeperator} />
-            <Text style={styles.toolTipTextStyle} onPress={handleLogOut}>
+            <Text onPress={handleLogOut} style={styles.toolTipTextStyle}>
               {'Logout'}
             </Text>
           </View>
         }
         onClose={() => setTip(!showTip)}
       />
-
       <FlatList
         data={staticData}
         renderItem={onRender}
