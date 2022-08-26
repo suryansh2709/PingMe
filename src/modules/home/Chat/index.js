@@ -1,4 +1,11 @@
-import {FlatList, SafeAreaView, View} from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  View,
+  Text,
+  Platform,
+  StatusBar,
+} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import HomeHeader from '../../../components/commonHomeHeader';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,11 +16,13 @@ import {StackActions, useNavigation} from '@react-navigation/native';
 import {string} from '../../../utils/strings';
 import Loader from '../../../components/loader';
 import {setUser} from '../../../redux/auth/action';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
 const ChatList = () => {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
   const navigation = useNavigation();
   const [loader, setLoader] = useState(false);
+  const [showTip, setTip] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,7 +38,13 @@ const ChatList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleTooltipPress = () => {
+    setTip(!showTip);
+    navigation.navigate(string.profile, {uid: userId});
+  };
+
   const handleLogOut = () => {
+    setTip(!showTip);
     setLoader(true);
     logOut(
       () => {
@@ -66,7 +81,6 @@ const ChatList = () => {
   const onRender = useCallback(
     ({item}) => {
       const {displayImage, fName, lName, id, isActive} = item;
-      console.log('asdfghjkjhg', staticData);
 
       return (
         <RenderChatCard
@@ -81,9 +95,38 @@ const ChatList = () => {
 
     [staticData],
   );
+
+  const toolTip = () => {
+    setTip(!showTip);
+  };
   return (
     <SafeAreaView style={styles.homeMainView}>
-      <HomeHeader handleLogOut={handleLogOut} />
+      <HomeHeader
+        toolTip={toolTip}
+        addFriend={() => {
+          navigation.navigate('AddFriend');
+        }}
+      />
+      <Tooltip
+        topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
+        backgroundColor="transparent"
+        placement="right"
+        contentStyle={styles.toolTipContainer}
+        isVisible={showTip}
+        content={
+          <View style={styles.tooTipContentMainView}>
+            <Text style={styles.toolTipTextStyle} onPress={handleTooltipPress}>
+              {'Profile'}
+            </Text>
+            <View style={styles.contentLineSeperator} />
+            <Text style={styles.toolTipTextStyle} onPress={handleLogOut}>
+              {'Logout'}
+            </Text>
+          </View>
+        }
+        onClose={() => setTip(!showTip)}
+      />
+
       <FlatList
         data={staticData}
         renderItem={onRender}
@@ -91,6 +134,7 @@ const ChatList = () => {
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={_itemSeperator}
       />
+
       <Loader loader={loader} />
     </SafeAreaView>
   );
