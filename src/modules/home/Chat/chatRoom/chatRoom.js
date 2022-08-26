@@ -1,17 +1,16 @@
 import React, {useState, useCallback, useLayoutEffect} from 'react';
-import {Image, View} from 'react-native';
-import {Bubble, GiftedChat, InputToolbar, Send} from 'react-native-gifted-chat';
+import {View} from 'react-native';
+import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import {useRoute} from '@react-navigation/native';
-import {styles} from './style';
-import {string} from '../../../utils/strings';
-import localImages from '../../../utils/localImages';
-import {addMessagges} from '../../../utils/commonFunctions';
-
+import {styles} from '../style';
+import {string} from '../../../../utils/strings';
+import {addMessagges} from '../../../../utils/commonFunctions';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import ChatHeader from './chatHeader';
-
+import ChatHeader from '../chatHeader';
+import RenderBubble from './chatBubble';
+import RenderSend from './chatSend';
 export function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
@@ -47,35 +46,9 @@ export function ChatRoom() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const renderSend = props => {
-    return (
-      <Send {...props}>
-        <View style={styles.chatSend}>
-          <Image source={localImages.sendButton} style={styles.sendButton} />
-        </View>
-      </Send>
-    );
-  };
-
   const renderInputToolbar = props => {
     return (
       <InputToolbar containerStyle={styles.chatInputViewStyle} {...props} />
-    );
-  };
-
-  const renderBubble = props => {
-    return (
-      <Bubble
-        {...props}
-        wrapperStyle={{
-          right: {
-            backgroundColor: '#4FBC87',
-          },
-          left: {
-            backgroundColor: '#EFEEF4',
-          },
-        }}
-      />
     );
   };
 
@@ -92,8 +65,8 @@ export function ChatRoom() {
           {paddingTop: getStatusBarHeight()},
         ]}
         showAvatarForEveryMessage={true}
-        renderSend={renderSend}
-        renderBubble={renderBubble}
+        renderSend={RenderSend}
+        enderBubble={RenderBubble}
         messages={messages}
         onSend={message => onSend(message)}
         user={{
