@@ -1,22 +1,20 @@
 import React, {useState, useCallback, useLayoutEffect} from 'react';
-import {Image, View} from 'react-native';
-import {Bubble, GiftedChat, InputToolbar, Send} from 'react-native-gifted-chat';
+import {View} from 'react-native';
+import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import {useRoute} from '@react-navigation/native';
-import {styles} from './style';
-import {string} from '../../../utils/strings';
-import localImages from '../../../utils/localImages';
-import {addMessagges} from '../../../utils/commonFunctions';
-
+import {styles} from '../style';
+import {string} from '../../../../utils/strings';
+import {addMessagges} from '../../../../utils/commonFunctions';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import ChatHeader from './chatHeader';
-
+import ChatHeader from '../chatHeader';
+import RenderBubble from './chatBubble';
+import RenderSend from './chatSend';
 export function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
-  const {id, fName, isActive, displayImage, handleLastMessage} =
-    useRoute().params;
+  const {id, fName, isActive, displayImage} = useRoute().params;
   const docId =
     loggedInUser?.uid > id
       ? loggedInUser?.uid + '-' + id
@@ -37,47 +35,36 @@ export function ChatRoom() {
   }, []);
 
   const onSend = useCallback((message = []) => {
+    console.log('if');
     const msg = message[0];
-    handleLastMessage(message[0]?.text?.slice(-1));
     const myMsg = {
       ...msg,
       sentBy: loggedInUser?.uid,
       sentTo: id,
     };
+    if (messages.length === 0) {
+      firestore()
+        .collection('Users')
+        .doc(loggedInUser?.uid)
+        .collection('Inbox')
+        .doc(id)
+        .set({id: id, lastMessage: myMsg});
+    } else {
+      firestore()
+        .collection('Users')
+        .doc(loggedInUser?.uid)
+        .collection('Inbox')
+        .doc(id)
+        .update({lastMessage: msg});
+    }
     setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
     addMessagges(docId, myMsg);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const renderSend = props => {
-    return (
-      <Send {...props}>
-        <View style={styles.chatSend}>
-          <Image source={localImages.sendButton} style={styles.sendButton} />
-        </View>
-      </Send>
-    );
-  };
-
   const renderInputToolbar = props => {
     return (
       <InputToolbar containerStyle={styles.chatInputViewStyle} {...props} />
-    );
-  };
-
-  const renderBubble = props => {
-    return (
-      <Bubble
-        {...props}
-        wrapperStyle={{
-          right: {
-            backgroundColor: '#4FBC87',
-          },
-          left: {
-            backgroundColor: '#EFEEF4',
-          },
-        }}
-      />
     );
   };
 
@@ -94,8 +81,8 @@ export function ChatRoom() {
           {paddingTop: getStatusBarHeight()},
         ]}
         showAvatarForEveryMessage={true}
-        renderSend={renderSend}
-        renderBubble={renderBubble}
+        renderSend={RenderSend}
+        renderBubble={RenderBubble}
         messages={messages}
         onSend={message => onSend(message)}
         user={{
