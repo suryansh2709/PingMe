@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useLayoutEffect, useEffect} from 'react';
-import {View} from 'react-native';
+import {Clipboard, View} from 'react-native';
 import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
@@ -17,13 +17,14 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import ChatHeader from '../chatHeader';
 import RenderBubble from './chatBubble';
 import RenderSend from './chatSend';
+import {normalize, vh} from '../../../../utils/dimensions';
 
 export function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const [getTypingStatus, setGetTypingStatus] = useState(false);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
-  const {id, fName, isActive, displayImage} = useRoute().params;
+  const {id, fName, isActive, displayImage, lastMessage} = useRoute().params;
   console.log(id, fName, isActive, displayImage, 'checking');
   const docId =
     loggedInUser?.uid > id
@@ -36,13 +37,39 @@ export function ChatRoom() {
       .doc(docId)
       .collection(string.messages)
       .onSnapshot(doc => {
+        handleDeliverdStatus();
         const dataArray = doc?._docs.map(element => element._data);
         dataArray.sort((a, b) => b.createdAt - a.createdAt);
-        setMessages(dataArray);
+        let newmsgs = dataArray.filter(item => {
+          if (item?.deletedForEveryOne) {
+            return false;
+          } else if (item?.deletedBy) {
+            return item?.deletedBy !== loggedInUser?.uid;
+          } else {
+            return true;
+          }
+        });
+        console.log('newmsgs', newmsgs);
+        setMessages(newmsgs);
       });
+
     return subscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const handleDeliverdStatus = async () => {
+    const delivered = await firestore()
+      .collection(string.homeChatRoom)
+      .doc(docId)
+      .collection('messages')
+      .get();
+    const batch = firestore()?.batch();
+    delivered.forEach(documentSnapshot => {
+      if (documentSnapshot._data.sentTo === loggedInUser?.uid) {
+        batch.update(documentSnapshot.ref, {received: true});
+      }
+    });
+    return batch.commit();
+  };
 
   const debounce = useCallback((fun, timeout) => {
     let timer;
@@ -55,12 +82,95 @@ export function ChatRoom() {
     };
   }, []);
 
+  const deletForMe = msg => {
+    firestore()
+      .collection(string.homeChatRoom)
+      .doc(docId)
+      .collection(string.messages)
+      .doc(msg?._id)
+      .update({...msg, deletedBy: loggedInUser?.uid})
+      .then(() => {
+        if (messages[0]?._id === msg?._id) {
+          updateInbox(loggedInUser?.uid, id, {
+            lastMessage: messages[1],
+            isActive,
+          });
+        }
+      });
+  };
+
+  const deletedForEveryOne = msg => {
+    firestore()
+      .collection(string.homeChatRoom)
+      .doc(docId)
+      .collection(string.messages)
+      .doc(msg?._id)
+      .update({...msg, deletedForEveryOne: true})
+      .then(() => {
+        if (messages[0]?._id === msg?._id) {
+          updateInbox(loggedInUser?.uid, id, {
+            lastMessage: messages[1],
+            isActive,
+          });
+        }
+      });
+  };
+
+  const handleLongPress = (context, message) => {
+    console.log('context-->', context, 'message =>', message);
+    let options, cancelButtonIndex;
+    if (message.sentBy === loggedInUser?.uid) {
+      options = ['Copy', 'Delete for me', 'Delete for everyone', 'Cancel'];
+      cancelButtonIndex = options.length;
+      context
+        .actionSheet()
+        .showActionSheetWithOptions(
+          {options, cancelButtonIndex},
+          buttonIndex => {
+            switch (buttonIndex) {
+              case 0:
+                Clipboard.setString(message.text);
+                break;
+              case 1:
+                deletForMe(message);
+                break;
+              case 2:
+                deletedForEveryOne(message);
+                break;
+            }
+          },
+        );
+    } else {
+      options = ['Copy', 'Delete for me', 'Cancel'];
+      cancelButtonIndex = options.length;
+      context
+        .actionSheet()
+        .showActionSheetWithOptions(
+          {options, cancelButtonIndex},
+          buttonIndex => {
+            switch (buttonIndex) {
+              case 0:
+                Clipboard.setString(message.text);
+                break;
+              case 1:
+                deletForMe(message);
+                break;
+            }
+          },
+        );
+    }
+  };
+
   const onSend = useCallback((message = []) => {
     const msg = message[0];
     const myMsg = {
       ...msg,
       sentBy: loggedInUser?.uid,
       sentTo: id,
+      deletedBy: '',
+      sent: true,
+      received: false,
+      deletedForEveryOne: false,
     };
     if (messages.length === 0) {
       let param_1 = {fName, displayImage, id, lastMessage: myMsg, isActive};
@@ -111,7 +221,10 @@ export function ChatRoom() {
       <GiftedChat
         messagesContainerStyle={[
           styles.messageContainerView,
-          {paddingTop: getStatusBarHeight()},
+          {
+            top: getStatusBarHeight() + normalize(25),
+            paddingBottom: vh(80),
+          },
         ]}
         showAvatarForEveryMessage={true}
         renderSend={RenderSend}
@@ -120,11 +233,12 @@ export function ChatRoom() {
         onSend={message => onSend(message)}
         user={{
           _id: loggedInUser?.uid,
-          avatar: 'https://placeimg.com/140/140/any',
+          avatar: loggedInUser?.displayImage,
         }}
         isTyping={getTypingStatus}
         isKeyboardInternallyHandled={true}
         renderInputToolbar={renderInputToolbar}
+        onLongPress={handleLongPress}
         onInputTextChanged={detectTyping}
       />
     </View>

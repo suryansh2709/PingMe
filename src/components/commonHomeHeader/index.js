@@ -1,9 +1,10 @@
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import {vh, vw} from '../../utils/dimensions';
 import localImages from '../../utils/localImages';
 import {color} from '../../utils/colors';
 import LinearGradient from 'react-native-linear-gradient';
+import IconButton from '../iconButtons';
 
 export default function HomeHeader({
   toolTip,
@@ -20,24 +21,21 @@ export default function HomeHeader({
         {'քɨռɢʍɛ'}
       </Text>
       <View style={styles.iconImageView}>
-        <TouchableOpacity onPress={onsearchPress}>
-          <Image
-            source={localImages.homeSearchIcon}
-            style={styles.headerIconImage}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={addFriend}>
-          <Image
-            source={localImages.homeAddIcon}
-            style={styles.headerIconImage}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={toolTip} activeOpacity={0.8}>
-          <Image
-            source={localImages.homeMenuIcon}
-            style={styles.headerIconImage}
-          />
-        </TouchableOpacity>
+        <IconButton
+          onPress={onsearchPress}
+          imageStyle={styles.headerIconImage}
+          image={localImages.homeSearchIcon}
+        />
+        <IconButton
+          onPress={addFriend}
+          image={localImages.homeAddIcon}
+          imageStyle={styles.headerIconImage}
+        />
+        <IconButton
+          onPress={toolTip}
+          image={localImages.homeMenuIcon}
+          imageStyle={styles.headerIconImage}
+        />
       </View>
     </LinearGradient>
   );

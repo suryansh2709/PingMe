@@ -155,14 +155,12 @@ const ChatList = () => {
         }}
         onsearchPress={searchPress}
       />
-      {/* ) : ( */}
       <SearchHeader
         search={search}
         setSearch={setSearch}
         animatedStyle={scale}
         onBackPress={backPress}
       />
-      {/* )} */}
       <Tooltip
         topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
         backgroundColor="transparent"

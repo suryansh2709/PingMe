@@ -35,7 +35,8 @@ export const addMessagges = async (docId, myMsg) => {
       .collection(string.homeChatRoom)
       .doc(docId)
       .collection(string.messages)
-      .add({...myMsg, createdAt: new Date().getTime()});
+      .doc(myMsg._id)
+      .set({...myMsg, createdAt: new Date().getTime()});
   } catch (e) {}
 };
 
