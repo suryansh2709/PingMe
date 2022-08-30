@@ -12,6 +12,7 @@ import {getUsers, showToast} from '../../../../utils/commonFunctions';
 import {useSelector} from 'react-redux';
 import {styles} from '../style';
 import {string} from '../../../../utils/strings';
+import ContactHeader from './contactListHeader';
 
 export default function AddFriend() {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
@@ -61,6 +62,7 @@ export default function AddFriend() {
   };
   return (
     <SafeAreaView style={{flex: 1}}>
+      <ContactHeader />
       <Text
         onPress={() => {
           navigation.goBack();
