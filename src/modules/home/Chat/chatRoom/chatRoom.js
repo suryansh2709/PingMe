@@ -89,9 +89,9 @@ export function ChatRoom() {
           _id: loggedInUser?.uid,
           avatar: 'https://placeimg.com/140/140/any',
         }}
-        isTyping={true}
         isKeyboardInternallyHandled={true}
         renderInputToolbar={renderInputToolbar}
+        isTyping={true}
       />
     </View>
   );

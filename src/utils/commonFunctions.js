@@ -38,22 +38,6 @@ export const addMessagges = async (docId, myMsg) => {
       .add({...myMsg, createdAt: new Date().getTime()});
   } catch (e) {}
 };
-export const handleError = code => {
-  switch (code) {
-    case string.invalidPhoneCase:
-      showToast(string.invalidPhoneNumber);
-      break;
-    case string.tooManyCase:
-      showToast(string.requestExceed);
-      break;
-    case string.networkIsuueCase:
-      showToast(string.networkIsuue);
-      break;
-    case string.invalidOtpCase:
-      showToast(string);
-      break;
-  }
-};
 
 export async function confirmOtp(
   confirm,
@@ -121,5 +105,22 @@ export const logOut = async (successCallback, failureCallback) => {
   } catch (err) {
     console.log(err);
     failureCallback(err);
+  }
+};
+
+export const handleError = code => {
+  switch (code) {
+    case string.invalidPhoneCase:
+      showToast(string.invalidPhoneNumber);
+      break;
+    case string.tooManyCase:
+      showToast(string.requestExceed);
+      break;
+    case string.networkIsuueCase:
+      showToast(string.networkIsuue);
+      break;
+    case string.invalidOtpCase:
+      showToast(string);
+      break;
   }
 };

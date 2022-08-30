@@ -5,7 +5,7 @@ import {
   Text,
   Platform,
   StatusBar,
-  TouchableOpacity,
+  Animated,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import HomeHeader from '../../../components/commonHomeHeader';
@@ -18,15 +18,33 @@ import {string} from '../../../utils/strings';
 import Loader from '../../../components/loader';
 import {setUser} from '../../../redux/auth/action';
 import Tooltip from 'react-native-walkthrough-tooltip';
-import firestore from '@react-native-firebase/firestore';
+import SearchHeader from './searchHeader';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 const ChatList = () => {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
   const navigation = useNavigation();
   const [loader, setLoader] = useState(false);
   const [showTip, setTip] = useState(false);
+  const [search, setSearch] = useState(true);
+  const transform = useState(new Animated.Value(0))[0];
   const dispatch = useDispatch();
   const [staticData, setStaticData] = useState([]);
+
+  let scale = {
+    transform: [
+      {
+        scale: transform.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 1],
+          extrapolate: 'clamp',
+        }),
+      },
+    ],
+    position: 'absolute',
+    top: getStatusBarHeight(),
+    zIndex: 10,
+  };
 
   useEffect(() => {
     getUsers(
@@ -100,17 +118,45 @@ const ChatList = () => {
     [staticData],
   );
 
+  const searchPress = () => {
+    Animated.timing(transform, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const backPress = () => {
+    Animated.timing(transform, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+
   const toolTip = () => {
     setTip(!showTip);
   };
   return (
     <SafeAreaView style={styles.homeMainView}>
+      {/* {search ? ( */}
       <HomeHeader
+        search={search}
+        setSearch={setSearch}
         toolTip={toolTip}
         addFriend={() => {
           navigation.navigate('AddFriend');
         }}
+        onsearchPress={searchPress}
       />
+      {/* ) : ( */}
+      <SearchHeader
+        search={search}
+        setSearch={setSearch}
+        animatedStyle={scale}
+        onBackPress={backPress}
+      />
+      {/* )} */}
       <Tooltip
         topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
         backgroundColor="transparent"
