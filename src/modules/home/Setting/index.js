@@ -4,9 +4,12 @@ import React, {useState} from 'react';
 import localImages from '../../../utils/localImages';
 import Data from './utils';
 import styles from './style';
+import Profile from './userProfile';
+import {vh} from '../../../utils/dimensions';
 
 const Setting = () => {
   const [list, setList] = useState(Data);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const onRender = ({item}) => {
     if (item?.id < 3 || (item?.id > 3 && item?.id < 7) || item?.id > 7) {
@@ -59,7 +62,16 @@ const Setting = () => {
         <Text style={styles.headerText}>{'More'}</Text>
       </View>
       <View style={styles.userDataMainView}>
-        <TouchableOpacity style={styles.userDataView} activeOpacity={0.6}>
+        {modalVisible ? (
+          <Profile
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+          />
+        ) : null}
+        <TouchableOpacity
+          style={styles.userDataView}
+          activeOpacity={0.6}
+          onPress={() => setModalVisible(true)}>
           <View style={styles.userNameView}>
             <Image source={localImages.user} style={styles.userImageStyle} />
             <View style={styles.userNameText}>
