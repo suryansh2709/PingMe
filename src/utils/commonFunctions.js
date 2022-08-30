@@ -17,13 +17,13 @@ export const showToast = message => {
 
 export const getUsers = async (uid, successCallback, failureCallback) => {
   try {
-    const querySnap = await firestore()
+    await firestore()
       .collection('Users')
       .where('id', '!=', uid)
-      .get();
-    const allUsers = querySnap.docs?.map(docSnap => docSnap.data());
-    console.log('alluser', allUsers);
-    successCallback(allUsers);
+      .onSnapshot(doc => {
+        const dataArray = doc?._docs.map(element => element._data);
+        successCallback(dataArray);
+      });
   } catch (err) {
     failureCallback(err);
   }
@@ -113,8 +113,11 @@ export async function handleDisplayImage() {
     });
 }
 
-export const logOut = async (successCallback, failureCallback) => {
+export const logOut = async (uid, successCallback, failureCallback) => {
   try {
+    firestore().collection('Users').doc(uid).update({
+      isActive: true,
+    });
     const logOutSucces = auth().signOut();
     console.log('logOutSucces', logOutSucces);
     successCallback();
@@ -122,4 +125,43 @@ export const logOut = async (successCallback, failureCallback) => {
     console.log(err);
     failureCallback(err);
   }
+};
+
+export const setInbox = (id_1, id_2, param) => {
+  firestore()
+    .collection('Users')
+    .doc(id_1)
+    .collection('Inbox')
+    .doc(id_2)
+    .set(param);
+};
+
+export const updateInbox = (id_1, id_2, param) => {
+  firestore()
+    .collection('Users')
+    .doc(id_1)
+    .collection('Inbox')
+    .doc(id_2)
+    .update(param);
+};
+
+export const saveTypingStatusOnFireStore = (id_1, id_2, param) => {
+  firestore()
+    .collection('chatroom')
+    .doc(id_1)
+    .collection('typingStatus')
+    .doc(id_2)
+    .set(param);
+};
+
+export const getTypingStatusFromFireBase = (id_1, id_2, callback) => {
+  firestore()
+    .collection('chatroom')
+    .doc(id_1)
+    .collection('typingStatus')
+    .doc(id_2)
+    .onSnapshot(onchange => {
+      let typing = onchange?.data();
+      callback(typing);
+    });
 };

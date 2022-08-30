@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useLayoutEffect} from 'react';
+import React, {useState, useCallback, useLayoutEffect, useEffect} from 'react';
 import {View} from 'react-native';
 import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
@@ -6,15 +6,25 @@ import firestore from '@react-native-firebase/firestore';
 import {useRoute} from '@react-navigation/native';
 import {styles} from '../style';
 import {string} from '../../../../utils/strings';
-import {addMessagges} from '../../../../utils/commonFunctions';
+import {
+  addMessagges,
+  getTypingStatusFromFireBase,
+  saveTypingStatusOnFireStore,
+  setInbox,
+  updateInbox,
+} from '../../../../utils/commonFunctions';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import ChatHeader from '../chatHeader';
 import RenderBubble from './chatBubble';
 import RenderSend from './chatSend';
+
 export function ChatRoom() {
   const [messages, setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const [getTypingStatus, setGetTypingStatus] = useState(false);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
   const {id, fName, isActive, displayImage} = useRoute().params;
+  console.log(id, fName, isActive, displayImage, 'checking');
   const docId =
     loggedInUser?.uid > id
       ? loggedInUser?.uid + '-' + id
@@ -34,8 +44,18 @@ export function ChatRoom() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const debounce = useCallback((fun, timeout) => {
+    let timer;
+    return args => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        fun(false);
+      }, timeout);
+      fun(true);
+    };
+  }, []);
+
   const onSend = useCallback((message = []) => {
-    console.log('if');
     const msg = message[0];
     const myMsg = {
       ...msg,
@@ -43,19 +63,18 @@ export function ChatRoom() {
       sentTo: id,
     };
     if (messages.length === 0) {
-      firestore()
-        .collection('Users')
-        .doc(loggedInUser?.uid)
-        .collection('Inbox')
-        .doc(id)
-        .set({id: id, lastMessage: myMsg});
+      let param_1 = {fName, displayImage, id, lastMessage: myMsg, isActive};
+      let param_2 = {
+        fName: loggedInUser?.fName,
+        displayImage: loggedInUser?.displayImage,
+        id: loggedInUser?.uid,
+        lastMessage: myMsg,
+        isActive: isActive,
+      };
+      setInbox(loggedInUser?.uid, id, param_1);
+      setInbox(id, loggedInUser?.uid, param_2);
     } else {
-      firestore()
-        .collection('Users')
-        .doc(loggedInUser?.uid)
-        .collection('Inbox')
-        .doc(id)
-        .update({lastMessage: msg});
+      updateInbox(loggedInUser?.uid, id, {lastMessage: myMsg, isActive});
     }
     setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
     addMessagges(docId, myMsg);
@@ -68,13 +87,27 @@ export function ChatRoom() {
     );
   };
 
+  useEffect(() => {
+    saveTypingStatusOnFireStore(docId, loggedInUser?.uid, {typing: isTyping});
+    getTypingStatusFromFireBase(docId, id, typing => {
+      setGetTypingStatus(typing?.typing);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTyping]);
+
+  const startTyping = debounce(arg => {
+    setIsTyping(arg);
+  }, 2000);
+
+  const detectTyping = text => {
+    if (text.length > 0) {
+      startTyping();
+    }
+  };
+
   return (
     <View style={styles.giftedChatMainView}>
-      <ChatHeader
-        fName={fName}
-        isActive={isActive}
-        displayImage={displayImage}
-      />
+      <ChatHeader id={id} fName={fName} displayImage={displayImage} />
       <GiftedChat
         messagesContainerStyle={[
           styles.messageContainerView,
@@ -89,9 +122,10 @@ export function ChatRoom() {
           _id: loggedInUser?.uid,
           avatar: 'https://placeimg.com/140/140/any',
         }}
-        isTyping={true}
+        isTyping={getTypingStatus}
         isKeyboardInternallyHandled={true}
         renderInputToolbar={renderInputToolbar}
+        onInputTextChanged={detectTyping}
       />
     </View>
   );

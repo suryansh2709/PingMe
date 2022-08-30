@@ -20,13 +20,24 @@ function Navigation() {
         appState.current.match(/inactive|background/) &&
         nextAppState === 'active'
       ) {
-        firestore().collection('Users').doc(loggedInUser?.uid).update({
-          isActive: true,
-        });
+        console.log(loggedInUser);
+        firestore()
+          .collection('Users')
+          .doc(loggedInUser?.uid)
+          .update({
+            isActive: true,
+          })
+          .then(res => console.log('res', res))
+          .catch(err => console.log('err', err));
       } else {
-        firestore().collection('Users').doc(loggedInUser?.uid).update({
-          isActive: false,
-        });
+        firestore()
+          .collection('Users')
+          .doc(loggedInUser?.uid)
+          .update({
+            isActive: false,
+          })
+          .then(res => console.log('res', res))
+          .catch(err => console.log('err', err));
       }
       appState.current = nextAppState;
     });

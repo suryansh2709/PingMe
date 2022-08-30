@@ -6,6 +6,7 @@ import UserProfile from '../../modules/Login/userProfile';
 import {ChatRoom} from '../../modules/Home/Chat/chatRoom/chatRoom';
 import Home from '../../modules/Home';
 import {string} from '../../utils/strings';
+import AddFriend from '../../modules/Home/Chat/addFriend';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ export function HomeStack() {
       screenOptions={{headerShown: false}}>
       <Stack.Screen name={string.home} component={Home} />
       <Stack.Screen name={string.chatRoom} component={ChatRoom} />
+      <Stack.Screen name={'AddFriend'} component={AddFriend} />
     </Stack.Navigator>
   );
 }

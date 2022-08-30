@@ -5,14 +5,13 @@ import {
   Text,
   Platform,
   StatusBar,
-  TouchableOpacity,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import HomeHeader from '../../../components/commonHomeHeader';
 import {useDispatch, useSelector} from 'react-redux';
 import {styles} from './style';
 import RenderChatCard from './renderChatCard';
-import {getUsers, logOut, showToast} from '../../../utils/commonFunctions';
+import {logOut, showToast} from '../../../utils/commonFunctions';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import {string} from '../../../utils/strings';
 import Loader from '../../../components/loader';
@@ -29,15 +28,16 @@ const ChatList = () => {
   const [staticData, setStaticData] = useState([]);
 
   useEffect(() => {
-    getUsers(
-      loggedInUser.uid,
-      allUsers => {
-        setStaticData(allUsers);
-      },
-      err => {
-        console.log(err);
-      },
-    );
+    const abc = firestore()
+      .collection('Users')
+      .doc(loggedInUser.uid)
+      .collection('Inbox')
+      .onSnapshot(doc => {
+        const dataArray = doc?._docs.map(element => element._data);
+        setStaticData(dataArray);
+        console.log('dataArray', dataArray);
+      });
+    console.log('abc', abc);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -49,13 +49,15 @@ const ChatList = () => {
   const handleLogOut = () => {
     setTip(!showTip);
     setLoader(true);
-    console.log('handle logOut');
     logOut(
+      loggedInUser?.uid,
       () => {
         console.log('logh');
-        setLoader(false);
-        dispatch(setUser({}));
-        navigation.dispatch(StackActions.replace(string.loginStack));
+        setTimeout(() => {
+          setLoader(false);
+          dispatch(setUser({}));
+          navigation.dispatch(StackActions.replace(string.loginStack));
+        }, 1000);
       },
       error => {
         setLoader(false);
@@ -70,8 +72,8 @@ const ChatList = () => {
    * @returns id
    */
 
-  const _keyExtractor = ({id}) => {
-    return id;
+  const _keyExtractor = ({fName}) => {
+    return fName + '1';
   };
 
   const _itemSeperator = () => {
@@ -83,7 +85,8 @@ const ChatList = () => {
    */
   const onRender = useCallback(
     ({item}) => {
-      const {displayImage, fName, lName, id, isActive} = item;
+      const {displayImage, fName, lName, id, isActive, lastMessage} = item;
+      console.log('lastMessage', lastMessage);
 
       return (
         <RenderChatCard
@@ -91,6 +94,7 @@ const ChatList = () => {
           fName={fName}
           lName={lName}
           isActive={isActive}
+          lastMessage={lastMessage}
           displayImage={displayImage}
         />
       );
