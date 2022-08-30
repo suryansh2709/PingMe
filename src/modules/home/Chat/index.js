@@ -20,6 +20,7 @@ import {setUser} from '../../../redux/auth/action';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import SearchHeader from './searchHeader';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import firestore from '@react-native-firebase/firestore';
 
 const ChatList = () => {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
