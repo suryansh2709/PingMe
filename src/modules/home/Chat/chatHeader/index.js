@@ -1,12 +1,25 @@
 import {Text, View, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import localImages from '../../../../utils/localImages';
 import {styles} from './style';
 import {vh, vw} from '../../../../utils/dimensions';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
-export default function ChatHeader({fName, isActive, displayImage}) {
+export default function ChatHeader({fName, id, displayImage}) {
+  const [isActive, setisActive] = useState(false);
+  console.log('isActive', isActive);
+  useEffect(() => {
+    const activeUserListener = firestore()
+      .collection('Users')
+      .doc(id)
+      .onSnapshot(documentSnapshot => {
+        setisActive(documentSnapshot?.data()?.isActive);
+      });
+    console.log('activeUserListener', activeUserListener);
+    return activeUserListener;
+  }, []);
   const navigation = useNavigation();
   return (
     <LinearGradient

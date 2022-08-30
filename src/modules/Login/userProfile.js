@@ -47,6 +47,7 @@ export default function UserProfile() {
       width: 300,
       height: 400,
       cropping: true,
+      compressImageQuality: 0.2,
     })
       .then(res => {
         if (Platform.OS === 'ios') {

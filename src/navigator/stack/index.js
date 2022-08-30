@@ -3,10 +3,10 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../../modules/Login';
 import OtpScreen from '../../modules/Login/otpScreen';
 import UserProfile from '../../modules/Login/userProfile';
-import {ChatRoom} from '../../modules/home/Chat/chatRoom/chatRoom';
-import Home from '../../modules/home';
+import Home from '../../modules/Home';
 import {string} from '../../utils/strings';
-import AddFriend from '../../modules/home/Chat/addFriend';
+import AddFriend from '../../modules/Home/Chat/addFriend';
+import {ChatRoom} from '../../modules/Home/Chat/chatRoom/chatRoom';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +29,7 @@ export function HomeStack() {
       screenOptions={{headerShown: false}}>
       <Stack.Screen name={string.home} component={Home} />
       <Stack.Screen name={string.chatRoom} component={ChatRoom} />
-      <Stack.Screen name="AddFriend" component={AddFriend} />
+      <Stack.Screen name={'AddFriend'} component={AddFriend} />
     </Stack.Navigator>
   );
 }
