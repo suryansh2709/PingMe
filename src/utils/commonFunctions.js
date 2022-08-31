@@ -35,7 +35,8 @@ export const addMessagges = async (docId, myMsg) => {
       .collection(string.homeChatRoom)
       .doc(docId)
       .collection(string.messages)
-      .add({...myMsg, createdAt: new Date().getTime()});
+      .doc(myMsg._id)
+      .set({...myMsg, createdAt: new Date().getTime()});
   } catch (e) {}
 };
 
@@ -165,4 +166,36 @@ export const handleError = code => {
       showToast(string);
       break;
   }
+};
+
+export const updateChat = (
+  id_1,
+  id_2,
+  param,
+  successCallback,
+  failureCallback,
+) => {
+  firestore()
+    .collection(string.homeChatRoom)
+    .doc(id_1)
+    .collection(string.messages)
+    .doc(id_2)
+    .update(param)
+    .then(() => {
+      successCallback();
+    })
+    .catch(() => {
+      failureCallback();
+    });
+};
+
+export const debounce = (fun, timeout) => {
+  let timer;
+  return args => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fun(false);
+    }, timeout);
+    fun(true);
+  };
 };

@@ -29,7 +29,7 @@ export default function UserProfile() {
     fName: '',
     lName: '',
     date: new Date(),
-    gender: '',
+    about: '',
     displayImage: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
   });
   const [loader, setLoader] = useState(false);
@@ -115,7 +115,11 @@ export default function UserProfile() {
   };
 
   const isDisable = () => {
-    if (infoDetails.userName.length > 4 && infoDetails.fName.length > 2) {
+    if (
+      infoDetails.userName.length > 4 &&
+      infoDetails.fName.length > 2 &&
+      infoDetails.about.length > 5
+    ) {
       return false;
     } else {
       return true;
@@ -204,9 +208,9 @@ export default function UserProfile() {
           width={335}
           color={color.lightGrey}
           style={styles.userInputStyle}
-          placeholder={string.gender}
+          placeholder={string.about}
           onChangeText={text => {
-            setInfoDetails({...infoDetails, gender: text});
+            setInfoDetails({...infoDetails, about: text});
           }}
         />
       </View>

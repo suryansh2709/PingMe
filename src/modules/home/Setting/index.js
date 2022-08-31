@@ -4,12 +4,15 @@ import React, {useState} from 'react';
 import localImages from '../../../utils/localImages';
 import Data from './utils';
 import styles from './style';
-import Profile from './userProfile';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 import {vh} from '../../../utils/dimensions';
+import {color} from '../../../utils/colors';
 
 const Setting = () => {
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
+  const navigation = useNavigation();
   const [list, setList] = useState(Data);
-  const [modalVisible, setModalVisible] = useState(false);
 
   const onRender = ({item}) => {
     if (item?.id < 3 || (item?.id > 3 && item?.id < 7) || item?.id > 7) {
@@ -62,21 +65,24 @@ const Setting = () => {
         <Text style={styles.headerText}>{'More'}</Text>
       </View>
       <View style={styles.userDataMainView}>
-        {modalVisible ? (
-          <Profile
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-          />
-        ) : null}
         <TouchableOpacity
           style={styles.userDataView}
           activeOpacity={0.6}
-          onPress={() => setModalVisible(true)}>
+          onPress={() => {
+            navigation.navigate('Profile');
+          }}>
           <View style={styles.userNameView}>
-            <Image source={localImages.user} style={styles.userImageStyle} />
+            <View style={styles.userImageView}>
+              <Image
+                source={{uri: loggedInUser.displayImage}}
+                style={styles.userImageStyle}
+              />
+            </View>
             <View style={styles.userNameText}>
-              <Text style={styles.userNameTextStyle}>{'Shubhankar'}</Text>
-              <Text style={styles.userNamePhoneStyle}>{'1234567890'}</Text>
+              <Text style={styles.userNameTextStyle}>{loggedInUser.fName}</Text>
+              <Text style={styles.userNamePhoneStyle}>
+                {loggedInUser.phoneNumber}
+              </Text>
             </View>
           </View>
           <TouchableOpacity>

@@ -12,6 +12,7 @@ export default {
   videoIcon: require('../assets/images/video.png'),
   sendButton: require('../assets/images/send.png'),
   homeAddIcon: require('../assets/images/plus.png'),
+  pencilIcon: require('../assets/images/pencil.png'),
   statusIcon: require('../assets/images/status.png'),
   homeMenuIcon: require('../assets/images/menu.png'),
   warningIcon: require('../assets/images/warning.png'),

@@ -6,6 +6,9 @@ import {vh, vw} from '../../../../utils/dimensions';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
+import IconButton from '../../../../components/iconButtons';
+import FastImage from 'react-native-fast-image';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
 export default function ChatHeader({fName, id, displayImage, toolTip}) {
   const [isActive, setisActive] = useState(false);
@@ -17,8 +20,8 @@ export default function ChatHeader({fName, id, displayImage, toolTip}) {
       .onSnapshot(documentSnapshot => {
         setisActive(documentSnapshot?.data()?.isActive);
       });
-    console.log('activeUserListener', activeUserListener);
     return activeUserListener;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const navigation = useNavigation();
   return (
@@ -37,7 +40,7 @@ export default function ChatHeader({fName, id, displayImage, toolTip}) {
             style={{height: vh(22), width: vh(22), marginLeft: vw(14)}}
           />
         </TouchableOpacity>
-        <Image source={{uri: displayImage}} style={styles.userProfile} />
+        <FastImage source={{uri: displayImage}} style={styles.userProfile} />
         <View style={styles.activeNameView}>
           <Text style={styles.nameText}>{fName}</Text>
           {isActive ? (
@@ -46,24 +49,21 @@ export default function ChatHeader({fName, id, displayImage, toolTip}) {
         </View>
       </View>
       <View style={styles.iconImageView}>
-        <TouchableOpacity>
-          <Image
-            source={localImages.audioIcon}
-            style={styles.headerIconImage}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            source={localImages.videoIcon}
-            style={styles.headerVideoIconImage}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={toolTip}>
-          <Image
-            source={localImages.homeMenuIcon}
-            style={styles.headerIconImage}
-          />
-        </TouchableOpacity>
+        <IconButton
+          onPress={() => {}}
+          image={localImages.audioIcon}
+          imageStyle={styles.headerIconImage}
+        />
+        <IconButton
+          onPress={() => {}}
+          image={localImages.videoIcon}
+          imageStyle={styles.headerVideoIconImage}
+        />
+        <IconButton
+          onPress={toolTip}
+          image={localImages.homeMenuIcon}
+          imageStyle={styles.headerIconImage}
+        />
       </View>
     </LinearGradient>
   );
