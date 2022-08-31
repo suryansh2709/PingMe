@@ -57,6 +57,7 @@ const ChatList = () => {
         setStaticData(dataArray);
         console.log('dataArray', dataArray);
       });
+      const blockedUserListener = 
     return abc;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

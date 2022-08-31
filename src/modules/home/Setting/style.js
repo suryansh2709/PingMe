@@ -1,3 +1,4 @@
+import {color} from '../../../utils/colors';
 import {vh, vw} from '../../../utils/dimensions';
 
 const styles = {
@@ -30,16 +31,22 @@ const styles = {
     right: 10,
     top: -10,
   },
+  userImageView: {
+    height: vh(50),
+    width: vh(50),
+    borderRadius: 50,
+    backgroundColor: color.grey,
+  },
   userImageStyle: {
-    height: vh(48),
-    width: vh(48),
+    height: '100%',
+    width: '100%',
     borderRadius: 50,
   },
   userNameText: {
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     height: vh(38),
-    marginLeft: vw(16),
+    marginLeft: vw(15),
   },
   itemTextView: {flexDirection: 'row'},
   itemIconStyle: {height: vh(22), width: vh(22)},

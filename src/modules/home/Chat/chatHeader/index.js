@@ -10,7 +10,7 @@ import IconButton from '../../../../components/iconButtons';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 
-export default function ChatHeader({fName, id, displayImage}) {
+export default function ChatHeader({fName, id, displayImage, toolTip}) {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
   const [isActive, setisActive] = useState(false);
   const navigation = useNavigation();
@@ -60,14 +60,7 @@ export default function ChatHeader({fName, id, displayImage}) {
           imageStyle={styles.headerVideoIconImage}
         />
         <IconButton
-          onPress={() => {
-            // firestore()
-            //   .collection('Users')
-            //   .doc(loggedInUser?.uid)
-            //   .collection('BlockedUsers')
-            //   .doc(id)
-            //   .set({fName, id, displayImage});
-          }}
+          onPress={toolTip}
           image={localImages.homeMenuIcon}
           imageStyle={styles.headerIconImage}
         />
