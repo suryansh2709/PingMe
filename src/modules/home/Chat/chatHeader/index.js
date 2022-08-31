@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 
-export default function ChatHeader({fName, id, displayImage}) {
+export default function ChatHeader({fName, id, displayImage, toolTip}) {
   const [isActive, setisActive] = useState(false);
   console.log('isActive', isActive);
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function ChatHeader({fName, id, displayImage}) {
             style={styles.headerVideoIconImage}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={toolTip}>
           <Image
             source={localImages.homeMenuIcon}
             style={styles.headerIconImage}

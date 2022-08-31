@@ -5,13 +5,7 @@ import localImages from '../../utils/localImages';
 import {color} from '../../utils/colors';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default function HomeHeader({
-  toolTip,
-  addFriend,
-  search,
-  setSearch,
-  onsearchPress,
-}) {
+export default function HomeHeader({toolTip, addFriend, onsearchPress}) {
   return (
     <LinearGradient
       colors={['#56CF83', '#50BD87', '#47AD8B']}

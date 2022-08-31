@@ -11,7 +11,6 @@ import {useNavigation} from '@react-navigation/native';
 import {getUsers, showToast} from '../../../../utils/commonFunctions';
 import {useSelector} from 'react-redux';
 import {styles} from '../style';
-import {string} from '../../../../utils/strings';
 import ContactHeader from './contactListHeader';
 
 export default function AddFriend() {
@@ -63,12 +62,6 @@ export default function AddFriend() {
   return (
     <SafeAreaView style={{flex: 1}}>
       <ContactHeader />
-      <Text
-        onPress={() => {
-          navigation.goBack();
-        }}>
-        index
-      </Text>
       <FlatList
         data={allUsers}
         renderItem={renderAllUsers}

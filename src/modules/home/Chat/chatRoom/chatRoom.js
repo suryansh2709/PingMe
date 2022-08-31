@@ -1,10 +1,9 @@
 import React, {useState, useCallback, useLayoutEffect, useEffect} from 'react';
-import {View} from 'react-native';
-import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
+import {View, Platform, Text} from 'react-native';
+import {GiftedChat, InputToolbar, StatusBar} from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import {useRoute} from '@react-navigation/native';
-import {styles} from '../style';
 import {string} from '../../../../utils/strings';
 import {
   addMessagges,
@@ -17,8 +16,11 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import ChatHeader from '../chatHeader';
 import RenderBubble from './chatBubble';
 import RenderSend from './chatSend';
+import Tooltip from 'react-native-walkthrough-tooltip';
+import {styles} from './style';
 
 export function ChatRoom() {
+  const [showTip, setTip] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const [getTypingStatus, setGetTypingStatus] = useState(false);
@@ -105,9 +107,37 @@ export function ChatRoom() {
     }
   };
 
+  const toolTip = () => {
+    setTip(!showTip);
+  };
+
   return (
     <View style={styles.giftedChatMainView}>
-      <ChatHeader id={id} fName={fName} displayImage={displayImage} />
+      <ChatHeader
+        id={id}
+        fName={fName}
+        displayImage={displayImage}
+        toolTip={toolTip}
+      />
+      <Tooltip
+        topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
+        backgroundColor="transparent"
+        placement="right"
+        contentStyle={styles.toolTipContainer}
+        isVisible={showTip}
+        content={
+          <View style={styles.tooTipContentMainView}>
+            <Text style={styles.toolTipTextStyle} onPress={{}}>
+              {string.blockUser}
+            </Text>
+            <View style={styles.contentLineSeperator} />
+            <Text onPress={{}} style={styles.toolTipTextStyle}>
+              {string.clearChat}
+            </Text>
+          </View>
+        }
+        onClose={() => setTip(!showTip)}
+      />
       <GiftedChat
         messagesContainerStyle={[
           styles.messageContainerView,
@@ -120,7 +150,7 @@ export function ChatRoom() {
         onSend={message => onSend(message)}
         user={{
           _id: loggedInUser?.uid,
-          avatar: 'https://placeimg.com/140/140/any',
+          avatar: loggedInUser?.displayImage,
         }}
         isTyping={getTypingStatus}
         isKeyboardInternallyHandled={true}
