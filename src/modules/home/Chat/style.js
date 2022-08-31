@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {color} from '../../../utils/colors';
-import {vh, vw} from '../../../utils/dimensions';
+import {normalize, vh, vw} from '../../../utils/dimensions';
 
 export const styles = StyleSheet.create({
   homeMainView: {height: '88%'},
@@ -23,8 +23,12 @@ export const styles = StyleSheet.create({
     color: 'rgba(119, 131, 143, 1)',
     marginTop: vh(5),
   },
-  nameView: {marginLeft: vw(14), marginTop: vh(5)},
-  userName: {fontSize: vh(17), fontWeight: '500'},
+  nameView: {
+    paddingLeft: vw(14),
+    paddingTop: vh(5),
+    width: '85%',
+  },
+  userName: {fontSize: vh(17), fontWeight: '500', color: color.black},
   chatSend: {
     height: 30,
     width: 30,
@@ -33,7 +37,6 @@ export const styles = StyleSheet.create({
     zIndex: -1,
   },
   chatInputViewStyle: {
-    height: vh(40),
     marginHorizontal: vw(15),
     borderRadius: 22,
     justifyContent: 'center',

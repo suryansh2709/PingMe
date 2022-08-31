@@ -106,8 +106,6 @@ const ChatList = () => {
   const onRender = useCallback(
     ({item}) => {
       const {displayImage, fName, lName, id, isActive, lastMessage} = item;
-      console.log('lastMessage', lastMessage);
-
       return (
         <RenderChatCard
           id={id}
@@ -155,14 +153,12 @@ const ChatList = () => {
         }}
         onsearchPress={searchPress}
       />
-      {/* ) : ( */}
       <SearchHeader
         search={search}
         setSearch={setSearch}
         animatedStyle={scale}
         onBackPress={backPress}
       />
-      {/* )} */}
       <Tooltip
         topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
         backgroundColor="transparent"
