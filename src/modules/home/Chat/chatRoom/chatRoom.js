@@ -180,9 +180,9 @@ export function ChatRoom() {
   }, []);
 
   const renderInputToolbar = props => {
-    return (
+    return true ? (
       <InputToolbar containerStyle={styles.chatInputViewStyle} {...props} />
-    );
+    ) : null;
   };
 
   useEffect(() => {

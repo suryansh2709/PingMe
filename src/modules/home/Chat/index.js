@@ -57,7 +57,7 @@ const ChatList = () => {
         setStaticData(dataArray);
         console.log('dataArray', dataArray);
       });
-    console.log('abc', abc);
+    return abc;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

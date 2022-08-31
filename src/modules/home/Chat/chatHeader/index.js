@@ -8,10 +8,12 @@ import {useNavigation} from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import IconButton from '../../../../components/iconButtons';
 import FastImage from 'react-native-fast-image';
+import {useSelector} from 'react-redux';
 
 export default function ChatHeader({fName, id, displayImage}) {
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
   const [isActive, setisActive] = useState(false);
-  console.log('isActive', isActive);
+  const navigation = useNavigation();
   useEffect(() => {
     const activeUserListener = firestore()
       .collection('Users')
@@ -22,7 +24,6 @@ export default function ChatHeader({fName, id, displayImage}) {
     return activeUserListener;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const navigation = useNavigation();
   return (
     <LinearGradient
       start={{x: 0, y: 0}}
