@@ -33,6 +33,14 @@ export function ChatRoom() {
       ? loggedInUser?.uid + '-' + id
       : id + '-' + loggedInUser?.uid;
 
+  useEffect(() => {
+    firestore()
+      .collection('Users')
+      .doc(loggedInUser?.uid)
+      .collection('BlockedUsers')
+      .onSnapshot(doc => console.log(doc._docs));
+  }, []);
+
   useLayoutEffect(() => {
     const subscribe = firestore()
       .collection(string.homeChatRoom)
@@ -41,6 +49,7 @@ export function ChatRoom() {
       .onSnapshot(doc => {
         handleDeliverdStatus();
         const dataArray = doc?._docs.map(element => element._data);
+        console.log(dataArray);
         dataArray.sort((a, b) => b.createdAt - a.createdAt);
         let newmsgs = dataArray.filter(item => {
           if (item?.deletedForEveryOne) {

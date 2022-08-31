@@ -60,7 +60,14 @@ export default function ChatHeader({fName, id, displayImage}) {
           imageStyle={styles.headerVideoIconImage}
         />
         <IconButton
-          onPress={() => {}}
+          onPress={() => {
+            // firestore()
+            //   .collection('Users')
+            //   .doc(loggedInUser?.uid)
+            //   .collection('BlockedUsers')
+            //   .doc(id)
+            //   .set({fName, id, displayImage});
+          }}
           image={localImages.homeMenuIcon}
           imageStyle={styles.headerIconImage}
         />
