@@ -8,9 +8,11 @@ import {styles} from '../style';
 import {string} from '../../../../utils/strings';
 import {
   addMessagges,
+  debounce,
   getTypingStatusFromFireBase,
   saveTypingStatusOnFireStore,
   setInbox,
+  updateChat,
   updateInbox,
 } from '../../../../utils/commonFunctions';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
@@ -24,7 +26,7 @@ export function ChatRoom() {
   const [isTyping, setIsTyping] = useState(false);
   const [getTypingStatus, setGetTypingStatus] = useState(false);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
-  const {id, fName, isActive, displayImage, lastMessage} = useRoute().params;
+  const {id, fName, isActive, displayImage} = useRoute().params;
   console.log(id, fName, isActive, displayImage, 'checking');
   const docId =
     loggedInUser?.uid > id
@@ -49,7 +51,6 @@ export function ChatRoom() {
             return true;
           }
         });
-        console.log('newmsgs', newmsgs);
         setMessages(newmsgs);
       });
 
@@ -70,54 +71,41 @@ export function ChatRoom() {
     });
     return batch.commit();
   };
-
-  const debounce = useCallback((fun, timeout) => {
-    let timer;
-    return args => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        fun(false);
-      }, timeout);
-      fun(true);
-    };
-  }, []);
-
   const deletForMe = msg => {
-    firestore()
-      .collection(string.homeChatRoom)
-      .doc(docId)
-      .collection(string.messages)
-      .doc(msg?._id)
-      .update({...msg, deletedBy: loggedInUser?.uid})
-      .then(() => {
+    updateChat(
+      docId,
+      msg?._id,
+      {...msg, deletedBy: loggedInUser?.uid},
+      () => {
         if (messages[0]?._id === msg?._id) {
           updateInbox(loggedInUser?.uid, id, {
             lastMessage: messages[1],
             isActive,
           });
         }
-      });
+      },
+      () => {},
+    );
   };
 
   const deletedForEveryOne = msg => {
-    firestore()
-      .collection(string.homeChatRoom)
-      .doc(docId)
-      .collection(string.messages)
-      .doc(msg?._id)
-      .update({...msg, deletedForEveryOne: true})
-      .then(() => {
+    updateChat(
+      docId,
+      msg?._id,
+      {...msg, deletedForEveryOne: true},
+      () => {
         if (messages[0]?._id === msg?._id) {
           updateInbox(loggedInUser?.uid, id, {
             lastMessage: messages[1],
             isActive,
           });
         }
-      });
+      },
+      () => {},
+    );
   };
 
   const handleLongPress = (context, message) => {
-    console.log('context-->', context, 'message =>', message);
     let options, cancelButtonIndex;
     if (message.sentBy === loggedInUser?.uid) {
       options = ['Copy', 'Delete for me', 'Delete for everyone', 'Cancel'];

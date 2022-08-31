@@ -19,7 +19,6 @@ export default function ChatHeader({fName, id, displayImage}) {
       .onSnapshot(documentSnapshot => {
         setisActive(documentSnapshot?.data()?.isActive);
       });
-    console.log('activeUserListener', activeUserListener);
     return activeUserListener;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

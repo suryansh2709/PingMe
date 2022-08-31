@@ -5,6 +5,7 @@ import localImages from '../../utils/localImages';
 import {color} from '../../utils/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import IconButton from '../iconButtons';
+import {string} from '../../utils/strings';
 
 export default function HomeHeader({
   toolTip,
@@ -18,7 +19,7 @@ export default function HomeHeader({
       colors={['#56CF83', '#50BD87', '#47AD8B']}
       style={styles.headerMainView}>
       <Text style={{fontSize: vh(34), marginLeft: vw(10), color: color.white}}>
-        {'քɨռɢʍɛ'}
+        {string.headerPingMe}
       </Text>
       <View style={styles.iconImageView}>
         <IconButton

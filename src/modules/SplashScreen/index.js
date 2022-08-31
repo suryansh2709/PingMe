@@ -20,16 +20,10 @@ const SplashScreen = () => {
     }).start();
 
     setTimeout(() => {
-      console.log(
-        'Object.keys(loggedInUser).length',
-        Object.keys(loggedInUser).length,
-      );
       if (Object.keys(loggedInUser).length === 0) {
         navigation.navigate(string.loginStack);
-        console.log('yahaaa');
       } else {
         navigation.navigate(string.homeStack);
-        console.log('vaha');
       }
     }, 2000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,7 +36,7 @@ const SplashScreen = () => {
       colors={colorArray}
       style={styles.splashMain}>
       <Animated.Text style={{fontSize: vh(70), opacity: animRef}}>
-        {'ƤíղɠⱮҽ'}
+        {string.pingMe}
       </Animated.Text>
     </LinearGradient>
   );

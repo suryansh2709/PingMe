@@ -106,8 +106,6 @@ const ChatList = () => {
   const onRender = useCallback(
     ({item}) => {
       const {displayImage, fName, lName, id, isActive, lastMessage} = item;
-      console.log('lastMessage', lastMessage);
-
       return (
         <RenderChatCard
           id={id}
