@@ -24,6 +24,7 @@ import firestore from '@react-native-firebase/firestore';
 
 const ChatList = () => {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
+  console.log('SHubhankar', loggedInUser);
   const navigation = useNavigation();
   const [loader, setLoader] = useState(false);
   const [showTip, setTip] = useState(false);

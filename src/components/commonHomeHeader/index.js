@@ -7,13 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import IconButton from '../iconButtons';
 import {string} from '../../utils/strings';
 
-export default function HomeHeader({
-  toolTip,
-  addFriend,
-  search,
-  setSearch,
-  onsearchPress,
-}) {
+export default function HomeHeader({toolTip, addFriend, onsearchPress}) {
   return (
     <LinearGradient
       colors={['#56CF83', '#50BD87', '#47AD8B']}

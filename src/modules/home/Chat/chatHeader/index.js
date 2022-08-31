@@ -8,8 +8,9 @@ import {useNavigation} from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import IconButton from '../../../../components/iconButtons';
 import FastImage from 'react-native-fast-image';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
-export default function ChatHeader({fName, id, displayImage}) {
+export default function ChatHeader({fName, id, displayImage, toolTip}) {
   const [isActive, setisActive] = useState(false);
   console.log('isActive', isActive);
   useEffect(() => {
@@ -59,7 +60,7 @@ export default function ChatHeader({fName, id, displayImage}) {
           imageStyle={styles.headerVideoIconImage}
         />
         <IconButton
-          onPress={() => {}}
+          onPress={toolTip}
           image={localImages.homeMenuIcon}
           imageStyle={styles.headerIconImage}
         />
