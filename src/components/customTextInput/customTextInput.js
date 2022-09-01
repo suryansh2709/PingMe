@@ -3,7 +3,7 @@ import React from 'react';
 import {vh, vw} from '../../utils/dimensions';
 import {styles} from './style';
 
-export default function CustomTextInput(props) {
+function CustomTextInput(props) {
   const {width = 375} = props;
   return (
     <View
@@ -31,3 +31,5 @@ export default function CustomTextInput(props) {
     </View>
   );
 }
+
+export default React.memo(CustomTextInput);

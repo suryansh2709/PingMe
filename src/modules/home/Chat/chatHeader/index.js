@@ -8,12 +8,15 @@ import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
 import IconButton from '../../../../components/iconButtons';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
+import {useSelector} from 'react-redux';
 
-export default function ChatHeader({fName, id, displayImage, toolTip}) {
+function ChatHeader({fName, id, displayImage, toolTip}) {
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
   const [isActive, setisActive] = useState(false);
+  const navigation = useNavigation();
   useEffect(() => {
     const activeUserListener = firestore()
-      .collection('Users')
+      .collection(string.users)
       .doc(id)
       .onSnapshot(documentSnapshot => {
         setisActive(documentSnapshot?.data()?.isActive);
@@ -21,7 +24,6 @@ export default function ChatHeader({fName, id, displayImage, toolTip}) {
     return activeUserListener;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const navigation = useNavigation();
   return (
     <LinearGradient
       start={{x: 0, y: 0}}
@@ -63,3 +65,5 @@ export default function ChatHeader({fName, id, displayImage, toolTip}) {
     </LinearGradient>
   );
 }
+
+export default React.memo(ChatHeader);

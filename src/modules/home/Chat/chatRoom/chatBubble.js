@@ -2,7 +2,7 @@ import React from 'react';
 import {color} from '../../../../utils/colors';
 import {Bubble} from 'react-native-gifted-chat';
 
-const renderBubble = props => {
+const RenderBubble = props => {
   return (
     <Bubble
       {...props}
@@ -17,4 +17,4 @@ const renderBubble = props => {
     />
   );
 };
-export default renderBubble;
+export default RenderBubble;

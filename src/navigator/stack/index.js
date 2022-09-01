@@ -1,12 +1,12 @@
 import React from 'react';
-import Home from '../../modules/home';
+import Home from '../../modules/Home';
 import Login from '../../modules/Login';
 import {string} from '../../utils/strings';
 import OtpScreen from '../../modules/Login/otpScreen';
 import UserProfile from '../../modules/Login/userProfile';
-import AddFriend from '../../modules/home/Chat/addFriend';
-import Profile from '../../modules/home/Setting/userProfile';
-import {ChatRoom} from '../../modules/home/Chat/chatRoom/chatRoom';
+import AddFriend from '../../modules/Home/Chat/addFriend';
+import Profile from '../../modules/Home/Setting/userProfile';
+import ChatRoom from '../../modules/Home/Chat/chatRoom/chatRoom';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
