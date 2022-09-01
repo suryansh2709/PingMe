@@ -1,88 +1,54 @@
-import React, {useState, useCallback, useLayoutEffect, useEffect} from 'react';
-import {View, Platform, Text} from 'react-native';
-import Clipboard from '@react-native-clipboard/clipboard';
-import {GiftedChat, InputToolbar, StatusBar} from 'react-native-gifted-chat';
+import {styles} from './style';
+import RenderSend from './chatSend';
+import ChatHeader from '../chatHeader';
+import RenderBubble from './chatBubble';
 import {useSelector} from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
-import {useRoute} from '@react-navigation/native';
-import {string} from '../../../../utils/strings';
 import {
-  addMessagges,
   debounce,
-  getTypingStatusFromFireBase,
-  saveTypingStatusOnFireStore,
   setInbox,
   updateChat,
   updateInbox,
+  addMessagges,
+  getTypingStatusFromFireBase,
+  saveTypingStatusOnFireStore,
 } from '../../../../utils/commonFunctions';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-import ChatHeader from '../chatHeader';
-import RenderBubble from './chatBubble';
-import RenderSend from './chatSend';
+import {string} from '../../../../utils/strings';
+import {View, Platform, Text} from 'react-native';
+import {useRoute} from '@react-navigation/native';
 import Tooltip from 'react-native-walkthrough-tooltip';
-import {styles} from './style';
+import Clipboard from '@react-native-clipboard/clipboard';
 import {normalize, vh} from '../../../../utils/dimensions';
+import {createRoom, handleClearChat} from './utils/chatUtils';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {GiftedChat, InputToolbar, StatusBar} from 'react-native-gifted-chat';
+import React, {useState, useCallback, useLayoutEffect, useEffect} from 'react';
 
-export function ChatRoom() {
+function ChatRoom() {
   const [showTip, setTip] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+  const {id, fName, isActive, displayImage} = useRoute().params;
   const [getTypingStatus, setGetTypingStatus] = useState(false);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
-  const {id, fName, isActive, displayImage} = useRoute().params;
-  console.log(id, fName, isActive, displayImage, 'checking');
   const docId =
     loggedInUser?.uid > id
       ? loggedInUser?.uid + '-' + id
       : id + '-' + loggedInUser?.uid;
 
-  useEffect(() => {
-    firestore()
-      .collection('Users')
-      .doc(loggedInUser?.uid)
-      .collection('BlockedUsers')
-      .onSnapshot(doc => console.log(doc._docs));
-  }, []);
-
   useLayoutEffect(() => {
-    const subscribe = firestore()
-      .collection(string.homeChatRoom)
-      .doc(docId)
-      .collection(string.messages)
-      .onSnapshot(doc => {
-        handleDeliverdStatus();
-        const dataArray = doc?._docs.map(element => element._data);
-        console.log(dataArray);
-        dataArray.sort((a, b) => b.createdAt - a.createdAt);
-        let newmsgs = dataArray.filter(item => {
-          if (item?.deletedForEveryOne) {
-            return false;
-          } else if (item?.deletedBy) {
-            return item?.deletedBy !== loggedInUser?.uid;
-          } else {
-            return true;
-          }
-        });
-        setMessages(newmsgs);
-      });
-
-    return subscribe;
+    createRoom(docId, loggedInUser, msgs => {
+      setMessages(msgs);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const handleDeliverdStatus = async () => {
-    const delivered = await firestore()
-      .collection(string.homeChatRoom)
-      .doc(docId)
-      .collection('messages')
-      .get();
-    const batch = firestore()?.batch();
-    delivered.forEach(documentSnapshot => {
-      if (documentSnapshot._data.sentTo === loggedInUser?.uid) {
-        batch.update(documentSnapshot.ref, {received: true});
-      }
+  useEffect(() => {
+    saveTypingStatusOnFireStore(docId, loggedInUser?.uid, {typing: isTyping});
+    getTypingStatusFromFireBase(docId, id, typing => {
+      setGetTypingStatus(typing?.typing);
     });
-    return batch.commit();
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTyping]);
+
   const deletForMe = msg => {
     updateChat(
       docId,
@@ -197,14 +163,6 @@ export function ChatRoom() {
     ) : null;
   };
 
-  useEffect(() => {
-    saveTypingStatusOnFireStore(docId, loggedInUser?.uid, {typing: isTyping});
-    getTypingStatusFromFireBase(docId, id, typing => {
-      setGetTypingStatus(typing?.typing);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isTyping]);
-
   const startTyping = debounce(arg => {
     setIsTyping(arg);
   }, 1000);
@@ -224,8 +182,8 @@ export function ChatRoom() {
       <ChatHeader
         id={id}
         fName={fName}
-        displayImage={displayImage}
         toolTip={toolTip}
+        displayImage={displayImage}
       />
       <Tooltip
         topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
@@ -239,7 +197,7 @@ export function ChatRoom() {
               {string.blockUser}
             </Text>
             <View style={styles.contentLineSeperator} />
-            <Text onPress={{}} style={styles.toolTipTextStyle}>
+            <Text onPress={handleClearChat} style={styles.toolTipTextStyle}>
               {string.clearChat}
             </Text>
           </View>
@@ -272,3 +230,4 @@ export function ChatRoom() {
     </View>
   );
 }
+export default React.memo(ChatRoom);

@@ -80,4 +80,4 @@ const CountryCodeModal = ({
   );
 };
 
-export default CountryCodeModal;
+export default React.memo(CountryCodeModal);

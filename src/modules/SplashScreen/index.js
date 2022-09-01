@@ -42,4 +42,4 @@ const SplashScreen = () => {
   );
 };
 
-export default SplashScreen;
+export default React.memo(SplashScreen);

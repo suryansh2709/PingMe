@@ -63,4 +63,4 @@ const ResendOtp = ({handleResendConfirmation, number, selected}) => {
   );
 };
 
-export default ResendOtp;
+export default React.memo(ResendOtp);
