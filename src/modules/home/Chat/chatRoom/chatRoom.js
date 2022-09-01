@@ -1,11 +1,18 @@
-import React, {useState, useCallback, useLayoutEffect, useEffect} from 'react';
-import {View, Platform, Text} from 'react-native';
-import Clipboard from '@react-native-clipboard/clipboard';
-import {GiftedChat, InputToolbar, StatusBar} from 'react-native-gifted-chat';
+import {styles} from './style';
+import RenderSend from './chatSend';
+import ChatHeader from '../chatHeader';
+import RenderBubble from './chatBubble';
 import {useSelector} from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
-import {useRoute} from '@react-navigation/native';
 import {string} from '../../../../utils/strings';
+import {View, Platform, Text} from 'react-native';
+import {useRoute} from '@react-navigation/native';
+import Tooltip from 'react-native-walkthrough-tooltip';
+import firestore from '@react-native-firebase/firestore';
+import Clipboard from '@react-native-clipboard/clipboard';
+import {normalize, vh} from '../../../../utils/dimensions';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {GiftedChat, InputToolbar, StatusBar} from 'react-native-gifted-chat';
+import React, {useState, useCallback, useLayoutEffect, useEffect} from 'react';
 import {
   addMessagges,
   debounce,
@@ -15,26 +22,26 @@ import {
   updateChat,
   updateInbox,
 } from '../../../../utils/commonFunctions';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-import ChatHeader from '../chatHeader';
-import RenderBubble from './chatBubble';
-import RenderSend from './chatSend';
-import Tooltip from 'react-native-walkthrough-tooltip';
-import {styles} from './style';
-import {normalize, vh} from '../../../../utils/dimensions';
 
 export function ChatRoom() {
   const [showTip, setTip] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+  const {id, fName, isActive, displayImage} = useRoute().params;
   const [getTypingStatus, setGetTypingStatus] = useState(false);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
-  const {id, fName, isActive, displayImage} = useRoute().params;
-  console.log(id, fName, isActive, displayImage, 'checking');
   const docId =
     loggedInUser?.uid > id
       ? loggedInUser?.uid + '-' + id
       : id + '-' + loggedInUser?.uid;
+
+  useEffect(() => {
+    firestore()
+      .collection('Users')
+      .doc(loggedInUser?.uid)
+      .collection('BlockedUsers')
+      .onSnapshot(doc => console.log(doc._docs));
+  }, []);
 
   useLayoutEffect(() => {
     const subscribe = firestore()
@@ -64,7 +71,7 @@ export function ChatRoom() {
     const delivered = await firestore()
       .collection(string.homeChatRoom)
       .doc(docId)
-      .collection('messages')
+      .collection(string.messages)
       .get();
     const batch = firestore()?.batch();
     delivered.forEach(documentSnapshot => {
@@ -111,7 +118,12 @@ export function ChatRoom() {
   const handleLongPress = (context, message) => {
     let options, cancelButtonIndex;
     if (message.sentBy === loggedInUser?.uid) {
-      options = ['Copy', 'Delete for me', 'Delete for everyone', 'Cancel'];
+      options = [
+        string.copy,
+        string.deleteMe,
+        string.deleteEveryOne,
+        string.cancel,
+      ];
       cancelButtonIndex = options.length;
       context
         .actionSheet()
@@ -132,7 +144,7 @@ export function ChatRoom() {
           },
         );
     } else {
-      options = ['Copy', 'Delete for me', 'Cancel'];
+      options = [string.copy, string.deleteMe, string.cancel];
       cancelButtonIndex = options.length;
       context
         .actionSheet()
@@ -183,9 +195,9 @@ export function ChatRoom() {
   }, []);
 
   const renderInputToolbar = props => {
-    return (
+    return true ? (
       <InputToolbar containerStyle={styles.chatInputViewStyle} {...props} />
-    );
+    ) : null;
   };
 
   useEffect(() => {
@@ -219,7 +231,9 @@ export function ChatRoom() {
         toolTip={toolTip}
       />
       <Tooltip
-        topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
+        topAdjustment={
+          Platform.OS === string.android ? -StatusBar.currentHeight : 0
+        }
         backgroundColor="transparent"
         placement="right"
         contentStyle={styles.toolTipContainer}

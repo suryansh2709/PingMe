@@ -1,14 +1,14 @@
-import {Text, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {styles} from '../style';
+import {styles} from './style';
 import {string} from '../../../utils/strings';
+import React, {useEffect, useState} from 'react';
+import {Text, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import BackgroundTimer from 'react-native-background-timer';
 import {signInWirhPhoneNumber} from '../../../utils/commonFunctions';
-import {useNavigation} from '@react-navigation/native';
 
 const ResendOtp = ({handleResendConfirmation, number, selected}) => {
-  const [timer, setTimer] = useState(30);
   const navigation = useNavigation();
+  const [timer, setTimer] = useState(30);
 
   useEffect(() => {
     startTimer();

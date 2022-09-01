@@ -1,7 +1,7 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
-import {confirmOtp} from '../../utils/commonFunctions';
 import {string} from '../../utils/strings';
 import {setUser} from '../auth/action';
+import {confirmOtp} from '../../utils/commonFunctions';
+import {call, put, takeEvery} from 'redux-saga/effects';
 
 export function* otpConfirm(action) {
   const {confirm, otp, successCallback, failureCallback} = action.payload;

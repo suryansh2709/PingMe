@@ -1,23 +1,23 @@
-import {View, Image, TouchableOpacity, Text, Platform} from 'react-native';
-import React, {useState} from 'react';
-import Header from '../../components/commonHeader';
-import {color} from '../../utils/colors';
-import localImages from '../../utils/localImages';
-import CustomTextInput from '../../components/customTextInput/customTextInput';
-import CustomButton from '../../components/customButton/customButton';
-import {string} from '../../utils/strings';
 import {styles} from './style';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {firstNameTest, userNameTest} from '../../utils/validation';
-import {useDispatch, useSelector} from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
-import {showToast} from '../../utils/commonFunctions';
-import ImageCropPicker from 'react-native-image-crop-picker';
+import React, {useState} from 'react';
+import {color} from '../../utils/colors';
+import {string} from '../../utils/strings';
 import Loader from '../../components/loader';
-import {useNavigation, CommonActions} from '@react-navigation/native';
-import DatePicker from 'react-native-date-picker';
 import {setUser} from '../../redux/auth/action';
+import DatePicker from 'react-native-date-picker';
+import localImages from '../../utils/localImages';
+import Header from '../../components/commonHeader';
 import storage from '@react-native-firebase/storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {showToast} from '../../utils/commonFunctions';
+import firestore from '@react-native-firebase/firestore';
+import ImageCropPicker from 'react-native-image-crop-picker';
+import {firstNameTest, userNameTest} from '../../utils/validation';
+import CustomButton from '../../components/customButton/customButton';
+import {useNavigation, CommonActions} from '@react-navigation/native';
+import {View, Image, TouchableOpacity, Text, Platform} from 'react-native';
+import CustomTextInput from '../../components/customTextInput/customTextInput';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export default function UserProfile() {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
@@ -32,10 +32,10 @@ export default function UserProfile() {
     about: '',
     displayImage: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
   });
-  const [loader, setLoader] = useState(false);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [open, setOPen] = useState(false);
-  const dispatch = useDispatch();
+  const [loader, setLoader] = useState(false);
 
   /**
    * Setting Display Image.
@@ -50,11 +50,10 @@ export default function UserProfile() {
       compressImageQuality: 0.2,
     })
       .then(res => {
-        if (Platform.OS === 'ios') {
+        if (Platform.OS === string.ios) {
           reference
             .putFile(res?.sourceURL)
             .then(res => {
-              console.log('uploaded', res);
               reference.getDownloadURL().then(result => {
                 setInfoDetails({...infoDetails, displayImage: result});
                 setLoader(false);
@@ -67,7 +66,6 @@ export default function UserProfile() {
             reference
               .putFile(res?.path)
               .then(res => {
-                console.log('uploaded', res);
                 reference.getDownloadURL().then(result => {
                   setInfoDetails({...infoDetails, displayImage: result});
                   setLoader(false);
@@ -87,15 +85,15 @@ export default function UserProfile() {
   const handleContineuPress = () => {
     setLoader(true);
     if (!userNameTest(infoDetails.userName)) {
-      showToast('Invalid username');
+      showToast(string.invalidUserName);
       setLoader(false);
     } else if (!firstNameTest(infoDetails.fName)) {
-      showToast('Invalid name');
+      showToast(string.invalidName);
       setLoader(false);
     } else {
       let user = {...infoDetails};
       firestore()
-        .collection('Users')
+        .collection(string.users)
         .doc(loggedInUser?.uid)
         .update({
           ...user,
@@ -118,7 +116,7 @@ export default function UserProfile() {
     if (
       infoDetails.userName.length > 4 &&
       infoDetails.fName.length > 2 &&
-      infoDetails.about.length > 5
+      infoDetails.about.length > 3
     ) {
       return false;
     } else {
@@ -128,7 +126,7 @@ export default function UserProfile() {
 
   return (
     <KeyboardAwareScrollView style={styles.userProfileMainView} bounces={false}>
-      <Header header={'Your Profile'} />
+      <Header header={string.yourProfile} />
       <View style={styles.profileView}>
         <TouchableOpacity
           onPress={onAddImagePress}
@@ -181,7 +179,7 @@ export default function UserProfile() {
                 infoDetails?.date?.getDate(),
               )}/${JSON.stringify(
                 infoDetails.date.getMonth() + 1,
-              )}/${JSON.stringify(infoDetails.date.getFullYear() - 18)}`}
+              )}/${JSON.stringify(infoDetails.date.getFullYear())}`}
             </Text>
           </View>
           <TouchableOpacity onPress={() => setOPen(true)}>

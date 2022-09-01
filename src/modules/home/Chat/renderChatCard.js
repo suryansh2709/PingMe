@@ -1,8 +1,9 @@
-import {Text, View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {styles} from './style';
-import {useNavigation} from '@react-navigation/native';
+import {string} from '../../../utils/strings';
 import FastImage from 'react-native-fast-image';
+import {useNavigation} from '@react-navigation/native';
+import {Text, View, TouchableOpacity} from 'react-native';
 const RenderChatCard = ({
   displayImage,
   fName,
@@ -14,7 +15,7 @@ const RenderChatCard = ({
   const navigation = useNavigation();
 
   const onCardPress = () => {
-    navigation.navigate('ChatRoom', {
+    navigation.navigate(string.chatRoom, {
       id,
       fName,
       lName,

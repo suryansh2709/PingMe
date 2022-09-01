@@ -6,17 +6,18 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import {styles} from './style';
+import {useSelector} from 'react-redux';
+import ContactHeader from './contactListHeader';
+import {string} from '../../../../utils/strings';
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {getUsers, showToast} from '../../../../utils/commonFunctions';
-import {useSelector} from 'react-redux';
-import {styles} from '../style';
-import ContactHeader from './contactListHeader';
 
 export default function AddFriend() {
-  const {loggedInUser} = useSelector(store => store.userDataReducer);
-  const [allUsers, setAllUsers] = useState([]);
   const navigation = useNavigation();
+  const [allUsers, setAllUsers] = useState([]);
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
 
   useEffect(() => {
     getUsers(
@@ -41,7 +42,7 @@ export default function AddFriend() {
     return (
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('ChatRoom', {
+          navigation.navigate(string.chatRoom, {
             id,
             fName,
             displayImage,
@@ -59,8 +60,9 @@ export default function AddFriend() {
       </TouchableOpacity>
     );
   };
+
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={styles.mainView}>
       <ContactHeader />
       <FlatList
         data={allUsers}

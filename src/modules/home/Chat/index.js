@@ -7,31 +7,31 @@ import {
   StatusBar,
   Animated,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
-import HomeHeader from '../../../components/commonHomeHeader';
-import {useDispatch, useSelector} from 'react-redux';
 import {styles} from './style';
-import RenderChatCard from './renderChatCard';
-import {logOut, showToast} from '../../../utils/commonFunctions';
-import {StackActions, useNavigation} from '@react-navigation/native';
+import SearchHeader from './searchHeader';
 import {string} from '../../../utils/strings';
+import RenderChatCard from './renderChatCard';
 import Loader from '../../../components/loader';
 import {setUser} from '../../../redux/auth/action';
+import {useDispatch, useSelector} from 'react-redux';
 import Tooltip from 'react-native-walkthrough-tooltip';
-import SearchHeader from './searchHeader';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
 import firestore from '@react-native-firebase/firestore';
+import HomeHeader from '../../../components/commonHomeHeader';
+import React, {useCallback, useEffect, useState} from 'react';
+import {logOut, showToast} from '../../../utils/commonFunctions';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {StackActions, useNavigation} from '@react-navigation/native';
 
 const ChatList = () => {
-  const {loggedInUser} = useSelector(store => store.userDataReducer);
-  console.log('SHubhankar', loggedInUser);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [loader, setLoader] = useState(false);
+  console.log('SHubhankar', loggedInUser);
   const [showTip, setTip] = useState(false);
   const [search, setSearch] = useState(true);
-  const transform = useState(new Animated.Value(0))[0];
-  const dispatch = useDispatch();
+  const [loader, setLoader] = useState(false);
   const [staticData, setStaticData] = useState([]);
+  const transform = useState(new Animated.Value(0))[0];
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
 
   let scale = {
     transform: [
@@ -50,15 +50,13 @@ const ChatList = () => {
 
   useEffect(() => {
     const abc = firestore()
-      .collection('Users')
+      .collection(string.users)
       .doc(loggedInUser.uid)
-      .collection('Inbox')
+      .collection(string.inbox)
       .onSnapshot(doc => {
         const dataArray = doc?._docs.map(element => element._data);
         setStaticData(dataArray);
-        console.log('dataArray', dataArray);
       });
-    console.log('abc', abc);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -73,7 +71,6 @@ const ChatList = () => {
     logOut(
       loggedInUser?.uid,
       () => {
-        console.log('logh');
         setTimeout(() => {
           setLoader(false);
           dispatch(setUser({}));
@@ -144,13 +141,12 @@ const ChatList = () => {
   };
   return (
     <SafeAreaView style={styles.homeMainView}>
-      {/* {search ? ( */}
       <HomeHeader
         search={search}
         setSearch={setSearch}
         toolTip={toolTip}
         addFriend={() => {
-          navigation.navigate('AddFriend');
+          navigation.navigate(string.addFriend);
         }}
         onsearchPress={searchPress}
       />
@@ -161,7 +157,9 @@ const ChatList = () => {
         onBackPress={backPress}
       />
       <Tooltip
-        topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
+        topAdjustment={
+          Platform.OS === string.android ? -StatusBar.currentHeight : 0
+        }
         backgroundColor="transparent"
         placement="right"
         contentStyle={styles.toolTipContainer}
@@ -169,11 +167,11 @@ const ChatList = () => {
         content={
           <View style={styles.tooTipContentMainView}>
             <Text style={styles.toolTipTextStyle} onPress={handleTooltipPress}>
-              {'Profile'}
+              {string.profile}
             </Text>
             <View style={styles.contentLineSeperator} />
             <Text onPress={handleLogOut} style={styles.toolTipTextStyle}>
-              {'Logout'}
+              {string.logout}
             </Text>
           </View>
         }

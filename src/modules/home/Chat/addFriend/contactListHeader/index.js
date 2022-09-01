@@ -1,10 +1,9 @@
-import {Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {styles} from './style';
-import {vh, vw} from '../../../../../utils/dimensions';
-import LinearGradient from 'react-native-linear-gradient';
+import {string} from '../../../../../utils/strings';
 import {useNavigation} from '@react-navigation/native';
-import {color} from '../../../../../utils/colors';
+import LinearGradient from 'react-native-linear-gradient';
+import {Text, Image, TouchableOpacity} from 'react-native';
 import localImages from '../../../../../utils/localImages';
 
 export default function ContactHeader({fName, isActive, displayImage}) {
@@ -17,14 +16,9 @@ export default function ContactHeader({fName, isActive, displayImage}) {
         onPress={() => {
           navigation.goBack();
         }}>
-        <Image
-          source={localImages.left}
-          style={{height: vh(30), width: vh(30), tintColor: color.white}}
-        />
+        <Image source={localImages.left} style={styles.leftImageStyle} />
       </TouchableOpacity>
-      <Text style={{fontSize: vh(34), marginLeft: vw(10), color: color.white}}>
-        {'ℭ𝔬𝔫𝔱𝔞𝔠𝔱 𝔏𝔦𝔰𝔱'}
-      </Text>
+      <Text style={styles.contactText}>{string.contactList}</Text>
     </LinearGradient>
   );
 }

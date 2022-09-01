@@ -1,14 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
+import {styles} from './style';
 
 const Call = () => {
   return (
-    <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+    <View style={styles.callMainView}>
       <Text>Call</Text>
     </View>
   );
 };
 
 export default Call;
-
-const styles = StyleSheet.create({});

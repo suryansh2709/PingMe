@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {confirmOtpAction} from '../../redux/auth/action';
 import firestore from '@react-native-firebase/firestore';
+import {string} from '../../utils/strings';
 
 const OtpComponent = ({confirm, handleLoader, number}) => {
   const navigation = useNavigation();
@@ -19,12 +20,12 @@ const OtpComponent = ({confirm, handleLoader, number}) => {
         user => {
           console.log('uidddd', user?._user?.uid);
           let uid = user?._user?.uid;
-          firestore().collection('Users').doc(uid).set({
+          firestore().collection(string.users).doc(uid).set({
             phoneNumber: number,
             id: uid,
             isActive: true,
           });
-          navigation.navigate('Profile');
+          navigation.navigate(string.userProfile);
           handleLoader(false);
         },
         () => {

@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     width: normalize(16),
     marginLeft: normalize(24),
   },
+  hitSlopStyle: {top: 20, left: 20, right: 20, bottom: 20},
   backText: {
     height: '100%',
     width: '100%',

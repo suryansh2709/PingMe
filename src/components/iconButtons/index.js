@@ -1,10 +1,11 @@
 import {TouchableOpacity, Image} from 'react-native';
 import React from 'react';
+import {styles} from './style';
 
 const IconButton = props => {
   return (
     <TouchableOpacity
-      hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}
+      hitSlop={styles.hitSlopStyle}
       onPress={props?.onPress}
       style={props.imageStyle}>
       <Image source={props?.image} style={props.imageStyle} />

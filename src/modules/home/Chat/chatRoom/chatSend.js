@@ -1,7 +1,7 @@
-import {Image, View} from 'react-native';
-import {Send} from 'react-native-gifted-chat';
 import React from 'react';
 import {styles} from '../style';
+import {Image, View} from 'react-native';
+import {Send} from 'react-native-gifted-chat';
 import localImages from '../../../../utils/localImages';
 
 const RenderSend = props => {

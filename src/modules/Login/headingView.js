@@ -1,7 +1,6 @@
-import {Text, View} from 'react-native';
-
 import React from 'react';
 import {styles} from './style';
+import {Text, View} from 'react-native';
 
 export const HeadingView = ({bigHeader, smallHeader, style}) => {
   return (
