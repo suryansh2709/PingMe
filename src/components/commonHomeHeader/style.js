@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
+  chatHeaderText: {fontSize: vh(34), marginLeft: vw(10), color: color.white},
   iconImageView: {
     flexDirection: 'row',
     width: vw(98),

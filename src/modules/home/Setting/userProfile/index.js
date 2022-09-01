@@ -53,15 +53,14 @@ export default function Profile() {
       compressImageQuality: 0.2,
     })
       .then(res => {
-        if (Platform.OS === 'ios') {
+        if (Platform.OS === string.ios) {
           reference
             .putFile(res?.sourceURL)
             .then(res => {
-              console.log('uploaded', res);
               reference.getDownloadURL().then(result => {
                 dispatch(setUser({...loggedInUser, displayImage: result}));
                 firestore()
-                  .collection('Users')
+                  .collection(string.users)
                   .doc(loggedInUser?.uid)
                   .update({displayImage: result});
                 setLoader(false);
@@ -74,7 +73,6 @@ export default function Profile() {
             reference
               .putFile(res?.path)
               .then(res => {
-                console.log('uploaded', res);
                 reference.getDownloadURL().then(result => {
                   dispatch(setUser({...loggedInUser, displayImage: result}));
                   setLoader(false);
@@ -93,7 +91,7 @@ export default function Profile() {
   return (
     <View style={styles.centeredView}>
       <Header
-        header={'Profile'}
+        header={string.profile}
         backVisible
         onPress={() => {
           navigation.goBack();
@@ -115,14 +113,14 @@ export default function Profile() {
           </View>
         </View>
         <View style={styles.inputModalView}>
-          <Text style={styles.profileDataName}>{'Name'}</Text>
+          <Text style={styles.profileDataName}>{string.name}</Text>
           <View style={styles.editDataView}>
             <Text style={styles.dataText}>{loggedInUser?.fName}</Text>
             <IconButton
               image={localImages.pencilIcon}
               imageStyle={styles.pencilImageData}
               onPress={() => {
-                setCaller('Name');
+                setCaller(string.name);
                 setChange(loggedInUser?.name);
                 setModalVisible(true);
               }}
@@ -130,20 +128,20 @@ export default function Profile() {
           </View>
         </View>
         <View style={styles.inputModalView}>
-          <Text style={styles.profileDataName}>{'Phone Number'}</Text>
+          <Text style={styles.profileDataName}>{string.phoneNumber}</Text>
           <View style={styles.editDataView}>
             <Text style={styles.dataText}>{loggedInUser?.phoneNumber}</Text>
           </View>
         </View>
         <View style={styles.inputModalView}>
-          <Text style={styles.profileDataName}>{'About'}</Text>
+          <Text style={styles.profileDataName}>{string.about}</Text>
           <View style={styles.editDataView}>
             <Text style={styles.dataText}>{loggedInUser?.about}</Text>
             <IconButton
               image={localImages.pencilIcon}
               imageStyle={styles.pencilImageData}
               onPress={() => {
-                setCaller('About');
+                setCaller(string.about);
                 setChange(loggedInUser?.about);
                 setModalVisible(true);
               }}

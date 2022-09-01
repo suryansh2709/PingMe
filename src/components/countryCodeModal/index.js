@@ -7,6 +7,7 @@ import {countryCodes} from './utils/phoneData';
 import CountryCodeRender from './countryCodeRender';
 import localImages from '../../utils/localImages';
 import {string} from '../../utils/strings';
+import {color} from '../../utils/colors';
 
 const CountryCodeModal = ({
   selected,
@@ -64,8 +65,8 @@ const CountryCodeModal = ({
           <CustomTextInput
             width={247}
             onChangeText={onChangeText}
-            placeholder={'select Code'}
-            color={'#f2f2f2'}
+            placeholder={string.selectCode}
+            color={color.darkGrey}
           />
         </View>
         <FlatList

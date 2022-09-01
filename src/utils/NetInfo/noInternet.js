@@ -1,7 +1,7 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
 import {normalize} from '../dimensions';
 import localImages from '../localImages';
+import {Image, StyleSheet, View} from 'react-native';
 
 const NoInternet = () => {
   return (

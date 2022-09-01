@@ -1,17 +1,17 @@
-import {Animated} from 'react-native';
-import React, {useEffect, useRef} from 'react';
 import styles from './styles';
-import LinearGradient from 'react-native-linear-gradient';
+import {Animated} from 'react-native';
+import {useSelector} from 'react-redux';
 import {color} from '../../utils/colors';
-import {useNavigation} from '@react-navigation/native';
 import {vh} from '../../utils/dimensions';
 import {string} from '../../utils/strings';
-import {useSelector} from 'react-redux';
+import React, {useEffect, useRef} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const SplashScreen = () => {
-  const {loggedInUser} = useSelector(store => store.userDataReducer);
-  const animRef = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
+  const animRef = useRef(new Animated.Value(0)).current;
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
   useEffect(() => {
     Animated.timing(animRef, {
       toValue: 1,

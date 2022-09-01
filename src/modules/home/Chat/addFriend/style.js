@@ -1,8 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {color} from '../../../utils/colors';
-import {vh, vw} from '../../../utils/dimensions';
+import {color} from '../../../../utils/colors';
+import {vh, vw} from '../../../../utils/dimensions';
 
 export const styles = StyleSheet.create({
+  mainView: {flex: 1},
   homeMainView: {height: '88%'},
   homeChatMainView: {
     flexDirection: 'row',

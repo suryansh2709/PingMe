@@ -1,8 +1,8 @@
 export default {
   add: require('../assets/images/add.png'),
+  left: require('../assets/images/left.png'),
   user: require('../assets/images/user.jpeg'),
   check: require('../assets/images/check.jpeg'),
-  left: require('../assets/images/left.png'),
   search: require('../assets/images/search.png'),
   splash: require('../assets/images/splash.jpg'),
   callIcon: require('../assets/images/call.png'),

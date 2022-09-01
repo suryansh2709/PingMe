@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  leftImageStyle: {height: vh(22), width: vh(22), marginLeft: vw(14)},
   nameMainView: {
     flexDirection: 'row',
     alignItems: 'center',

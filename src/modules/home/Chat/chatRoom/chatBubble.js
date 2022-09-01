@@ -1,4 +1,5 @@
 import React from 'react';
+import {color} from '../../../../utils/colors';
 import {Bubble} from 'react-native-gifted-chat';
 
 const RenderBubble = props => {
@@ -7,10 +8,10 @@ const RenderBubble = props => {
       {...props}
       wrapperStyle={{
         right: {
-          backgroundColor: '#4FBC87',
+          backgroundColor: color.chatSender,
         },
         left: {
-          backgroundColor: '#EFEEF4',
+          backgroundColor: color.chatReciever,
         },
       }}
     />

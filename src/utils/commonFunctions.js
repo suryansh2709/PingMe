@@ -18,7 +18,7 @@ export const showToast = message => {
 export const getUsers = async (uid, successCallback, failureCallback) => {
   try {
     await firestore()
-      .collection('Users')
+      .collection(string.users)
       .where('id', '!=', uid)
       .onSnapshot(doc => {
         const dataArray = doc?._docs.map(element => element._data);
@@ -57,7 +57,6 @@ export async function confirmOtp(
   try {
     const data = await confirm.confirm(code);
     if (data) {
-      console.log('user', data?.user?._user?.uid);
       successCallback(data?.user);
       return data?.user;
     }
@@ -95,7 +94,7 @@ export async function handleDisplayImage() {
     cropping: true,
   })
     .then(res => {
-      if (Platform.OS === 'ios') {
+      if (Platform.OS === string.ios) {
         return res?.sourceURL;
       } else {
         return res?.path;
@@ -108,11 +107,10 @@ export async function handleDisplayImage() {
 
 export const logOut = async (uid, successCallback, failureCallback) => {
   try {
-    firestore().collection('Users').doc(uid).update({
+    firestore().collection(string.users).doc(uid).update({
       isActive: true,
     });
     const logOutSucces = auth().signOut();
-    console.log('logOutSucces', logOutSucces);
     successCallback();
   } catch (err) {
     console.log(err);
@@ -122,36 +120,36 @@ export const logOut = async (uid, successCallback, failureCallback) => {
 
 export const setInbox = (id_1, id_2, param) => {
   firestore()
-    .collection('Users')
+    .collection(string.users)
     .doc(id_1)
-    .collection('Inbox')
+    .collection(string.inbox)
     .doc(id_2)
     .set(param);
 };
 
 export const updateInbox = (id_1, id_2, param) => {
   firestore()
-    .collection('Users')
+    .collection(string.users)
     .doc(id_1)
-    .collection('Inbox')
+    .collection(string.inbox)
     .doc(id_2)
     .update(param);
 };
 
 export const saveTypingStatusOnFireStore = (id_1, id_2, param) => {
   firestore()
-    .collection('chatroom')
+    .collection(string.smallChatRoom)
     .doc(id_1)
-    .collection('typingStatus')
+    .collection(string.typingStatus)
     .doc(id_2)
     .set(param);
 };
 
 export const getTypingStatusFromFireBase = (id_1, id_2, callback) => {
   firestore()
-    .collection('chatroom')
+    .collection(string.smallChatRoom)
     .doc(id_1)
-    .collection('typingStatus')
+    .collection(string.typingStatus)
     .doc(id_2)
     .onSnapshot(onchange => {
       let typing = onchange?.data();

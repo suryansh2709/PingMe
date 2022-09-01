@@ -1,18 +1,18 @@
 /* eslint-disable react/self-closing-comp */
-import {Text, View, Image, TouchableOpacity, FlatList} from 'react-native';
-import React, {useState} from 'react';
-import localImages from '../../../utils/localImages';
 import Data from './utils';
 import styles from './style';
-import {useNavigation} from '@react-navigation/native';
+import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
-import {vh} from '../../../utils/dimensions';
-import {color} from '../../../utils/colors';
+import {string} from '../../../utils/strings';
+import FastImage from 'react-native-fast-image';
+import localImages from '../../../utils/localImages';
+import {useNavigation} from '@react-navigation/native';
+import {Text, View, Image, TouchableOpacity, FlatList} from 'react-native';
 
 const Setting = () => {
-  const {loggedInUser} = useSelector(store => store.userDataReducer);
   const navigation = useNavigation();
   const [list, setList] = useState(Data);
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
 
   const onRender = ({item}) => {
     if (item?.id < 3 || (item?.id > 3 && item?.id < 7) || item?.id > 7) {
@@ -62,18 +62,18 @@ const Setting = () => {
   return (
     <View style={styles.settingMainView}>
       <View style={styles.settingHeaderView}>
-        <Text style={styles.headerText}>{'More'}</Text>
+        <Text style={styles.headerText}>{string.more}</Text>
       </View>
       <View style={styles.userDataMainView}>
         <TouchableOpacity
           style={styles.userDataView}
           activeOpacity={0.6}
           onPress={() => {
-            navigation.navigate('Profile');
+            navigation.navigate(string.profile);
           }}>
           <View style={styles.userNameView}>
             <View style={styles.userImageView}>
-              <Image
+              <FastImage
                 source={{uri: loggedInUser.displayImage}}
                 style={styles.userImageStyle}
               />

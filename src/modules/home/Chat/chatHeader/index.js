@@ -1,13 +1,13 @@
-import {Text, View, Image, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import localImages from '../../../../utils/localImages';
 import {styles} from './style';
-import {vh, vw} from '../../../../utils/dimensions';
-import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation} from '@react-navigation/native';
-import firestore from '@react-native-firebase/firestore';
-import IconButton from '../../../../components/iconButtons';
 import FastImage from 'react-native-fast-image';
+import {string} from '../../../../utils/strings';
+import React, {useEffect, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import localImages from '../../../../utils/localImages';
+import firestore from '@react-native-firebase/firestore';
+import LinearGradient from 'react-native-linear-gradient';
+import IconButton from '../../../../components/iconButtons';
+import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 
 function ChatHeader({fName, id, displayImage, toolTip}) {
@@ -16,7 +16,7 @@ function ChatHeader({fName, id, displayImage, toolTip}) {
   const navigation = useNavigation();
   useEffect(() => {
     const activeUserListener = firestore()
-      .collection('Users')
+      .collection(string.users)
       .doc(id)
       .onSnapshot(documentSnapshot => {
         setisActive(documentSnapshot?.data()?.isActive);
@@ -35,16 +35,13 @@ function ChatHeader({fName, id, displayImage, toolTip}) {
           onPress={() => {
             navigation.goBack();
           }}>
-          <Image
-            source={localImages.left}
-            style={{height: vh(22), width: vh(22), marginLeft: vw(14)}}
-          />
+          <Image source={localImages.left} style={styles.leftImageStyle} />
         </TouchableOpacity>
         <FastImage source={{uri: displayImage}} style={styles.userProfile} />
         <View style={styles.activeNameView}>
           <Text style={styles.nameText}>{fName}</Text>
           {isActive ? (
-            <Text style={styles.activeText}>{'Active Now'}</Text>
+            <Text style={styles.activeText}>{string.activeNow}</Text>
           ) : null}
         </View>
       </View>

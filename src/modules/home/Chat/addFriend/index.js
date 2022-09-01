@@ -5,18 +5,19 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {getUsers, showToast} from '../../../../utils/commonFunctions';
+import {styles} from './style';
 import {useSelector} from 'react-redux';
-import {styles} from '../style';
-import ContactHeader from './contactListHeader';
 import FastImage from 'react-native-fast-image';
+import ContactHeader from './contactListHeader';
+import {string} from '../../../../utils/strings';
+import {useNavigation} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {getUsers, showToast} from '../../../../utils/commonFunctions';
 
 export default function AddFriend() {
-  const {loggedInUser} = useSelector(store => store.userDataReducer);
-  const [allUsers, setAllUsers] = useState([]);
   const navigation = useNavigation();
+  const [allUsers, setAllUsers] = useState([]);
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
 
   useEffect(() => {
     getUsers(
@@ -38,7 +39,7 @@ export default function AddFriend() {
     ({item}) => {
       const {id, fName, displayImage, isActive, about} = item;
       const handleCardPress = () => {
-        navigation.navigate('ChatRoom', {
+        navigation.navigate(string.chatRoom, {
           id,
           fName,
           displayImage,
@@ -66,7 +67,7 @@ export default function AddFriend() {
     [allUsers],
   );
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={styles.mainView}>
       <ContactHeader />
       <FlatList
         data={allUsers}
