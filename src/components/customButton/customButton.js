@@ -2,7 +2,7 @@ import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import React from 'react';
 import {normalize} from '../../utils/dimensions';
 
-export default function CustomButton(props) {
+function CustomButton(props) {
   const {
     textColor,
     bgColor,
@@ -31,6 +31,8 @@ export default function CustomButton(props) {
     </TouchableOpacity>
   );
 }
+
+export default React.memo(CustomButton);
 const styles = StyleSheet.create({
   button: {
     height: normalize(42),

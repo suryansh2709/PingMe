@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text} from 'react-native';
 import React from 'react';
 import {vh, vw} from '../../utils/dimensions';
 import localImages from '../../utils/localImages';
@@ -6,8 +6,9 @@ import {color} from '../../utils/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import IconButton from '../iconButtons';
 import {string} from '../../utils/strings';
+import {styles} from './style';
 
-export default function HomeHeader({toolTip, addFriend, onsearchPress}) {
+function HomeHeader({toolTip, addFriend, onsearchPress}) {
   return (
     <LinearGradient
       colors={['#56CF83', '#50BD87', '#47AD8B']}
@@ -35,27 +36,4 @@ export default function HomeHeader({toolTip, addFriend, onsearchPress}) {
     </LinearGradient>
   );
 }
-
-const styles = StyleSheet.create({
-  headerIconImage: {
-    height: vh(20),
-    width: vh(20),
-    tintColor: color.white,
-  },
-  headerMainView: {
-    height: vh(83),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#50BF87',
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-  },
-  iconImageView: {
-    flexDirection: 'row',
-    width: vw(98),
-    height: vh(24),
-    justifyContent: 'space-around',
-    marginRight: vw(13),
-  },
-});
+export default React.memo(HomeHeader);

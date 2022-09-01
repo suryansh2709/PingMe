@@ -1,9 +1,7 @@
-import {View, Image, TouchableOpacity, Text, Platform} from 'react-native';
-import React, {useState} from 'react';
+import {Platform} from 'react-native';
+import React, {useCallback, useLayoutEffect, useState} from 'react';
 import Header from '../../components/commonHeader';
 import {color} from '../../utils/colors';
-import localImages from '../../utils/localImages';
-import CustomTextInput from '../../components/customTextInput/customTextInput';
 import CustomButton from '../../components/customButton/customButton';
 import {string} from '../../utils/strings';
 import {styles} from './style';
@@ -15,15 +13,27 @@ import {showToast} from '../../utils/commonFunctions';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import Loader from '../../components/loader';
 import {useNavigation, CommonActions} from '@react-navigation/native';
-import DatePicker from 'react-native-date-picker';
 import {setUser} from '../../redux/auth/action';
 import storage from '@react-native-firebase/storage';
+import FormComponent from './FormComponent';
 
-export default function UserProfile() {
+function UserProfile() {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
   const reference = storage().ref(
     `${loggedInUser?.uid}/IMG_${Math.floor(Math.random() * 100000000)}.jpg`,
   );
+  const [checkUser, setCheckUser] = useState({});
+  useLayoutEffect(() => {
+    firestore()
+      .collection('Users')
+      .get()
+      .then(res => {
+        const a = res._docs.map(ele => ele.data());
+        console.log(a[0]);
+        setCheckUser(a[0]);
+      })
+      .catch(() => {});
+  }, []);
   const [infoDetails, setInfoDetails] = useState({
     userName: '',
     fName: '',
@@ -36,6 +46,8 @@ export default function UserProfile() {
   const navigation = useNavigation();
   const [open, setOPen] = useState(false);
   const dispatch = useDispatch();
+
+  console.log('infodetails', infoDetails);
 
   /**
    * Setting Display Image.
@@ -84,9 +96,10 @@ export default function UserProfile() {
       });
   };
 
-  const handleContineuPress = () => {
+  const handleContineuPress = useCallback(() => {
+    console.log('infodetails', infoDetails);
     setLoader(true);
-    if (!userNameTest(infoDetails.userName)) {
+    if (infoDetails?.userName.length < 2) {
       showToast('Invalid username');
       setLoader(false);
     } else if (!firstNameTest(infoDetails.fName)) {
@@ -112,7 +125,8 @@ export default function UserProfile() {
         })
         .catch(err => console.log(err));
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const isDisable = () => {
     if (
@@ -129,91 +143,13 @@ export default function UserProfile() {
   return (
     <KeyboardAwareScrollView style={styles.userProfileMainView} bounces={false}>
       <Header header={'Your Profile'} />
-      <View style={styles.profileView}>
-        <TouchableOpacity
-          onPress={onAddImagePress}
-          style={styles.deleteIconView}
-          activeOpacity={0.5}>
-          <Image source={localImages.add} style={styles.deleteImage} />
-        </TouchableOpacity>
-        <View style={styles.profilePicView}>
-          <Image
-            source={{
-              uri: infoDetails?.displayImage,
-            }}
-            style={styles.profileImage}
-          />
-        </View>
-      </View>
-      <View style={styles.textInputView}>
-        <CustomTextInput
-          width={335}
-          color={color.lightGrey}
-          style={styles.userInputStyle}
-          placeholder={string.userName}
-          onChangeText={text => {
-            setInfoDetails({...infoDetails, userName: text});
-          }}
-        />
-        <CustomTextInput
-          width={335}
-          color={color.lightGrey}
-          style={styles.userInputStyle}
-          placeholder={string.firstName}
-          onChangeText={text => {
-            setInfoDetails({...infoDetails, fName: text});
-          }}
-        />
-        <CustomTextInput
-          width={335}
-          color={color.lightGrey}
-          style={styles.userInputStyle}
-          placeholder={string.lastName}
-          onChangeText={text => {
-            setInfoDetails({...infoDetails, lName: text});
-          }}
-        />
-        <View style={styles.datePickerView}>
-          <View style={styles.dateDisplayView}>
-            <Text style={{color: color.darkGreen}}>
-              {' '}
-              {`${JSON.stringify(
-                infoDetails?.date?.getDate(),
-              )}/${JSON.stringify(
-                infoDetails.date.getMonth() + 1,
-              )}/${JSON.stringify(infoDetails.date.getFullYear() - 18)}`}
-            </Text>
-          </View>
-          <TouchableOpacity onPress={() => setOPen(true)}>
-            <Image
-              source={localImages.calenderIcon}
-              style={styles.calenderImage}
-            />
-          </TouchableOpacity>
-        </View>
-        <DatePicker
-          mode="date"
-          modal
-          open={open}
-          date={infoDetails.date}
-          onConfirm={date => {
-            setOPen(false);
-            setInfoDetails({...infoDetails, date: date});
-          }}
-          onCancel={() => {
-            setOPen(false);
-          }}
-        />
-        <CustomTextInput
-          width={335}
-          color={color.lightGrey}
-          style={styles.userInputStyle}
-          placeholder={string.about}
-          onChangeText={text => {
-            setInfoDetails({...infoDetails, about: text});
-          }}
-        />
-      </View>
+      <FormComponent
+        onAddImagePress={onAddImagePress}
+        infoDetails={infoDetails}
+        setInfoDetails={setInfoDetails}
+        open={open}
+        setOPen={setOPen}
+      />
       <CustomButton
         text={string.save}
         marginTop={128}
@@ -228,3 +164,4 @@ export default function UserProfile() {
     </KeyboardAwareScrollView>
   );
 }
+export default React.memo(UserProfile);

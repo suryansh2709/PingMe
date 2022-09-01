@@ -29,6 +29,14 @@ export const getUsers = async (uid, successCallback, failureCallback) => {
   }
 };
 
+export const createUser = (uid, number) => {
+  firestore().collection('Users').doc(uid).set({
+    phoneNumber: number,
+    id: uid,
+    isActive: true,
+  });
+};
+
 export const addMessagges = async (docId, myMsg) => {
   try {
     firestore()

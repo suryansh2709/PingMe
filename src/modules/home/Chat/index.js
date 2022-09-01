@@ -6,6 +6,7 @@ import {
   Platform,
   StatusBar,
   Animated,
+  ImageBackground,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import HomeHeader from '../../../components/commonHomeHeader';
@@ -21,17 +22,18 @@ import Tooltip from 'react-native-walkthrough-tooltip';
 import SearchHeader from './searchHeader';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import firestore from '@react-native-firebase/firestore';
+import {backPress, searchPress} from './chatUtils/chatUtils';
+import {vh} from '../../../utils/dimensions';
 
 const ChatList = () => {
-  const {loggedInUser} = useSelector(store => store.userDataReducer);
-  console.log('SHubhankar', loggedInUser);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [loader, setLoader] = useState(false);
   const [showTip, setTip] = useState(false);
   const [search, setSearch] = useState(true);
-  const transform = useState(new Animated.Value(0))[0];
-  const dispatch = useDispatch();
+  const [loader, setLoader] = useState(false);
   const [staticData, setStaticData] = useState([]);
+  const transform = useState(new Animated.Value(0))[0];
+  const {loggedInUser} = useSelector(store => store.userDataReducer);
 
   let scale = {
     transform: [
@@ -56,16 +58,15 @@ const ChatList = () => {
       .onSnapshot(doc => {
         const dataArray = doc?._docs.map(element => element._data);
         setStaticData(dataArray);
-        console.log('dataArray', dataArray);
       });
-    console.log('abc', abc);
+    return abc;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleTooltipPress = () => {
+  const handleTooltipPress = useCallback(() => {
     setTip(!showTip);
     navigation.navigate(string.profile, {});
-  };
+  }, [navigation, showTip]);
 
   const handleLogOut = () => {
     setTip(!showTip);
@@ -87,14 +88,21 @@ const ChatList = () => {
     );
   };
 
+  const listEmptyComponent = () => (
+    <ImageBackground
+      source={require('../../../assets/images/empty.png')}
+      style={{height: vh(560), width: '100%'}}
+    />
+  );
+
   /**
    *
    * @param {*} item
    * @returns id
    */
 
-  const _keyExtractor = ({fName}) => {
-    return fName + '1';
+  const _keyExtractor = item => {
+    return item?.id;
   };
 
   const _itemSeperator = () => {
@@ -118,33 +126,23 @@ const ChatList = () => {
         />
       );
     },
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [staticData],
   );
 
-  const searchPress = () => {
-    Animated.timing(transform, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
+  const handleSearchPress = () => {
+    searchPress(transform);
   };
 
-  const backPress = () => {
-    Animated.timing(transform, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
+  const handleBackPress = () => {
+    backPress(transform);
   };
 
-  const toolTip = () => {
+  const toolTip = useCallback(() => {
     setTip(!showTip);
-  };
+  }, [showTip]);
   return (
     <SafeAreaView style={styles.homeMainView}>
-      {/* {search ? ( */}
       <HomeHeader
         search={search}
         setSearch={setSearch}
@@ -152,13 +150,13 @@ const ChatList = () => {
         addFriend={() => {
           navigation.navigate('AddFriend');
         }}
-        onsearchPress={searchPress}
+        onsearchPress={handleSearchPress}
       />
       <SearchHeader
         search={search}
         setSearch={setSearch}
         animatedStyle={scale}
-        onBackPress={backPress}
+        onBackPress={handleBackPress}
       />
       <Tooltip
         topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
@@ -184,6 +182,7 @@ const ChatList = () => {
         renderItem={onRender}
         keyExtractor={_keyExtractor}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={listEmptyComponent}
         ItemSeparatorComponent={_itemSeperator}
       />
 

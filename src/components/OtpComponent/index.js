@@ -1,11 +1,11 @@
 import {} from 'react-native';
-import React from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {confirmOtpAction} from '../../redux/auth/action';
-import firestore from '@react-native-firebase/firestore';
+import {createUser} from '../../utils/commonFunctions';
 
 const OtpComponent = ({confirm, handleLoader, number}) => {
   const navigation = useNavigation();
@@ -17,15 +17,10 @@ const OtpComponent = ({confirm, handleLoader, number}) => {
         confirm,
         otp,
         user => {
-          console.log('uidddd', user?._user?.uid);
           let uid = user?._user?.uid;
-          firestore().collection('Users').doc(uid).set({
-            phoneNumber: number,
-            id: uid,
-            isActive: true,
-          });
-          navigation.navigate('Profile');
+          createUser(uid, number);
           handleLoader(false);
+          navigation.navigate('Profile');
         },
         () => {
           handleLoader(false);
@@ -45,4 +40,4 @@ const OtpComponent = ({confirm, handleLoader, number}) => {
   );
 };
 
-export default OtpComponent;
+export default React.memo(OtpComponent);

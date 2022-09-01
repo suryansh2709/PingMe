@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {color} from '../../utils/colors';
-import {normalize, vh, vw} from '../../utils/dimensions';
+import {normalize, vw, vh} from '../../utils/dimensions';
 
 export const styles = StyleSheet.create({
   userProfileMainView: {flex: 1, backgroundColor: color.white},
