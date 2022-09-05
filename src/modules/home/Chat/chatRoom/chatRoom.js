@@ -2,7 +2,7 @@ import {styles} from './style';
 import RenderSend from './chatSend';
 import ChatHeader from '../chatHeader';
 import RenderBubble from './chatBubble';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   debounce,
   setInbox,
@@ -20,8 +20,9 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {normalize, vh} from '../../../../utils/dimensions';
 import {createRoom, handleClearChat} from './utils/chatUtils';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {GiftedChat, InputToolbar, StatusBar} from 'react-native-gifted-chat';
+import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
 import React, {useState, useCallback, useLayoutEffect, useEffect} from 'react';
+import firestore from '@react-native-firebase/firestore';
 
 function ChatRoom() {
   const [showTip, setTip] = useState(false);
@@ -30,16 +31,39 @@ function ChatRoom() {
   const {id, fName, isActive, displayImage} = useRoute().params;
   const [getTypingStatus, setGetTypingStatus] = useState(false);
   const {loggedInUser} = useSelector(store => store.userDataReducer);
+  const [senderBlock, setSenderBlock] = useState(false);
+  const [recieverBlock, setRecieverBlock] = useState(false);
   const docId =
     loggedInUser?.uid > id
       ? loggedInUser?.uid + '-' + id
       : id + '-' + loggedInUser?.uid;
+  const {blockList} = useSelector(store => store.userDataReducer);
 
   useLayoutEffect(() => {
     createRoom(docId, loggedInUser, msgs => {
       setMessages(msgs);
     });
+    firestore()
+      .collection('Users')
+      .doc(id)
+      .collection('BlockList')
+      .onSnapshot(doc => {
+        const list = doc._docs.map(ele => ele.data());
+        list?.forEach(element => {
+          if (element?.id === loggedInUser?.uid) {
+            setRecieverBlock(true);
+          }
+        });
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    blockList?.forEach(ele => {
+      if (ele?.id === id) {
+        setSenderBlock(true);
+      }
+    });
   }, []);
   useEffect(() => {
     saveTypingStatusOnFireStore(docId, loggedInUser?.uid, {typing: isTyping});
@@ -127,6 +151,17 @@ function ChatRoom() {
     }
   };
 
+  const handleBlock = () => {
+    firestore()
+      .collection('Users')
+      .doc(loggedInUser?.uid)
+      .collection('BlockList')
+      .doc(id)
+      .set({name: fName, id: id});
+    setTip(!showTip);
+    setSenderBlock(true);
+  };
+
   const onSend = useCallback((message = []) => {
     const msg = message[0];
     const myMsg = {
@@ -158,9 +193,36 @@ function ChatRoom() {
   }, []);
 
   const renderInputToolbar = props => {
-    return true ? (
-      <InputToolbar containerStyle={styles.chatInputViewStyle} {...props} />
-    ) : null;
+    if (senderBlock) {
+      return (
+        <Text
+          style={styles.unblock}
+          onPress={() => {
+            firestore()
+              .collection('Users')
+              .doc(loggedInUser?.uid)
+              .collection('BlockList')
+              .doc(id)
+              .delete()
+              .then(() => {
+                setRecieverBlock(false);
+                setSenderBlock(false);
+              });
+          }}>
+          {'Unblock'}
+        </Text>
+      );
+    } else if (recieverBlock) {
+      return (
+        <Text style={styles.toolTipTextStyle}>
+          {'You cannot reply to this conversation anymore'}
+        </Text>
+      );
+    } else {
+      return (
+        <InputToolbar containerStyle={styles.chatInputViewStyle} {...props} />
+      );
+    }
   };
 
   const startTyping = debounce(arg => {
@@ -186,14 +248,14 @@ function ChatRoom() {
         displayImage={displayImage}
       />
       <Tooltip
-        topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
+        topAdjustment={Platform.OS === 'android' ? getStatusBarHeight() : 0}
         backgroundColor="transparent"
-        placement="right"
+        placement="top"
         contentStyle={styles.toolTipContainer}
         isVisible={showTip}
         content={
           <View style={styles.tooTipContentMainView}>
-            <Text style={styles.toolTipTextStyle} onPress={{}}>
+            <Text style={styles.toolTipTextStyle} onPress={handleBlock}>
               {string.blockUser}
             </Text>
             <View style={styles.contentLineSeperator} />

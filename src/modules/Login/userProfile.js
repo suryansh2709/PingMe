@@ -47,8 +47,6 @@ function UserProfile() {
   const [open, setOPen] = useState(false);
   const dispatch = useDispatch();
 
-  console.log('infodetails', infoDetails);
-
   /**
    * Setting Display Image.
    */
@@ -96,16 +94,17 @@ function UserProfile() {
       });
   };
 
-  const handleContineuPress = useCallback(() => {
+  const handleContineuPress = () => {
     console.log('infodetails', infoDetails);
     setLoader(true);
-    if (infoDetails?.userName.length < 2) {
+    if (infoDetails.userName.length < 2) {
       showToast('Invalid username');
       setLoader(false);
     } else if (!firstNameTest(infoDetails.fName)) {
       showToast('Invalid name');
       setLoader(false);
     } else {
+      console.log('huhuhuhuhu');
       let user = {...infoDetails};
       firestore()
         .collection('Users')
@@ -126,9 +125,10 @@ function UserProfile() {
         .catch(err => console.log(err));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
 
   const isDisable = () => {
+    console.log(infoDetails.fName);
     if (
       infoDetails.userName.length > 4 &&
       infoDetails.fName.length > 2 &&
@@ -164,4 +164,4 @@ function UserProfile() {
     </KeyboardAwareScrollView>
   );
 }
-export default React.memo(UserProfile);
+export default UserProfile;

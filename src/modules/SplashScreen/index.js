@@ -21,9 +21,9 @@ const SplashScreen = () => {
 
     setTimeout(() => {
       if (Object.keys(loggedInUser).length === 0) {
-        navigation.navigate(string.loginStack);
+        navigation.replace(string.loginStack);
       } else {
-        navigation.navigate(string.homeStack);
+        navigation.replace(string.homeStack);
       }
     }, 2000);
     // eslint-disable-next-line react-hooks/exhaustive-deps

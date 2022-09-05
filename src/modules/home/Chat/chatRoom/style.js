@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {color} from '../../../../utils/colors';
-import {vh, vw} from '../../../../utils/dimensions';
+import {normalize, vh, vw} from '../../../../utils/dimensions';
 
 export const styles = StyleSheet.create({
   giftedChatMainView: {flex: 1, backgroundColor: color.cream},
@@ -8,18 +8,18 @@ export const styles = StyleSheet.create({
     height: vh(40),
     marginHorizontal: vw(15),
     borderRadius: 22,
+    alignItems: 'center',
     justifyContent: 'center',
+    paddingLeft: vw(10),
+    marginBottom: 7,
     shadowColor: '#000',
     shadowOffset: {
-      width: 4,
-      height: 3,
+      width: 0,
+      height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 5.46,
-
-    elevation: 9,
-    paddingLeft: vw(10),
-    paddingTop: vh(5),
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 35,
   },
   toolTipTextStyle: {
     color: 'black',
@@ -28,7 +28,8 @@ export const styles = StyleSheet.create({
     lineHeight: 35,
   },
   toolTipContainer: {
-    bottom: 295,
+    left: 95,
+    top: 35,
     borderWidth: 1,
     borderColor: color.lightGreen,
   },
@@ -42,5 +43,10 @@ export const styles = StyleSheet.create({
   },
   messageContainerView: {
     backgroundColor: color.cream,
+  },
+  unblock: {
+    textAlign: 'center',
+    fontSize: normalize(22),
+    fontWeight: '800',
   },
 });

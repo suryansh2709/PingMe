@@ -18,11 +18,6 @@ function HomeHeader({toolTip, addFriend, onsearchPress}) {
       </Text>
       <View style={styles.iconImageView}>
         <IconButton
-          onPress={onsearchPress}
-          imageStyle={styles.headerIconImage}
-          image={localImages.homeSearchIcon}
-        />
-        <IconButton
           onPress={addFriend}
           image={localImages.homeAddIcon}
           imageStyle={styles.headerIconImage}

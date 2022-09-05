@@ -13,8 +13,34 @@ import {useSelector} from 'react-redux';
 function ChatHeader({fName, id, displayImage, toolTip}) {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
   const [isActive, setisActive] = useState(false);
+  const [recieverBlock, setRecieverBlock] = useState(false);
+  const [senderBlock, setSenderBlock] = useState(false);
+  const {blockList} = useSelector(store => store.userDataReducer);
   const navigation = useNavigation();
   useEffect(() => {
+    firestore()
+      .collection('Users')
+      .doc(id)
+      .collection('BlockList')
+      .onSnapshot(doc => {
+        const list = doc._docs.map(ele => ele.data());
+        list?.forEach(element => {
+          console.log(
+            'element?.id === loggedInUser?.id',
+            element?.id,
+            loggedInUser?.id,
+          );
+          if (element?.id === loggedInUser?.uid) {
+            setRecieverBlock(true);
+            console.log('setRecieverBlock');
+          }
+        });
+      });
+    blockList?.forEach(ele => {
+      if (ele?.id === id) {
+        setSenderBlock(true);
+      }
+    });
     const activeUserListener = firestore()
       .collection('Users')
       .doc(id)
@@ -40,7 +66,11 @@ function ChatHeader({fName, id, displayImage, toolTip}) {
             style={{height: vh(22), width: vh(22), marginLeft: vw(14)}}
           />
         </TouchableOpacity>
-        <FastImage source={{uri: displayImage}} style={styles.userProfile} />
+        {!recieverBlock ? (
+          <FastImage source={{uri: displayImage}} style={styles.userProfile} />
+        ) : (
+          <Image source={localImages.user} style={styles.userProfile} />
+        )}
         <View style={styles.activeNameView}>
           <Text style={styles.nameText}>{fName}</Text>
           {isActive ? (

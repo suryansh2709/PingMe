@@ -40,11 +40,7 @@ export default function TextModal({
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={styles.inputView}>
-            <TextInput
-              placeholder={change}
-              maxLength={20}
-              onChangeText={text => setChange(text)}
-            />
+            <TextInput maxLength={20} onChangeText={text => setChange(text)} />
           </View>
           <Pressable
             style={[styles.button, styles.buttonClose]}

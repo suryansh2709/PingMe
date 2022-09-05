@@ -109,7 +109,7 @@ export async function handleDisplayImage() {
 export const logOut = async (uid, successCallback, failureCallback) => {
   try {
     firestore().collection('Users').doc(uid).update({
-      isActive: true,
+      isActive: false,
     });
     const logOutSucces = auth().signOut();
     console.log('logOutSucces', logOutSucces);

@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {vh, vw} from '../../../../utils/dimensions';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {color} from '../../../../utils/colors';
@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     zIndex: 1,
     elevation: 1,
     width: '100%',
-    top: getStatusBarHeight(),
+    top: Platform.OS === 'ios' ? getStatusBarHeight() : 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

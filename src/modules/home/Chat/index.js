@@ -19,8 +19,6 @@ import {string} from '../../../utils/strings';
 import Loader from '../../../components/loader';
 import {setUser} from '../../../redux/auth/action';
 import Tooltip from 'react-native-walkthrough-tooltip';
-import SearchHeader from './searchHeader';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
 import firestore from '@react-native-firebase/firestore';
 import {backPress, searchPress} from './chatUtils/chatUtils';
 import {vh} from '../../../utils/dimensions';
@@ -35,20 +33,17 @@ const ChatList = () => {
   const transform = useState(new Animated.Value(0))[0];
   const {loggedInUser} = useSelector(store => store.userDataReducer);
 
-  let scale = {
-    transform: [
-      {
-        scale: transform.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0, 1],
-          extrapolate: 'clamp',
-        }),
-      },
-    ],
-    position: 'absolute',
-    top: getStatusBarHeight(),
-    zIndex: 10,
-  };
+  useEffect(() => {
+    firestore()
+      .collection('Users')
+      .doc(loggedInUser?.uid)
+      .collection('BlockList')
+      .onSnapshot(doc => {
+        const list = doc._docs.map(ele => ele.data());
+        dispatch({type: 'setBlock', payload: {blockList: list}});
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const abc = firestore()
@@ -151,12 +146,6 @@ const ChatList = () => {
           navigation.navigate('AddFriend');
         }}
         onsearchPress={handleSearchPress}
-      />
-      <SearchHeader
-        search={search}
-        setSearch={setSearch}
-        animatedStyle={scale}
-        onBackPress={handleBackPress}
       />
       <Tooltip
         topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}

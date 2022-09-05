@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     width: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: -1,
+    marginTop: 18,
   },
   chatInputViewStyle: {
     marginHorizontal: vw(15),

@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
   },
   iconImageView: {
     flexDirection: 'row',
-    width: vw(98),
+    width: vw(90),
     height: vh(24),
     justifyContent: 'space-around',
     marginRight: vw(13),
