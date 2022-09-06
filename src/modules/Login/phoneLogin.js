@@ -1,23 +1,23 @@
-import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
-import CustomTextInput from '../../components/customTextInput/customTextInput';
-import CountryCodeModal from '../../components/countryCodeModal';
-import {countryCodes} from '../../components/countryCodeModal/utils/phoneData';
-import CustomButton from '../../components/customButton/customButton';
-import {useNavigation} from '@react-navigation/native';
 import {styles} from './style';
-import {normalize} from '../../utils/dimensions';
+import React, {useState} from 'react';
 import {color} from '../../utils/colors';
-import {signInWirhPhoneNumber} from '../../utils/commonFunctions';
-import Loader from '../../components/loader';
 import {string} from '../../utils/strings';
+import Loader from '../../components/loader';
+import {normalize} from '../../utils/dimensions';
+import {useNavigation} from '@react-navigation/native';
+import {View, Text, TouchableOpacity} from 'react-native';
+import CountryCodeModal from '../../components/countryCodeModal';
+import {signInWirhPhoneNumber} from '../../utils/commonFunctions';
+import CustomButton from '../../components/customButton/customButton';
+import {countryCodes} from '../../components/countryCodeModal/utils/phoneData';
+import CustomTextInput from '../../components/customTextInput/customTextInput';
 
 export default function PhoneLogin() {
+  const navigation = useNavigation();
+  const [number, setNumber] = useState('');
+  const [loader, setLoader] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selected, setSelected] = useState(countryCodes[0].code);
-  const [number, setNumber] = useState('');
-  const navigation = useNavigation();
-  const [loader, setLoader] = useState(false);
 
   const selectionHandler = code => {
     setSelected(code);
@@ -77,10 +77,10 @@ export default function PhoneLogin() {
       <CustomButton
         disableColor={color.grey}
         disable={number.length < 10}
-        text={'Continue'}
+        text={string.continue}
         marginTop={130}
         width={327}
-        bgColor={'rgba(88, 213, 130, 1)'}
+        bgColor={color.buttonBackground}
         textColor={color.white}
         onPressButton={handleContineuPress}
       />

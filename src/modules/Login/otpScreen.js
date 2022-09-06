@@ -12,8 +12,8 @@ import ResendOtp from './ResendComponent';
 export default function OtpScreen() {
   useEffect(() => {}, []);
   const navigation = useNavigation();
-  const {confirm, number, selected} = useRoute().params;
   const [loader, setLoader] = useState(false);
+  const {confirm, number, selected} = useRoute().params;
   const [confirmation, setConfirmation] = useState(confirm);
 
   const handleLoader = loaderBack => {

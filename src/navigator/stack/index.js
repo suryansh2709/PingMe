@@ -18,7 +18,7 @@ export function LoginStack() {
       initialRouteName={string.login}>
       <Stack.Screen name={string.login} component={Login} />
       <Stack.Screen name={string.otp} component={OtpScreen} />
-      <Stack.Screen name={string.profile} component={UserProfile} />
+      <Stack.Screen name={string.userProfile} component={UserProfile} />
     </Stack.Navigator>
   );
 }
@@ -30,8 +30,8 @@ export function HomeStack() {
       screenOptions={{headerShown: false}}>
       <Stack.Screen name={string.home} component={Home} />
       <Stack.Screen name={string.chatRoom} component={ChatRoom} />
-      <Stack.Screen name={'AddFriend'} component={AddFriend} />
-      <Stack.Screen name={'Profile'} component={Profile} />
+      <Stack.Screen name={string.addFriend} component={AddFriend} />
+      <Stack.Screen name={string.profile} component={Profile} />
     </Stack.Navigator>
   );
 }

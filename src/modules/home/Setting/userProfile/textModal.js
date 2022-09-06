@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {color} from '../../../../utils/colors';
 import {vh, vw} from '../../../../utils/dimensions';
+import {string} from '../../../../utils/strings';
 export default function TextModal({
   modalVisible,
   setModalVisible,
@@ -21,7 +22,7 @@ export default function TextModal({
   const [change, setChange] = useState(changing);
 
   const handelModal = () => {
-    if (caller === 'Name') {
+    if (caller === string.name) {
       handleNameChange(change);
     } else {
       handleAboutChange(change);
@@ -34,7 +35,7 @@ export default function TextModal({
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
+        Alert.alert(string.modalClosed);
         setModalVisible(!modalVisible);
       }}>
       <View style={styles.centeredView}>

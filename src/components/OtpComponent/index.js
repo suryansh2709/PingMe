@@ -1,10 +1,11 @@
 import {} from 'react-native';
-import React, {useLayoutEffect, useState} from 'react';
+import React from 'react';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {confirmOtpAction} from '../../redux/auth/action';
+import {string} from '../../utils/strings';
 import {createUser} from '../../utils/commonFunctions';
 
 const OtpComponent = ({confirm, handleLoader, number}) => {
@@ -20,7 +21,7 @@ const OtpComponent = ({confirm, handleLoader, number}) => {
           let uid = user?._user?.uid;
           createUser(uid, number);
           handleLoader(false);
-          navigation.navigate('Profile');
+          navigation.navigate(string.userProfile);
         },
         () => {
           handleLoader(false);

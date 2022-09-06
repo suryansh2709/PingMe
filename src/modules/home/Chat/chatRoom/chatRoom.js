@@ -2,7 +2,7 @@ import {styles} from './style';
 import RenderSend from './chatSend';
 import ChatHeader from '../chatHeader';
 import RenderBubble from './chatBubble';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {
   debounce,
   setInbox,
@@ -13,16 +13,16 @@ import {
   saveTypingStatusOnFireStore,
 } from '../../../../utils/commonFunctions';
 import {string} from '../../../../utils/strings';
-import {View, Platform, Text} from 'react-native';
+import {View, Platform, Text, StatusBar} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import firestore from '@react-native-firebase/firestore';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {normalize, vh} from '../../../../utils/dimensions';
 import {createRoom, handleClearChat} from './utils/chatUtils';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
 import React, {useState, useCallback, useLayoutEffect, useEffect} from 'react';
-import firestore from '@react-native-firebase/firestore';
 
 function ChatRoom() {
   const [showTip, setTip] = useState(false);
@@ -38,6 +38,14 @@ function ChatRoom() {
       ? loggedInUser?.uid + '-' + id
       : id + '-' + loggedInUser?.uid;
   const {blockList} = useSelector(store => store.userDataReducer);
+
+  // useEffect(() => {
+  //   firestore()
+  //     .collection('Users')
+  //     .doc(loggedInUser?.uid)
+  //     .collection('BlockedUsers')
+  //     .onSnapshot(doc => console.log(doc._docs));
+  // }, []);
 
   useLayoutEffect(() => {
     createRoom(docId, loggedInUser, msgs => {
@@ -110,7 +118,12 @@ function ChatRoom() {
   const handleLongPress = (context, message) => {
     let options, cancelButtonIndex;
     if (message.sentBy === loggedInUser?.uid) {
-      options = ['Copy', 'Delete for me', 'Delete for everyone', 'Cancel'];
+      options = [
+        string.copy,
+        string.deleteMe,
+        string.deleteEveryOne,
+        string.cancel,
+      ];
       cancelButtonIndex = options.length;
       context
         .actionSheet()
@@ -131,7 +144,7 @@ function ChatRoom() {
           },
         );
     } else {
-      options = ['Copy', 'Delete for me', 'Cancel'];
+      options = [string.copy, string.deleteMe, string.cancel];
       cancelButtonIndex = options.length;
       context
         .actionSheet()
@@ -248,7 +261,9 @@ function ChatRoom() {
         displayImage={displayImage}
       />
       <Tooltip
-        topAdjustment={Platform.OS === 'android' ? getStatusBarHeight() : 0}
+        topAdjustment={
+          Platform.OS === string.android ? -StatusBar.currentHeight : 0
+        }
         backgroundColor="transparent"
         placement="top"
         contentStyle={styles.toolTipContainer}

@@ -1,21 +1,21 @@
-import {Platform} from 'react-native';
-import React, {useCallback, useLayoutEffect, useState} from 'react';
-import Header from '../../components/commonHeader';
-import {color} from '../../utils/colors';
-import CustomButton from '../../components/customButton/customButton';
-import {string} from '../../utils/strings';
 import {styles} from './style';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {firstNameTest, userNameTest} from '../../utils/validation';
-import {useDispatch, useSelector} from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
-import {showToast} from '../../utils/commonFunctions';
-import ImageCropPicker from 'react-native-image-crop-picker';
-import Loader from '../../components/loader';
-import {useNavigation, CommonActions} from '@react-navigation/native';
-import {setUser} from '../../redux/auth/action';
-import storage from '@react-native-firebase/storage';
+import {Platform} from 'react-native';
+import {color} from '../../utils/colors';
+import {string} from '../../utils/strings';
 import FormComponent from './FormComponent';
+import Loader from '../../components/loader';
+import {setUser} from '../../redux/auth/action';
+import Header from '../../components/commonHeader';
+import {firstNameTest} from '../../utils/validation';
+import storage from '@react-native-firebase/storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {showToast} from '../../utils/commonFunctions';
+import firestore from '@react-native-firebase/firestore';
+import ImageCropPicker from 'react-native-image-crop-picker';
+import React, {useCallback, useLayoutEffect, useState} from 'react';
+import CustomButton from '../../components/customButton/customButton';
+import {useNavigation, CommonActions} from '@react-navigation/native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 function UserProfile() {
   const {loggedInUser} = useSelector(store => store.userDataReducer);
@@ -25,7 +25,7 @@ function UserProfile() {
   const [checkUser, setCheckUser] = useState({});
   useLayoutEffect(() => {
     firestore()
-      .collection('Users')
+      .collection(string.users)
       .get()
       .then(res => {
         const a = res._docs.map(ele => ele.data());
@@ -42,10 +42,10 @@ function UserProfile() {
     about: '',
     displayImage: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
   });
-  const [loader, setLoader] = useState(false);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [open, setOPen] = useState(false);
-  const dispatch = useDispatch();
+  const [loader, setLoader] = useState(false);
 
   /**
    * Setting Display Image.
@@ -60,11 +60,10 @@ function UserProfile() {
       compressImageQuality: 0.2,
     })
       .then(res => {
-        if (Platform.OS === 'ios') {
+        if (Platform.OS === string.ios) {
           reference
             .putFile(res?.sourceURL)
             .then(res => {
-              console.log('uploaded', res);
               reference.getDownloadURL().then(result => {
                 setInfoDetails({...infoDetails, displayImage: result});
                 setLoader(false);
@@ -77,7 +76,6 @@ function UserProfile() {
             reference
               .putFile(res?.path)
               .then(res => {
-                console.log('uploaded', res);
                 reference.getDownloadURL().then(result => {
                   setInfoDetails({...infoDetails, displayImage: result});
                   setLoader(false);
@@ -97,17 +95,17 @@ function UserProfile() {
   const handleContineuPress = () => {
     console.log('infodetails', infoDetails);
     setLoader(true);
-    if (infoDetails.userName.length < 2) {
-      showToast('Invalid username');
+    if (infoDetails?.userName.length < 2) {
+      showToast(string.invalidUserName);
       setLoader(false);
     } else if (!firstNameTest(infoDetails.fName)) {
-      showToast('Invalid name');
+      showToast(string.invalidName);
       setLoader(false);
     } else {
       console.log('huhuhuhuhu');
       let user = {...infoDetails};
       firestore()
-        .collection('Users')
+        .collection(string.users)
         .doc(loggedInUser?.uid)
         .update({
           ...user,
@@ -132,7 +130,7 @@ function UserProfile() {
     if (
       infoDetails.userName.length > 4 &&
       infoDetails.fName.length > 2 &&
-      infoDetails.about.length > 5
+      infoDetails.about.length > 3
     ) {
       return false;
     } else {
@@ -142,7 +140,7 @@ function UserProfile() {
 
   return (
     <KeyboardAwareScrollView style={styles.userProfileMainView} bounces={false}>
-      <Header header={'Your Profile'} />
+      <Header header={string.yourProfile} />
       <FormComponent
         onAddImagePress={onAddImagePress}
         infoDetails={infoDetails}

@@ -8,18 +8,20 @@ import {
   Animated,
   ImageBackground,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
-import HomeHeader from '../../../components/commonHomeHeader';
-import {useDispatch, useSelector} from 'react-redux';
 import {styles} from './style';
-import RenderChatCard from './renderChatCard';
-import {logOut, showToast} from '../../../utils/commonFunctions';
-import {StackActions, useNavigation} from '@react-navigation/native';
+import SearchHeader from './searchHeader';
 import {string} from '../../../utils/strings';
+import RenderChatCard from './renderChatCard';
 import Loader from '../../../components/loader';
 import {setUser} from '../../../redux/auth/action';
+import {useDispatch, useSelector} from 'react-redux';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import firestore from '@react-native-firebase/firestore';
+import HomeHeader from '../../../components/commonHomeHeader';
+import React, {useCallback, useEffect, useState} from 'react';
+import {logOut, showToast} from '../../../utils/commonFunctions';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {StackActions, useNavigation} from '@react-navigation/native';
 import {backPress, searchPress} from './chatUtils/chatUtils';
 import {vh} from '../../../utils/dimensions';
 
@@ -47,9 +49,9 @@ const ChatList = () => {
 
   useEffect(() => {
     const abc = firestore()
-      .collection('Users')
+      .collection(string.users)
       .doc(loggedInUser.uid)
-      .collection('Inbox')
+      .collection(string.inbox)
       .onSnapshot(doc => {
         const dataArray = doc?._docs.map(element => element._data);
         setStaticData(dataArray);
@@ -69,7 +71,6 @@ const ChatList = () => {
     logOut(
       loggedInUser?.uid,
       () => {
-        console.log('logh');
         setTimeout(() => {
           setLoader(false);
           dispatch(setUser({}));
@@ -143,12 +144,14 @@ const ChatList = () => {
         setSearch={setSearch}
         toolTip={toolTip}
         addFriend={() => {
-          navigation.navigate('AddFriend');
+          navigation.navigate(string.addFriend);
         }}
         onsearchPress={handleSearchPress}
       />
       <Tooltip
-        topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
+        topAdjustment={
+          Platform.OS === string.android ? -StatusBar.currentHeight : 0
+        }
         backgroundColor="transparent"
         placement="right"
         contentStyle={styles.toolTipContainer}
@@ -156,11 +159,11 @@ const ChatList = () => {
         content={
           <View style={styles.tooTipContentMainView}>
             <Text style={styles.toolTipTextStyle} onPress={handleTooltipPress}>
-              {'Profile'}
+              {string.profile}
             </Text>
             <View style={styles.contentLineSeperator} />
             <Text onPress={handleLogOut} style={styles.toolTipTextStyle}>
-              {'Logout'}
+              {string.logout}
             </Text>
           </View>
         }

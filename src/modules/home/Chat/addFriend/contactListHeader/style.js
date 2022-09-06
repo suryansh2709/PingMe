@@ -11,4 +11,6 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
+  leftImageStyle: {height: vh(30), width: vh(30), tintColor: color.white},
+  contactText: {fontSize: vh(34), marginLeft: vw(10), color: color.white},
 });

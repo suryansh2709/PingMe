@@ -1,15 +1,9 @@
-import {
-  View,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Animated,
-} from 'react-native';
+import {styles} from './style';
 import React, {useState} from 'react';
-import {vh, vw} from '../../../../utils/dimensions';
-import LinearGradient from 'react-native-linear-gradient';
+import {string} from '../../../../utils/strings';
 import localImages from '../../../../utils/localImages';
+import LinearGradient from 'react-native-linear-gradient';
+import {View, Image, TouchableOpacity, TextInput, Animated} from 'react-native';
 
 export default function SearchHeader({
   search,
@@ -38,7 +32,7 @@ export default function SearchHeader({
             <Image source={localImages.left} style={styles.searchLeftIcon} />
           </TouchableOpacity>
           <TextInput
-            placeholder="Search"
+            placeholder={string.search}
             value={name}
             onChangeText={text => {
               setName(text);
@@ -50,22 +44,3 @@ export default function SearchHeader({
     </Animated.View>
   );
 }
-
-const styles = StyleSheet.create({
-  searchLeftIcon: {
-    height: vh(25),
-    width: vh(25),
-    top: 2,
-  },
-  headerMainView: {
-    height: vh(83),
-    backgroundColor: '#50BF87',
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    justifyContent: 'center',
-  },
-  searchMainView: {
-    flexDirection: 'row',
-  },
-  textInputStyle: {marginLeft: vw(8), width: '80%', padding: 8},
-});
